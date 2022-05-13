@@ -1,9 +1,10 @@
 package com.springmessenger.entity;
 
+import lombok.Data;
+
+@Data
 public class Message {
-    long id;
-    String name;
-    String text;
-
-
+    private long id;
+    private String name;
+    private String text;
 }

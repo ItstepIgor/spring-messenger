@@ -1,4 +1,6 @@
 package com.springmessenger.dto;
 
-public class MessageDto {
+public record MessageDto(long id,
+                         String name,
+                         String text) {
 }
