@@ -1,6 +1,8 @@
 package com.springmessenger.service;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.springmessenger.entity.Message;
@@ -19,45 +21,65 @@ import java.util.List;
 public class MessageService {
 
 
-    @SneakyThrows
     public List<Message> getAll() {
         System.out.println("Проверка работы2");
 
 
-
-//        try (CSVReader reader = new CSVReader(new FileReader("K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv"))) {
-//            List<String[]> r = reader.readAll();
-//            r.forEach(x -> System.out.println(Arrays.toString(x)));
-//        }
-
         try {
-            String fileName = "K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv";
+//            String csvFilename = "K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\country.csv";
+//            String csvFilename = "K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv";
+            Reader reader = Files.newBufferedReader(Paths.get("K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv"));
 
-            List<Message> beans = new CsvToBeanBuilder(new FileReader(fileName))
-                    .withType(Message.class)
-                    .build()
-                    .parse();
+            String[] columns = {"id", "name", "text"};
 
-            beans.forEach(System.out::println);
+            // create a mapping strategy
+            ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
+            strategy.setType(Message.class);
+            strategy.setColumnMapping(columns);
+
+            CsvToBean csvToBean = new CsvToBeanBuilder(reader)
+                    .withMappingStrategy(strategy)
+                    .withSkipLines(1)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
 
 
-//            Reader reader = Files.newBufferedReader(Paths.get("K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv"));
-//            CsvToBean csvToBean = new CsvToBeanBuilder(reader)
-//                    .withType(Message.class)
-//                    .withIgnoreLeadingWhiteSpace(true)
+
+            for (Message user : (Iterable<Message>) csvToBean) {
+                System.out.println(user);
+            }
+
+//            FileReader filereader = new FileReader(file);
+//// create csvReader object and skip first Line
+//            CSVReader csvReader = new CSVReaderBuilder(filereader)
+//                    .withSkipLines(1)
 //                    .build();
-//
-//            for (Message message : (Iterable<Message>) csvToBean) {
-//                System.out.println(message);
-////                System.out.println("ID: " + message.getId());
-////                System.out.println("Name: " + message.getName());
-////                System.out.println("Text: " + message.getText());
+//            List<String[]> allData = csvReader.readAll();
+//// print Data
+//            for (String[] row : allData) {
+//                for (String cell : row) {
+//                    System.out.print(cell + " ");
+//                }
+//                System.out.println();
 //            }
-//
-        } catch (IOException e) {
+
+            reader.close();
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         return null;
     }
+
+//    @SuppressWarnings({"rawtypes", "unchecked"})
+//    private static ColumnPositionMappingStrategy setColumMapping()
+//    {
+//        ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
+//        strategy.setType(Message.class);
+//        String[] columns = new String[] {"id", "name", "text"};
+//        strategy.setColumnMapping(columns);
+//        return strategy;
+//    }
+
 }
