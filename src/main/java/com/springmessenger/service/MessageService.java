@@ -1,18 +1,15 @@
 package com.springmessenger.service;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.springmessenger.entity.Bean;
 import com.springmessenger.entity.Message;
 import lombok.SneakyThrows;
+import org.csveed.api.CsvClient;
+import org.csveed.api.CsvClientImpl;
 import org.springframework.stereotype.Service;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -27,43 +24,37 @@ public class MessageService {
 
         try {
 //            String csvFilename = "K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\country.csv";
-//            String csvFilename = "K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv";
-            Reader reader = Files.newBufferedReader(Paths.get("K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv"));
+            File csvFilename = new File("E:\\JAVA\\IdeaProjects\\spring-messenger\\messages.csv");
+//            Reader reader = Files.newBufferedReader(Paths.get("E:\\JAVA\\IdeaProjects\\spring-messenger\\messages.csv"));
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFilename))) {
 
-            String[] columns = {"id", "name", "text"};
-
-            // create a mapping strategy
-            ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
-            strategy.setType(Message.class);
-            strategy.setColumnMapping(columns);
-
-            CsvToBean csvToBean = new CsvToBeanBuilder(reader)
-                    .withMappingStrategy(strategy)
-                    .withSkipLines(1)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
-
-
-
-            for (Message user : (Iterable<Message>) csvToBean) {
-                System.out.println(user);
+                System.out.println(reader);
             }
 
-//            FileReader filereader = new FileReader(file);
-//// create csvReader object and skip first Line
-//            CSVReader csvReader = new CSVReaderBuilder(filereader)
-//                    .withSkipLines(1)
-//                    .build();
-//            List<String[]> allData = csvReader.readAll();
-//// print Data
-//            for (String[] row : allData) {
-//                for (String cell : row) {
-//                    System.out.print(cell + " ");
-//                }
-//                System.out.println();
+//            Reader reader = new StringReader(
+//                    "name;number;date\n" +
+//                            "\"Alpha\";1900;\"13-07-1922\"\n" +"
+//                            "\"Beta\";1901;\"22-01-1943\"\n" +
+//                            "\"Gamma\";1902;\"30-09-1978\""
+//            );
+
+
+//            CsvClient<Message> csvReader = new CsvClientImpl<Message>(reader, Message.class);
+//            final List<Message> beans = csvReader.readBeans();
+
+//            for (Message bean : beans) {
+//                System.out.println(
+//                        bean.getId() + " | " +
+//                                bean.getName() + " | " +
+//                                bean.getText());
 //            }
 
-            reader.close();
+//            reader.close();
+
+//            String filename="messages.csv";
+//            Path pathToFile = Paths.get(filename);
+//            System.out.println(pathToFile.toAbsolutePath());
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -72,14 +63,5 @@ public class MessageService {
         return null;
     }
 
-//    @SuppressWarnings({"rawtypes", "unchecked"})
-//    private static ColumnPositionMappingStrategy setColumMapping()
-//    {
-//        ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
-//        strategy.setType(Message.class);
-//        String[] columns = new String[] {"id", "name", "text"};
-//        strategy.setColumnMapping(columns);
-//        return strategy;
-//    }
 
 }

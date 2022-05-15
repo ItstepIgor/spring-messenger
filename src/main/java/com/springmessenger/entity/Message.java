@@ -1,8 +1,5 @@
 package com.springmessenger.entity;
 
-import com.opencsv.bean.CsvBindByName;
-import lombok.Data;
-import lombok.ToString;
 
 
 public class Message {
