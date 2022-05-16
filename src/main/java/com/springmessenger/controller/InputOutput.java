@@ -1,8 +1,10 @@
 package com.springmessenger.controller;
 
+import com.springmessenger.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Controller
@@ -23,7 +25,10 @@ public class InputOutput {
             int a = scanner.nextInt();
             switch (a) {
                 case 1 -> {
-                    messageController.getAll();
+                    List<Message> messages = messageController.getAll();
+                    for (Message message : messages) {
+                        System.out.println(message);
+                    }
                 }
                 case 2 -> {
 

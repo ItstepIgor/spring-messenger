@@ -1,17 +1,21 @@
 package com.springmessenger.entity;
 
 
+import com.opencsv.bean.CsvBindByPosition;
 
 public class Message {
+    @CsvBindByPosition(position = 0)
     private long id;
+    @CsvBindByPosition(position = 1)
     private String name;
+    @CsvBindByPosition(position = 2)
     private String text;
 
-    public Message(long id, String name, String text) {
-        this.id = id;
-        this.name = name;
-        this.text = text;
-    }
+//    public Message(long id, String name, String text) {
+//        this.id = id;
+//        this.name = name;
+//        this.text = text;
+//    }
 
     public long getId() {
         return id;
