@@ -1,8 +1,6 @@
 package com.springmessenger.service;
 
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.bean.*;
 import com.springmessenger.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,23 +13,19 @@ import java.util.List;
 @Service
 public class MessageService {
 
-    @Autowired
-    private ColumnPositionMappingStrategy columnPositionMappingStrategy;
+//    @Autowired
+//    private ColumnPositionMappingStrategy columnPositionMappingStrategy;
 
     public List<Message> getAll() {
         List<Message> messages;
 
         try {
-            Path path = Path.of("K:\\Java\\IdeaProjects\\test-csv-parse\\src\\main\\resources\\messages.csv");
-
-            columnPositionMappingStrategy.setType(Message.class);
-
+            Path path = Path.of("K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv");
             Reader reader = Files.newBufferedReader(path);
-            CsvToBean cb = new CsvToBeanBuilder(reader)
-                    .withType(Message.class)
-                    .withMappingStrategy(columnPositionMappingStrategy)
-                    .build();
-            messages = cb.parse();
+
+            messages = new CsvToBeanBuilder(reader)
+                    .withType(Message.class).build().parse();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -40,5 +34,21 @@ public class MessageService {
 
     public Message getById(long id) {
         return getAll().stream().filter(mes -> mes.getId() == id).findFirst().orElse(null);
+    }
+
+    public void create(String name, String text) {
+        Path path = Path.of("K:\\Java\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv");
+
+
+        List<Message> messages = getAll();
+        long id = messages.size() + 1;
+        messages.add(new Message(id, name, text));
+
+        try (Writer writer = new FileWriter(path.toString())) {
+            StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
+            beanToCsv.write(messages);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

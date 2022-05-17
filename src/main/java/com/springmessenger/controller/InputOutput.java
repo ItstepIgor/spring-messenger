@@ -32,7 +32,11 @@ public class InputOutput {
                     }
                 }
                 case 2 -> {
-
+                    System.out.println("Введите имя");
+                    String name = scanner.next();
+                    System.out.println("Введите текст сообщения");
+                    String text = scanner.next();
+                    messageController.create(name, text);
                 }
                 case 3 -> {
 

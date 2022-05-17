@@ -30,4 +30,8 @@ public class MessageController {
     public MessageDto getById(long id) {
         return messageMapper.toDTO(messageService.getById(id));
     }
+
+    public void create(String name, String text) {
+        messageService.create(name, text);
+    }
 }
