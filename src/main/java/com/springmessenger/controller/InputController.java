@@ -1,14 +1,12 @@
 package com.springmessenger.controller;
 
-import com.springmessenger.dto.MessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
 import java.util.Scanner;
 
 @Controller
-public class InputOutput {
+public class InputController {
 
     @Autowired
     private MessageController messageController;
@@ -25,12 +23,7 @@ public class InputOutput {
                     """);
             int a = scanner.nextInt();
             switch (a) {
-                case 1 -> {
-                    List<MessageDto> messages = messageController.getAll();
-                    for (MessageDto message : messages) {
-                        System.out.println(message);
-                    }
-                }
+                case 1 -> messageController.getAll();
                 case 2 -> {
                     System.out.println("Введите имя");
                     String name = scanner.next();
@@ -39,10 +32,18 @@ public class InputOutput {
                     messageController.create(name, text);
                 }
                 case 3 -> {
-
+                    System.out.println("Выберите id сообщения для изменения");
+                    messageController.getAll();
+                    long id = scanner.nextInt();
+                    System.out.println("Введите новый текст сообщения");
+                    String text = scanner.next();
+                    messageController.update(id, text);
                 }
                 case 4 -> {
-
+                    System.out.println("Выберите id сообщения для удаления");
+                    messageController.getAll();
+                    long id = scanner.nextInt();
+                    messageController.delete(id);
                 }
                 case 5 -> System.out.println(messageController.getById(2));
             }

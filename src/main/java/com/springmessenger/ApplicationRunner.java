@@ -1,7 +1,7 @@
 package com.springmessenger;
 
 import com.springmessenger.config.ApplicationConfig;
-import com.springmessenger.controller.InputOutput;
+import com.springmessenger.controller.InputController;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 
@@ -9,8 +9,8 @@ public class ApplicationRunner {
 
     public static void main(String[] args) {
         try (var context = new AnnotationConfigApplicationContext(ApplicationConfig.class)) {
-            InputOutput inputOutput = context.getBean("inputOutput", InputOutput.class);
-            inputOutput.selectAction();
+            InputController inputController = context.getBean("inputController", InputController.class);
+            inputController.selectAction();
         }
     }
 }
