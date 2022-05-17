@@ -4,7 +4,6 @@ import com.springmessenger.config.ApplicationConfig;
 import com.springmessenger.controller.InputOutput;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.List;
 
 public class ApplicationRunner {
 

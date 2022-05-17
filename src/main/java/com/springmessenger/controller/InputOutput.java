@@ -1,6 +1,6 @@
 package com.springmessenger.controller;
 
-import com.springmessenger.entity.Message;
+import com.springmessenger.dto.MessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -21,12 +21,13 @@ public class InputOutput {
                     2 - Создать новое сообщение
                     3 - Отредактировать сообщение
                     4 - Удалить сообщение
+                    5 - Вывести одно сообщений
                     """);
             int a = scanner.nextInt();
             switch (a) {
                 case 1 -> {
-                    List<Message> messages = messageController.getAll();
-                    for (Message message : messages) {
+                    List<MessageDto> messages = messageController.getAll();
+                    for (MessageDto message : messages) {
                         System.out.println(message);
                     }
                 }
@@ -39,7 +40,7 @@ public class InputOutput {
                 case 4 -> {
 
                 }
-
+                case 5 -> System.out.println(messageController.getById(2));
             }
         }
     }

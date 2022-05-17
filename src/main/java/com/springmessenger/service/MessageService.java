@@ -37,4 +37,8 @@ public class MessageService {
         }
         return messages;
     }
+
+    public Message getById(long id) {
+        return getAll().stream().filter(mes -> mes.getId() == id).findFirst().orElse(null);
+    }
 }

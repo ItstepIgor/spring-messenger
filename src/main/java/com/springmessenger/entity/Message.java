@@ -11,11 +11,6 @@ public class Message {
     @CsvBindByPosition(position = 2)
     private String text;
 
-//    public Message(long id, String name, String text) {
-//        this.id = id;
-//        this.name = name;
-//        this.text = text;
-//    }
 
     public long getId() {
         return id;
