@@ -5,32 +5,22 @@ import com.springmessenger.entity.Message;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
 
-    //    @Autowired
-//    private ColumnPositionMappingStrategy columnPositionMappingStrategy;
-
+    private final Path path = Path.of("src", "main", "resources", "messages.csv");
 
     public List<Message> getAll() {
         List<Message> messages;
-
         try {
-            URL resource = getClass().getClassLoader().getResource("messages.csv");
-            File file = Paths.get(resource.toURI()).toFile();
-
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                messages = new CsvToBeanBuilder(reader)
-                        .withType(Message.class).build().parse();
+            try (Reader reader = Files.newBufferedReader(path)) {
+                messages = new CsvToBeanBuilder<Message>(reader).withType(Message.class).build().parse();
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -53,18 +43,14 @@ public class MessageService {
     }
 
     private void saveToFile(List<Message> messages) {
-//        Path path = Path.of("E:\\JAVA\\IdeaProjects\\spring-messenger\\src\\main\\resources\\messages.csv");
         try {
-            URL resource = getClass().getClassLoader().getResource("messages.csv");
-            File file = Paths.get(resource.toURI()).toFile();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
+            try (Writer writer = Files.newBufferedWriter(path)) {
+                var beanToCsv = new StatefulBeanToCsvBuilder<Message>(writer).build();
                 beanToCsv.write(messages);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void update(long id, String text) {
