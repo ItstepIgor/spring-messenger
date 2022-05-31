@@ -4,6 +4,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.io.PrintStream;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 
 @Configuration
 @ComponentScan(basePackages = "com.springmessenger")
+@EnableAspectJAutoProxy
 public class ApplicationConfig {
 
 
