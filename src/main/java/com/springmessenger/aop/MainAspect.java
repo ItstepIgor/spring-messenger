@@ -1,6 +1,6 @@
 package com.springmessenger.aop;
 
-import org.aopalliance.intercept.Joinpoint;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -19,7 +19,7 @@ public class MainAspect {
 
 
     @Before("selectAllMethod()")
-    public void beforeGetAll() {
-        System.out.println("Метод вызвали");
+    public void beforeGetAll(JoinPoint joinPoint) {
+        System.out.println("Метод вызвали под названием " + joinPoint.getSignature().getName());
     }
 }
