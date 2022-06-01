@@ -3,6 +3,7 @@ package com.springmessenger.aop;
 import org.aopalliance.intercept.Joinpoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 
@@ -11,9 +12,14 @@ import org.springframework.stereotype.Component;
 public class MainAspect {
 
 
-    @Before("execution(* com.springmessenger.repository.MessageRepository.getAll())")
+    @Pointcut("execution(* com.springmessenger.repository.MessageRepository.*(..))")
 //    @Before("@within(org.springframework.stereotype.Repository)")
-    public void beforeGetAll(/*Joinpoint joinpoint*/) {
-        System.out.println(/*joinpoint. +*/ " вызвали");
+    public void selectAllMethod() {
+    }
+
+
+    @Before("selectAllMethod()")
+    public void beforeGetAll() {
+        System.out.println("Метод вызвали");
     }
 }
