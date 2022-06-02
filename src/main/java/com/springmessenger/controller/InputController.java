@@ -1,11 +1,8 @@
 package com.springmessenger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
-import java.io.PrintStream;
-import java.util.Locale;
 import java.util.Scanner;
 
 @Controller
@@ -15,54 +12,48 @@ public class InputController {
     private MessageController messageController;
     @Autowired
     private Scanner scanner;
-
     @Autowired
-    private MessageSource messageSource;
-    @Autowired
-    private PrintStream printStream;
+    private OutputController outputController;
 
     public void selectAction() {
-        Locale locale = null;
-        System.out.println("""
-                1 - English
-                2 - Русский
-                """);
-        int selectLanguage = scanner.nextInt();
-        switch (selectLanguage) {
-            case 1 -> locale = new Locale("en", "EN");
-            case 2 -> locale = new Locale("ru", "RU");
-        }
-
-        printStream.println(messageSource.getMessage("select.action", null, locale));
-        printStream.println("1 - " + messageSource.getMessage("select.list.message", null, locale));
-        printStream.println("2 - " + messageSource.getMessage("create.message", null, locale));
-        printStream.println("3 - " + messageSource.getMessage("edit.message", null, locale));
-        printStream.println("4 - " + messageSource.getMessage("delete.message", null, locale));
+        outputController.showMessage("select.action", "", "");
+        outputController.showMessage("select.list.message", "1 - ", "");
+        outputController.showMessage("create.message", "2 - ", "");
+        outputController.showMessage("edit.message", "3 - ", "");
+        outputController.showMessage("delete.message", "4 - ", "");
+        outputController.showMessage("exit", "5 - ", "");
         int select = scanner.nextInt();
         switch (select) {
-            case 1 -> messageController.getAll();
+            case 1 -> {
+                messageController.getAll();
+                System.out.println();
+                selectAction();
+            }
             case 2 -> {
-                printStream.println(messageSource.getMessage("enter.name", null, locale));
+                outputController.showMessage("enter.name", "", "");
                 String name = scanner.next();
-                printStream.println(messageSource.getMessage("enter.text", null, locale));
+                outputController.showMessage("enter.text", "", "");
                 String text = scanner.next();
                 messageController.create(name, text);
+                selectAction();
             }
             case 3 -> {
-                printStream.println(messageSource.getMessage("select.id.message.edit", null, locale));
+                outputController.showMessage("select.id.message.edit", "", "");
                 System.out.println();
                 messageController.getAll();
                 long id = scanner.nextInt();
-                printStream.println(messageSource.getMessage("enter.new.text", null, locale));
+                outputController.showMessage("enter.new.text", "", "");
                 String text = scanner.next();
                 messageController.update(id, text);
+                selectAction();
             }
             case 4 -> {
-                printStream.println(messageSource.getMessage("select.id.message.delete", null, locale));
+                outputController.showMessage("select.id.message.delete", "", "");
                 System.out.println();
                 messageController.getAll();
                 long id = scanner.nextInt();
                 messageController.delete(id);
+                selectAction();
             }
         }
     }
