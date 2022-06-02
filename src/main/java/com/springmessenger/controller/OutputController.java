@@ -3,15 +3,21 @@ package com.springmessenger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
 
+import javax.annotation.PostConstruct;
 import java.io.PrintStream;
 import java.util.Locale;
+import java.util.Scanner;
 
-
+@Controller
 public class OutputController {
 
 
-    private final Locale locale;
+    private Locale locale;
+
+    @Autowired
+    private Scanner scanner;
 
     @Autowired
     private MessageSource messageSource;
@@ -19,9 +25,19 @@ public class OutputController {
     @Autowired
     private PrintStream printStream;
 
-    public OutputController(Locale locale) {
-        this.locale = locale;
+    @PostConstruct
+    private void init() {
+        System.out.println("""
+                1 - English
+                2 - Русский
+                """);
+        int selectLanguage = scanner.nextInt();
+        switch (selectLanguage) {
+            case 1 -> locale = new Locale("en", "EN");
+            case 2 -> locale = new Locale("ru", "RU");
+        }
     }
+
 
     public void showMessage(String stringLocale, String addText, String logText) {
         printStream.println(addText + "" + messageSource.getMessage(stringLocale, null, locale) + " " + logText);
