@@ -1,6 +1,7 @@
 package com.springmessenger.controller;
 
 
+import com.springmessenger.cache.MessageCacheMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class OutputController {
     @Autowired
     private PrintStream printStream;
 
+    @Autowired
+    private MessageCacheMap messageCacheMap;
+
     @PostConstruct
     private void init() {
         System.out.println("""
@@ -41,5 +45,9 @@ public class OutputController {
 
     public void showMessage(String stringLocale, String addText, String logText) {
         printStream.println(addText + "" + messageSource.getMessage(stringLocale, null, locale) + " " + logText);
+    }
+
+    public void showCache (){
+        System.out.println(messageCacheMap.getCacheMap());
     }
 }

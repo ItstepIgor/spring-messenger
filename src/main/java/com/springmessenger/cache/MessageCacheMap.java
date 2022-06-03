@@ -7,5 +7,15 @@ import java.util.Map;
 
 @Component
 public class MessageCacheMap {
-    private Map<String, String> cacheMap = new HashMap<>();
+    private Map<Long, String> cacheMap = new HashMap<>();
+
+
+    public void addCache(long id, String str) {
+        cacheMap.put(id, str);
+    }
+
+    public Map<Long, String> getCacheMap() {
+        return cacheMap;
+    }
 }
+

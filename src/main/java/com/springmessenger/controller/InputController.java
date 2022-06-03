@@ -20,8 +20,10 @@ public class InputController {
         outputController.showMessage("select.list.message", "1 - ", "");
         outputController.showMessage("create.message", "2 - ", "");
         outputController.showMessage("edit.message", "3 - ", "");
-        outputController.showMessage("delete.message", "4 - ", "");
-        outputController.showMessage("exit", "5 - ", "");
+        outputController.showMessage("select.id.message.show", "4 - ", "");
+        outputController.showMessage("delete.message", "5 - ", "");
+        outputController.showMessage("show.cache", "6 - ", "");
+        outputController.showMessage("exit", "7 - ", "");
         int select = scanner.nextInt();
         switch (select) {
             case 1 -> {
@@ -48,11 +50,21 @@ public class InputController {
                 selectAction();
             }
             case 4 -> {
+                messageController.getAll();
+                long id = scanner.nextInt();
+                messageController.getById(id);
+                selectAction();
+            }
+            case 5 -> {
                 outputController.showMessage("select.id.message.delete", "", "");
                 System.out.println();
                 messageController.getAll();
                 long id = scanner.nextInt();
                 messageController.delete(id);
+                selectAction();
+            }
+            case 6 -> {
+                outputController.showCache();
                 selectAction();
             }
         }

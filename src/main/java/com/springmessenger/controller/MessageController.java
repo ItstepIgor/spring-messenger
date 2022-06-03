@@ -27,8 +27,8 @@ public class MessageController {
         messages.forEach(System.out::println);
     }
 
-    public MessageDto getById(long id) {
-        return messageMapper.toDTO(messageService.getById(id));
+    public void getById(long id) {
+        System.out.println(messageMapper.toDTO(messageService.getById(id)));
     }
 
     public void create(String name, String text) {
