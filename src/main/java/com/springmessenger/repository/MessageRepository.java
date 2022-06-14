@@ -3,8 +3,11 @@ package com.springmessenger.repository;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.springmessenger.entity.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -13,6 +16,13 @@ import java.util.List;
 
 @Repository
 public class MessageRepository {
+
+    @Autowired
+    public DataSource dataSource;
+
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+
 
 
     private final Path path = Path.of("src", "main", "resources", "messages.csv");
