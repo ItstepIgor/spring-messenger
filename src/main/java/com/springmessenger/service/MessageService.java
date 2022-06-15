@@ -1,6 +1,7 @@
 package com.springmessenger.service;
 
 import com.springmessenger.entity.Message;
+import com.springmessenger.entity.MessageEntity;
 import com.springmessenger.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,11 @@ public class MessageService {
 
     @Autowired
     private MessageRepository messageRepository;
+
+
+    public List<MessageEntity> getAllMessageEntity(){
+        return messageRepository.getAllMessageEntity();
+    }
 
     public List<Message> getAll() {
         return messageRepository.getAll();

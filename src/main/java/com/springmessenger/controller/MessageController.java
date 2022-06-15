@@ -2,6 +2,7 @@ package com.springmessenger.controller;
 
 
 import com.springmessenger.dto.MessageDto;
+import com.springmessenger.entity.MessageEntity;
 import com.springmessenger.service.MessageService;
 import com.springmessenger.service.mapper.MessageListMapper;
 import com.springmessenger.service.mapper.MessageMapper;
@@ -21,6 +22,12 @@ public class MessageController {
 
     @Autowired
     MessageMapper messageMapper;
+
+
+    public void getAllMessageEntity(){
+        List<MessageEntity> messages =  messageService.getAllMessageEntity();
+        messages.forEach(System.out::println);
+    }
 
     public void getAll() {
         List<MessageDto> messages = messageListMapper.toDTOList(messageService.getAll());

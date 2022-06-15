@@ -27,7 +27,8 @@ public class InputController {
         int select = scanner.nextInt();
         switch (select) {
             case 1 -> {
-                messageController.getAll();
+                messageController.getAllMessageEntity();
+//                messageController.getAll();
                 System.out.println();
                 selectAction();
             }

@@ -1,22 +1,28 @@
 package com.springmessenger.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.Scanner;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 @ComponentScan(basePackages = "com.springmessenger")
 @EnableAspectJAutoProxy
 public class ApplicationConfig {
+
+
+    @Autowired
+    private Environment environment;
 
     @Bean
     public Scanner scanner() {
@@ -40,10 +46,15 @@ public class ApplicationConfig {
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/messenger");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("sa");
+        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("jdbc.driver.class.name")));
+        dataSource.setUrl(environment.getProperty("jdbc.url"));
+        dataSource.setUsername(environment.getProperty("jdbc.username"));
+        dataSource.setPassword(environment.getProperty("jdbc.password"));
         return dataSource;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate(){
+        return new JdbcTemplate(dataSource());
     }
 }
