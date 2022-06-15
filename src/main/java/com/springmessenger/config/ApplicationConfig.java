@@ -1,17 +1,15 @@
 package com.springmessenger.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 import java.util.Scanner;
 
 @Configuration
@@ -20,15 +18,10 @@ import java.util.Scanner;
 @EnableAspectJAutoProxy
 public class ApplicationConfig {
 
-
-    @Autowired
-    private Environment environment;
-
     @Bean
     public Scanner scanner() {
         return new Scanner(System.in);
     }
-
 
     @Bean
     public MessageSource messageSource() {
@@ -44,17 +37,20 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource(@Value("${jdbc.driver.class.name}") String driverClassName,
+                                 @Value("${jdbc.url}") String url,
+                                 @Value("${jdbc.username}") String username,
+                                 @Value("${jdbc.password}") String password){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("jdbc.driver.class.name")));
-        dataSource.setUrl(environment.getProperty("jdbc.url"));
-        dataSource.setUsername(environment.getProperty("jdbc.username"));
-        dataSource.setPassword(environment.getProperty("jdbc.password"));
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(){
-        return new JdbcTemplate(dataSource());
+    public JdbcTemplate jdbcTemplate(DataSource dataSource){
+        return new JdbcTemplate(dataSource);
     }
 }
