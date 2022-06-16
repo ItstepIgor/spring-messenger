@@ -1,11 +1,10 @@
 package com.springmessenger.controller;
 
 
-import com.springmessenger.dto.MessageCSVDto;
-import com.springmessenger.entity.Message;
+import com.springmessenger.dto.CreateMessageDto;
+import com.springmessenger.dto.MessageDto;
 import com.springmessenger.service.MessageService;
-import com.springmessenger.service.mapper.MessageCSVListMapper;
-import com.springmessenger.service.mapper.MessageCSVMapper;
+import com.springmessenger.service.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -17,41 +16,38 @@ public class MessageController {
 
     @Autowired
     private MessageService messageService;
-    @Autowired
-    MessageCSVListMapper messageCSVListMapper;
+
 
     @Autowired
-    MessageCSVMapper messageCSVMapper;
+    MessageListMapper messageListMapper;
 
+    @Autowired
+    MessageMapper messageMapper;
+
+    @Autowired
+    CreateMapperDto createMapperDto;
 
     public void getAllMessage() {
-        List<Message> messages = messageService.getAllMessage();
+        List<MessageDto> messages = messageListMapper.toDTOList(messageService.getAllMessage());
         messages.forEach(System.out::println);
     }
 
-//    public void create() {
-//        MessageDBDto messageDBDto = new MessageDBDto();
-//        messageService.create(messageDBDto);
-//    }
-
-    public void getAll() {
-        List<MessageCSVDto> messages = messageCSVListMapper.toDTOList(messageService.getAll());
-        messages.forEach(System.out::println);
+    public void createMessage() {
+        String str = "dsadasdasdsadas";
+        CreateMessageDto createMessageDto = new CreateMessageDto(str, 1, 3);
+        messageService.createMessage(createMapperDto.toModel(createMessageDto));
     }
 
-    public void getById(long id) {
-        System.out.println(messageCSVMapper.toDTO(messageService.getById(id)));
+    public void updateMessage(MessageDto messageDto) {
+        messageService.updateMessage(messageMapper.toModel(messageDto));
     }
 
-    public void create(String name, String text) {
-        messageService.create(name, text);
+    public MessageDto getMessageById(long id) {
+        return messageMapper.toDTO(messageService.getMessageById(id));
     }
 
-    public void delete(long id) {
-        messageService.delete(id);
+    public void deleteMessage(long id) {
+        messageService.deleteMessage(id);
     }
 
-    public void update(long id, String text) {
-        messageService.update(id, text);
-    }
 }

@@ -20,17 +20,29 @@ public class MessageRepository {
     @Autowired
     public JdbcTemplate jdbcTemplate;
 
-    public static final String GET_ALL_MESSAGE_ENTITY = """
-            select * from messages
+    public static final String GET_ALL_MESSAGE = """
+            SELECT * FROM messages
             """;
 
-    public static final String INSERT_MESSAGE_ENTITY = """
-            insert into messages (content, chat_id, sender_user_id) 
+    public static final String INSERT_MESSAGE = """
+            INSERT INTO messages (content, chat_id, sender_user_id)
             VALUES (?, ?, ?)
             """;
 
+    public static final String UPDATE_MESSAGE = """
+            UPDATE messages SET content = ? WHERE id = ?
+            """;
+    public static final String GET_MESSAGE_BY_ID = """
+            SELECT * FROM messages WHERE id = ?
+            """;
+
+    public static final String DELETE_BY_ID = """
+            DELETE FROM messages WHERE id = ?
+            """;
+
+
     public List<Message> getAllMessage() {
-        return jdbcTemplate.query(GET_ALL_MESSAGE_ENTITY, (rs, rowNum) -> new Message(
+        return jdbcTemplate.query(GET_ALL_MESSAGE, (rs, rowNum) -> new Message(
                 rs.getLong("id"),
                 rs.getTimestamp("data_create_message").toLocalDateTime(),
                 rs.getString("content"),
@@ -39,12 +51,35 @@ public class MessageRepository {
         ));
     }
 
-//    public void create(Message message) {
-//        jdbcTemplate.update(INSERT_MESSAGE_ENTITY,
-//                message.getContent(),
-//                message.getChatId(),
-//                message.getSenderUserId());
-//    }
+    public void createMessage(Message message) {
+        jdbcTemplate.update(INSERT_MESSAGE,
+                message.getContent(),
+                message.getChatId(),
+                message.getSenderUserId());
+    }
+
+    public void updateMessage(Message message) {
+        jdbcTemplate.update(UPDATE_MESSAGE,
+                message.getContent(),
+                message.getId());
+    }
+
+    public Message getMessageById(long id) {
+        return jdbcTemplate.queryForObject(GET_MESSAGE_BY_ID, (rs, rowNum) -> new Message(
+                rs.getLong("id"),
+                rs.getTimestamp("data_create_message").toLocalDateTime(),
+                rs.getString("content"),
+                rs.getLong("chat_id"),
+                rs.getLong("sender_user_id")
+        ), id);
+    }
+
+    public void deleteMessage(long id) {
+        jdbcTemplate.update(DELETE_BY_ID, id);
+    }
+
+
+    //методы для CSV файла
 
     private final Path path = Path.of("src", "main", "resources", "messages.csv");
 

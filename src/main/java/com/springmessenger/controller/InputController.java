@@ -1,5 +1,6 @@
 package com.springmessenger.controller;
 
+import com.springmessenger.dto.MessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -10,6 +11,10 @@ public class InputController {
 
     @Autowired
     private MessageController messageController;
+
+    @Autowired
+    private MessageCSVController messageCSVController;
+
     @Autowired
     private Scanner scanner;
     @Autowired
@@ -27,41 +32,51 @@ public class InputController {
         int select = scanner.nextInt();
         switch (select) {
             case 1 -> {
-//                messageController.getAllMessage();
-                messageController.getAll();
+                messageController.getAllMessage();
+//                messageCSVController.getAll();
                 System.out.println();
                 selectAction();
             }
             case 2 -> {
-                outputController.showMessage("enter.name", "", "");
-                String name = scanner.next();
-                outputController.showMessage("enter.text", "", "");
-                String text = scanner.next();
-                messageController.create(name, text);
+
+                messageController.createMessage();
+//                outputController.showMessage("enter.name", "", "");
+//                String name = scanner.next();
+//                outputController.showMessage("enter.text", "", "");
+//                String text = scanner.next();
+//                messageCSVController.create(name, text);
                 selectAction();
             }
             case 3 -> {
                 outputController.showMessage("select.id.message.edit", "", "");
                 System.out.println();
-                messageController.getAll();
+//                messageCSVController.getAll();
+                messageController.getAllMessage();
                 long id = scanner.nextInt();
+                MessageDto messageDto = messageController.getMessageById(id);
                 outputController.showMessage("enter.new.text", "", "");
                 String text = scanner.next();
-                messageController.update(id, text);
+//                messageCSVController.update(id, text);
+                messageDto.setContent(text);
+                messageController.updateMessage(messageDto);
                 selectAction();
             }
             case 4 -> {
-                messageController.getAll();
+//                messageCSVController.getAll();
+                messageController.getAllMessage();
                 long id = scanner.nextInt();
-                messageController.getById(id);
+                messageController.getMessageById(id);
+//                messageCSVController.getById(id);
                 selectAction();
             }
             case 5 -> {
                 outputController.showMessage("select.id.message.delete", "", "");
                 System.out.println();
-                messageController.getAll();
+//                messageCSVController.getAll();
+                messageController.getAllMessage();
                 long id = scanner.nextInt();
-                messageController.delete(id);
+                messageController.deleteMessage(id);
+//                messageCSVController.delete(id);
                 selectAction();
             }
             case 6 -> {

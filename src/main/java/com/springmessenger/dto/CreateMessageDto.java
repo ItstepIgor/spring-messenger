@@ -1,11 +1,11 @@
 package com.springmessenger.dto;
 
-public class MessageDBDto {
+public class CreateMessageDto {
     private String content;
     private long chatId;
     private long senderUserId;
 
-    public MessageDBDto(String content, long chatId, long senderUserId) {
+    public CreateMessageDto(String content, long chatId, long senderUserId) {
         this.content = content;
         this.chatId = chatId;
         this.senderUserId = senderUserId;

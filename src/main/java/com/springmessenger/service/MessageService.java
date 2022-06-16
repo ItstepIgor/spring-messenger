@@ -19,11 +19,26 @@ public class MessageService {
     public List<Message> getAllMessage() {
         return messageRepository.getAllMessage();
     }
-//
-//
-//    public void create(Message message) {
-//        messageRepository.create(message);
-//    }
+
+    public void createMessage(Message message) {
+        messageRepository.createMessage(message);
+    }
+
+    public void updateMessage (Message message){
+        messageRepository.updateMessage(message);
+    }
+
+    public Message getMessageById(long id) {
+        return messageRepository.getMessageById(id);
+    }
+
+
+    public void deleteMessage (long id){
+        messageRepository.deleteMessage(id);
+    }
+
+    //Методы для CSV файла
+
 
     public List<MessageCSV> getAll() {
         return messageRepository.getAll();
