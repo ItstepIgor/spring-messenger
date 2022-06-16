@@ -1,6 +1,6 @@
 package com.springmessenger.dto;
 
-public class MessageDto{
+public class MessageCSVDto {
     private long id;
     private String name;
     private String text;
@@ -31,7 +31,7 @@ public class MessageDto{
 
     @Override
     public String toString() {
-        return "MessageDto{" +
+        return "MessageCSVDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", text='" + text + '\'' +

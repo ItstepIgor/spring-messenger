@@ -1,23 +1,20 @@
 package com.springmessenger.entity;
 
-
-import com.opencsv.bean.CsvBindByName;
+import java.time.LocalDateTime;
 
 public class Message {
-    @CsvBindByName
     private long id;
-    @CsvBindByName
-    private String name;
-    @CsvBindByName
-    private String text;
+    private LocalDateTime dataCreateMessage;
+    private String content;
+    private long chatId;
+    private long senderUserId;
 
-    public Message(long id, String name, String text) {
+    public Message(long id, LocalDateTime dataCreateMessage, String content, long chatId, long senderUserId) {
         this.id = id;
-        this.name = name;
-        this.text = text;
-    }
-
-    public Message() {
+        this.dataCreateMessage = dataCreateMessage;
+        this.content = content;
+        this.chatId = chatId;
+        this.senderUserId = senderUserId;
     }
 
     public long getId() {
@@ -28,28 +25,46 @@ public class Message {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public LocalDateTime getDataCreateMessage() {
+        return dataCreateMessage;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDataCreateMessage(LocalDateTime dataCreateMessage) {
+        this.dataCreateMessage = dataCreateMessage;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
+    }
+
+    public long getSenderUserId() {
+        return senderUserId;
+    }
+
+    public void setSenderUserId(long senderUserId) {
+        this.senderUserId = senderUserId;
     }
 
     @Override
     public String toString() {
         return "Message{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", text='" + text + '\'' +
+                ", dataCreateMessage=" + dataCreateMessage +
+                ", content='" + content + '\'' +
+                ", chatId=" + chatId +
+                ", senderUserId=" + senderUserId +
                 '}';
     }
 }

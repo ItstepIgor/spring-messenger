@@ -1,11 +1,11 @@
 package com.springmessenger.controller;
 
 
-import com.springmessenger.dto.MessageDto;
-import com.springmessenger.entity.MessageEntity;
+import com.springmessenger.dto.MessageCSVDto;
+import com.springmessenger.entity.Message;
 import com.springmessenger.service.MessageService;
-import com.springmessenger.service.mapper.MessageListMapper;
-import com.springmessenger.service.mapper.MessageMapper;
+import com.springmessenger.service.mapper.MessageCSVListMapper;
+import com.springmessenger.service.mapper.MessageCSVMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -18,24 +18,29 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
     @Autowired
-    MessageListMapper messageListMapper;
+    MessageCSVListMapper messageCSVListMapper;
 
     @Autowired
-    MessageMapper messageMapper;
+    MessageCSVMapper messageCSVMapper;
 
 
-    public void getAllMessageEntity(){
-        List<MessageEntity> messages =  messageService.getAllMessageEntity();
+    public void getAllMessage() {
+        List<Message> messages = messageService.getAllMessage();
         messages.forEach(System.out::println);
     }
 
+//    public void create() {
+//        MessageDBDto messageDBDto = new MessageDBDto();
+//        messageService.create(messageDBDto);
+//    }
+
     public void getAll() {
-        List<MessageDto> messages = messageListMapper.toDTOList(messageService.getAll());
+        List<MessageCSVDto> messages = messageCSVListMapper.toDTOList(messageService.getAll());
         messages.forEach(System.out::println);
     }
 
     public void getById(long id) {
-        System.out.println(messageMapper.toDTO(messageService.getById(id)));
+        System.out.println(messageCSVMapper.toDTO(messageService.getById(id)));
     }
 
     public void create(String name, String text) {
