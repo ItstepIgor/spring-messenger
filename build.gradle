@@ -18,7 +18,7 @@ dependencies {
     implementation 'org.aspectj:aspectjweaver:1.9.7'
     implementation 'org.postgresql:postgresql:42.3.6'
     implementation 'org.springframework:spring-jdbc:5.3.15'
-
+    implementation 'org.hibernate:hibernate-core:5.6.4.Final'
 
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 

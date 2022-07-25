@@ -80,34 +80,34 @@ public class MessageRepository {
 
 
     //методы для CSV файла
-
-    private final Path path = Path.of("src", "main", "resources", "messages.csv");
-
-    public void saveToFile(List<MessageCSV> messageCSVS) {
-        try {
-            try (Writer writer = Files.newBufferedWriter(path)) {
-                var beanToCsv = new StatefulBeanToCsvBuilder<MessageCSV>(writer).build();
-                beanToCsv.write(messageCSVS);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public List<MessageCSV> getAll() {
-        List<MessageCSV> messageCSVS;
-        try {
-            try (Reader reader = Files.newBufferedReader(path)) {
-                messageCSVS = new CsvToBeanBuilder<MessageCSV>(reader).withType(MessageCSV.class).build().parse();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return messageCSVS;
-    }
-
-    public MessageCSV getById(long id) {
-        return getAll().stream().filter(mes -> mes.getId() == id).findFirst().orElse(null);
-    }
+//
+//    private final Path path = Path.of("src", "main", "resources", "messages.csv");
+//
+//    public void saveToFile(List<MessageCSV> messageCSVS) {
+//        try {
+//            try (Writer writer = Files.newBufferedWriter(path)) {
+//                var beanToCsv = new StatefulBeanToCsvBuilder<MessageCSV>(writer).build();
+//                beanToCsv.write(messageCSVS);
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//
+//    public List<MessageCSV> getAll() {
+//        List<MessageCSV> messageCSVS;
+//        try {
+//            try (Reader reader = Files.newBufferedReader(path)) {
+//                messageCSVS = new CsvToBeanBuilder<MessageCSV>(reader).withType(MessageCSV.class).build().parse();
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        return messageCSVS;
+//    }
+//
+//    public MessageCSV getById(long id) {
+//        return getAll().stream().filter(mes -> mes.getId() == id).findFirst().orElse(null);
+//    }
 }
