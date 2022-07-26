@@ -28,26 +28,27 @@ public class MessageController {
     CreateMapperDto createMapperDto;
 
     public void getAllMessage() {
-        List<MessageDto> messages = messageListMapper.toDTOList(messageService.getAllMessage());
-        messages.forEach(System.out::println);
+        messageService.getAllMessage();
+        //        List<MessageDto> messages = messageListMapper.toDTOList(messageService.getAllMessage());
+//        messages.forEach(System.out::println);
     }
 
-    public void createMessage() {
-        String str = "dsadasdasdsadas";
-        CreateMessageDto createMessageDto = new CreateMessageDto(str, 1, 3);
-        messageService.createMessage(createMapperDto.toModel(createMessageDto));
-    }
+//    public void createMessage() {
+//        String str = "dsadasdasdsadas";
+//        CreateMessageDto createMessageDto = new CreateMessageDto(str, 1, 3);
+//        messageService.createMessage(createMapperDto.toModel(createMessageDto));
+//    }
 
-    public void updateMessage(MessageDto messageDto) {
-        messageService.updateMessage(messageMapper.toModel(messageDto));
-    }
+//    public void updateMessage(MessageDto messageDto) {
+//        messageService.updateMessage(messageMapper.toModel(messageDto));
+//    }
+//
+//    public MessageDto getMessageById(long id) {
+//        return messageMapper.toDTO(messageService.getMessageById(id));
+//    }
 
-    public MessageDto getMessageById(long id) {
-        return messageMapper.toDTO(messageService.getMessageById(id));
-    }
-
-    public void deleteMessage(long id) {
-        messageService.deleteMessage(id);
-    }
+//    public void deleteMessage(long id) {
+//        messageService.deleteMessage(id);
+//    }
 
 }

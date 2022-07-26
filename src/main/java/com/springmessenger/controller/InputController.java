@@ -33,13 +33,17 @@ public class InputController {
         switch (select) {
             case 1 -> {
                 messageController.getAllMessage();
+
+
 //                messageCSVController.getAll();
                 System.out.println();
                 selectAction();
             }
             case 2 -> {
 
-                messageController.createMessage();
+//                messageController.createMessage();
+
+
 //                outputController.showMessage("enter.name", "", "");
 //                String name = scanner.next();
 //                outputController.showMessage("enter.text", "", "");
@@ -51,21 +55,24 @@ public class InputController {
                 outputController.showMessage("select.id.message.edit", "", "");
                 System.out.println();
 //                messageCSVController.getAll();
-                messageController.getAllMessage();
+
+//                messageController.getAllMessage();
+
                 long id = scanner.nextInt();
-                MessageDto messageDto = messageController.getMessageById(id);
+//                MessageDto messageDto = messageController.getMessageById(id);
+
                 outputController.showMessage("enter.new.text", "", "");
                 String text = scanner.next();
 //                messageCSVController.update(id, text);
-                messageDto.setContent(text);
-                messageController.updateMessage(messageDto);
+//                messageDto.setContent(text);
+//                messageController.updateMessage(messageDto);
                 selectAction();
             }
             case 4 -> {
 //                messageCSVController.getAll();
-                messageController.getAllMessage();
+//                messageController.getAllMessage();
                 long id = scanner.nextInt();
-                messageController.getMessageById(id);
+//                messageController.getMessageById(id);
 //                messageCSVController.getById(id);
                 selectAction();
             }
@@ -73,9 +80,10 @@ public class InputController {
                 outputController.showMessage("select.id.message.delete", "", "");
                 System.out.println();
 //                messageCSVController.getAll();
-                messageController.getAllMessage();
+
+//                messageController.getAllMessage();
                 long id = scanner.nextInt();
-                messageController.deleteMessage(id);
+//                messageController.deleteMessage(id);
 //                messageCSVController.delete(id);
                 selectAction();
             }

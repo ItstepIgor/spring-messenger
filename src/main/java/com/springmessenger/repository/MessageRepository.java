@@ -4,6 +4,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.springmessenger.entity.Message;
 import com.springmessenger.entity.MessageCSV;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,8 +18,11 @@ import java.util.List;
 @Repository
 public class MessageRepository {
 
+//    @Autowired
+//    public JdbcTemplate jdbcTemplate;
+
     @Autowired
-    public JdbcTemplate jdbcTemplate;
+    public SessionFactory sessionFactory;
 
     public static final String GET_ALL_MESSAGE = """
             SELECT * FROM messages
@@ -41,42 +45,48 @@ public class MessageRepository {
             """;
 
 
-    public List<Message> getAllMessage() {
-        return jdbcTemplate.query(GET_ALL_MESSAGE, (rs, rowNum) -> new Message(
-                rs.getLong("id"),
-                rs.getTimestamp("data_create_message").toLocalDateTime(),
-                rs.getString("content"),
-                rs.getLong("chat_id"),
-                rs.getLong("sender_user_id")
-        ));
+    public List<Message> findAll() {
+        List<Message> messages = (List<Message>) sessionFactory.openSession().createQuery("From Message").list();
+        return messages;
     }
 
-    public void createMessage(Message message) {
-        jdbcTemplate.update(INSERT_MESSAGE,
-                message.getContent(),
-                message.getChatId(),
-                message.getSenderUserId());
-    }
 
-    public void updateMessage(Message message) {
-        jdbcTemplate.update(UPDATE_MESSAGE,
-                message.getContent(),
-                message.getId());
-    }
+//    public List<Message> getAllMessage() {
+//        return jdbcTemplate.query(GET_ALL_MESSAGE, (rs, rowNum) -> new Message(
+//                rs.getLong("id"),
+//                rs.getTimestamp("data_create_message").toLocalDateTime(),
+//                rs.getString("content"),
+//                rs.getLong("chat_id"),
+//                rs.getLong("sender_user_id")
+//        ));
+//    }
 
-    public Message getMessageById(long id) {
-        return jdbcTemplate.queryForObject(GET_MESSAGE_BY_ID, (rs, rowNum) -> new Message(
-                rs.getLong("id"),
-                rs.getTimestamp("data_create_message").toLocalDateTime(),
-                rs.getString("content"),
-                rs.getLong("chat_id"),
-                rs.getLong("sender_user_id")
-        ), id);
-    }
+//    public void createMessage(Message message) {
+//        jdbcTemplate.update(INSERT_MESSAGE,
+//                message.getContent(),
+//                message.getChatId(),
+//                message.getSenderUserId());
+//    }
 
-    public void deleteMessage(long id) {
-        jdbcTemplate.update(DELETE_BY_ID, id);
-    }
+//    public void updateMessage(Message message) {
+//        jdbcTemplate.update(UPDATE_MESSAGE,
+//                message.getContent(),
+//                message.getId());
+//    }
+
+//    public Message getMessageById(long id) {
+//        return jdbcTemplate.queryForObject(GET_MESSAGE_BY_ID, (rs, rowNum) -> new Message(
+//                rs.getLong("id"),
+//                rs.getTimestamp("data_create_message").toLocalDateTime(),
+//                rs.getString("content"),
+//                rs.getLong("chat_id"),
+//                rs.getLong("sender_user_id")
+//        ), id);
+//    }
+
+//    public void deleteMessage(long id) {
+//        jdbcTemplate.update(DELETE_BY_ID, id);
+//    }
 
 
     //методы для CSV файла

@@ -22,24 +22,24 @@ public class MessageCSVController {
     @Autowired
     MessageCSVMapper messageCSVMapper;
 
-    public void getAll() {
-        List<MessageCSVDto> messages = messageCSVListMapper.toDTOList(messageService.getAll());
-        messages.forEach(System.out::println);
-    }
-
-    public void getById(long id) {
-        System.out.println(messageCSVMapper.toDTO(messageService.getById(id)));
-    }
-
-    public void create(String name, String text) {
-        messageService.create(name, text);
-    }
-
-    public void delete(long id) {
-        messageService.delete(id);
-    }
-
-    public void update(long id, String text) {
-        messageService.update(id, text);
-    }
+//    public void getAll() {
+//        List<MessageCSVDto> messages = messageCSVListMapper.toDTOList(messageService.getAll());
+//        messages.forEach(System.out::println);
+//    }
+//
+//    public void getById(long id) {
+//        System.out.println(messageCSVMapper.toDTO(messageService.getById(id)));
+//    }
+//
+//    public void create(String name, String text) {
+//        messageService.create(name, text);
+//    }
+//
+//    public void delete(long id) {
+//        messageService.delete(id);
+//    }
+//
+//    public void update(long id, String text) {
+//        messageService.update(id, text);
+//    }
 }

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CreateMapperDto {
-    CreateMessageDto toDTO(Message message);
+//    CreateMessageDto toDTO(Message message);
 
-    Message toModel(CreateMessageDto createMessageDto);
+//    Message toModel(CreateMessageDto createMessageDto);
 }

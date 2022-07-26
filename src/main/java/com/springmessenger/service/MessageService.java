@@ -16,56 +16,61 @@ public class MessageService {
     private MessageRepository messageRepository;
 
 
-    public List<Message> getAllMessage() {
-        return messageRepository.getAllMessage();
-    }
-
-    public void createMessage(Message message) {
-        messageRepository.createMessage(message);
-    }
-
-    public void updateMessage (Message message){
-        messageRepository.updateMessage(message);
-    }
-
-    public Message getMessageById(long id) {
-        return messageRepository.getMessageById(id);
+    public void getAllMessage() {
+        System.out.println(messageRepository.findAll());
     }
 
 
-    public void deleteMessage (long id){
-        messageRepository.deleteMessage(id);
-    }
+//    public List<Message> getAllMessage() {
+//        return messageRepository.getAllMessage();
+//    }
+//
+//    public void createMessage(Message message) {
+//        messageRepository.createMessage(message);
+//    }
+//
+//    public void updateMessage (Message message){
+//        messageRepository.updateMessage(message);
+//    }
+//
+//    public Message getMessageById(long id) {
+//        return messageRepository.getMessageById(id);
+//    }
+//
+
+//    public void deleteMessage (long id){
+//        messageRepository.deleteMessage(id);
+//    }
 
     //Методы для CSV файла
 
-
-    public List<MessageCSV> getAll() {
-        return messageRepository.getAll();
-    }
-
-    public MessageCSV getById(long id) {
-        return messageRepository.getById(id);
-    }
-
-    public void create(String name, String text) {
-        List<MessageCSV> messageCSVS = messageRepository.getAll();
-        messageCSVS.add(new MessageCSV((messageCSVS.size() + 1), name, text));
-        messageRepository.saveToFile(messageCSVS);
-    }
-
-    public void delete(long id) {
-        List<MessageCSV> messageCSVS = messageRepository.getAll();
-        messageRepository.saveToFile(messageCSVS.stream().filter(mes -> mes.getId() != id).collect(Collectors.toList()));
-    }
-
-    public void update(long id, String text) {
-        List<MessageCSV> messageCSVS = messageRepository.getAll();
-        for (MessageCSV messageCSV : messageCSVS) {
-            if (messageCSV.getId() == id) {
-                messageCSV.setText(text);
-            }
-        }
-        messageRepository.saveToFile(messageCSVS);
-    }
+//
+//    public List<MessageCSV> getAll() {
+//        return messageRepository.getAll();
+//    }
+//
+//    public MessageCSV getById(long id) {
+//        return messageRepository.getById(id);
+//    }
+//
+//    public void create(String name, String text) {
+//        List<MessageCSV> messageCSVS = messageRepository.getAll();
+//        messageCSVS.add(new MessageCSV((messageCSVS.size() + 1), name, text));
+//        messageRepository.saveToFile(messageCSVS);
+//    }
+//
+//    public void delete(long id) {
+//        List<MessageCSV> messageCSVS = messageRepository.getAll();
+//        messageRepository.saveToFile(messageCSVS.stream().filter(mes -> mes.getId() != id).collect(Collectors.toList()));
+//    }
+//
+//    public void update(long id, String text) {
+//        List<MessageCSV> messageCSVS = messageRepository.getAll();
+//        for (MessageCSV messageCSV : messageCSVS) {
+//            if (messageCSV.getId() == id) {
+//                messageCSV.setText(text);
+//            }
+//        }
+//        messageRepository.saveToFile(messageCSVS);
+//    }
 }
