@@ -1,8 +1,5 @@
 package com.springmessenger.config;
 
-import com.springmessenger.entity.Chats;
-import com.springmessenger.entity.Message;
-import com.springmessenger.entity.Users;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -70,17 +67,8 @@ public class ApplicationConfig {
     public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-
+        sessionFactory.setPackagesToScan("com.springmessenger.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
-        sessionFactory.setAnnotatedClasses(Message.class);
-        sessionFactory.setAnnotatedClasses(Chats.class);
-//        sessionFactory.setAnnotatedClasses(Users.class);
-//        Properties props=new Properties();
-//        props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-//        props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-//
-//        factoryBean.setHibernateProperties(props);
-//        factoryBean.setAnnotatedClasses(User.class);
         return sessionFactory;
     }
 

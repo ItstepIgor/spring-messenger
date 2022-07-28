@@ -12,15 +12,15 @@ public class Users {
     @Column(nullable = false)
     private String name;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "chats_users", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "chat_id")},
-//            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "chat_id"})})
-//    List<Chats> chats;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "chats_users", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "chat_id")},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "chat_id"})})
+    List<Chat> chats;
 
     public Users(long id, String name) {
         this.id = id;
         this.name = name;
-//        chats = new ArrayList<>();
+        chats = new ArrayList<>();
     }
 
     public Users() {

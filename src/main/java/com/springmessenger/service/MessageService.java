@@ -1,13 +1,11 @@
 package com.springmessenger.service;
 
 import com.springmessenger.entity.Message;
-import com.springmessenger.entity.MessageCSV;
 import com.springmessenger.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
@@ -16,8 +14,8 @@ public class MessageService {
     private MessageRepository messageRepository;
 
 
-    public void getAllMessage() {
-        System.out.println(messageRepository.findAll());
+    public List<Message> getAllMessage() {
+        return messageRepository.findAll();
     }
 
 

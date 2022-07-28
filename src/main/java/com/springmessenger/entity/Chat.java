@@ -5,27 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Chats {
+@Table(name = "chats")
+public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false)
+    @Column(name = "chat_name", nullable = false)
     private String chatName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chats")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
     private List<Message> messages;
 
-//    @ManyToMany( fetch = FetchType.LAZY, mappedBy = "chats")
-//    private List<Users> users;
+    @ManyToMany( fetch = FetchType.LAZY, mappedBy = "chats")
+    private List<Users> users;
 
-    public Chats(long id, String chatName) {
+    public Chat(long id, String chatName) {
         this.id = id;
         this.chatName = chatName;
         messages = new ArrayList<>();
-//        users = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
-    public Chats() {
+    public Chat() {
     }
 
     public long getId() {
@@ -46,7 +47,7 @@ public class Chats {
 
     @Override
     public String toString() {
-        return "Chats{" +
+        return "Chat{" +
                 "id=" + id +
                 ", chatName='" + chatName + '\'' +
                 '}';

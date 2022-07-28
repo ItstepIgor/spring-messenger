@@ -9,21 +9,21 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false)
+    @Column(name = "data_create_message", nullable = false)
     private LocalDateTime dataCreateMessage;
     @Column(nullable = false)
     private String content;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id", nullable = false)
-    private Chats chats;
-    @Column(nullable = false)
+    private Chat chat;
+    @Column(name = "sender_user_id", nullable = false)
     private long senderUserId;
 
-    public Message(long id, LocalDateTime dataCreateMessage, String content, Chats chats, long senderUserId) {
+    public Message(long id, LocalDateTime dataCreateMessage, String content, Chat chat, long senderUserId) {
         this.id = id;
         this.dataCreateMessage = dataCreateMessage;
         this.content = content;
-//        this.chats = chats;
+        this.chat = chat;
         this.senderUserId = senderUserId;
     }
 
@@ -55,13 +55,13 @@ public class Message {
         this.content = content;
     }
 
-//    public Chats getChats() {
-//        return chats;
-//    }
-//
-//    public void setChatId(Chats chats) {
-//        this.chats = chats;
-//    }
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChatId(Chat chat) {
+        this.chat = chat;
+    }
 
     public long getSenderUserId() {
         return senderUserId;
@@ -77,7 +77,7 @@ public class Message {
                 "id=" + id +
                 ", dataCreateMessage=" + dataCreateMessage +
                 ", content='" + content + '\'' +
-//                ", chats=" + chats +
+                ", chat=" + chat +
                 ", senderUserId=" + senderUserId +
                 '}';
     }

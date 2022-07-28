@@ -1,18 +1,10 @@
 package com.springmessenger.repository;
 
-import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.springmessenger.entity.Message;
-import com.springmessenger.entity.MessageCSV;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 @Repository
@@ -50,6 +42,8 @@ public class MessageRepository {
         return messages;
     }
 
+
+//    методы для JDBC
 
 //    public List<Message> getAllMessage() {
 //        return jdbcTemplate.query(GET_ALL_MESSAGE, (rs, rowNum) -> new Message(

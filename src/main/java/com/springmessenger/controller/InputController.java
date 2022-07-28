@@ -1,6 +1,5 @@
 package com.springmessenger.controller;
 
-import com.springmessenger.dto.MessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -33,9 +32,6 @@ public class InputController {
         switch (select) {
             case 1 -> {
                 messageController.getAllMessage();
-
-
-//                messageCSVController.getAll();
                 System.out.println();
                 selectAction();
             }
