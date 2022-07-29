@@ -1,10 +1,12 @@
 package com.springmessenger.service;
 
+import com.springmessenger.dto.CreateMessageDto;
 import com.springmessenger.entity.Message;
 import com.springmessenger.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -13,62 +15,32 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Autowired
+    ChatService chatService;
 
     public List<Message> getAllMessage() {
         return messageRepository.findAll();
     }
 
+    public Message findById(long id) {
+        return messageRepository.findById(id);
+    }
 
-//    public List<Message> getAllMessage() {
-//        return messageRepository.getAllMessage();
-//    }
-//
-//    public void createMessage(Message message) {
-//        messageRepository.createMessage(message);
-//    }
-//
-//    public void updateMessage (Message message){
-//        messageRepository.updateMessage(message);
-//    }
-//
-//    public Message getMessageById(long id) {
-//        return messageRepository.getMessageById(id);
-//    }
-//
+    public void saveMessage(CreateMessageDto createMessageDto) {
+        Message message = Message.builder()
+                .setDataCreateMessage(LocalDateTime.now())
+                .setContent(createMessageDto.getContent())
+                .setChat(chatService.findById(createMessageDto.getChatId()))
+                .setSenderUserId(createMessageDto.getSenderUserId())
+                .build();
+        messageRepository.save(message);
+    }
 
-//    public void deleteMessage (long id){
-//        messageRepository.deleteMessage(id);
-//    }
+    public void updateMessage(Message message) {
+        messageRepository.update(message);
+    }
 
-    //Методы для CSV файла
-
-//
-//    public List<MessageCSV> getAll() {
-//        return messageRepository.getAll();
-//    }
-//
-//    public MessageCSV getById(long id) {
-//        return messageRepository.getById(id);
-//    }
-//
-//    public void create(String name, String text) {
-//        List<MessageCSV> messageCSVS = messageRepository.getAll();
-//        messageCSVS.add(new MessageCSV((messageCSVS.size() + 1), name, text));
-//        messageRepository.saveToFile(messageCSVS);
-//    }
-//
-//    public void delete(long id) {
-//        List<MessageCSV> messageCSVS = messageRepository.getAll();
-//        messageRepository.saveToFile(messageCSVS.stream().filter(mes -> mes.getId() != id).collect(Collectors.toList()));
-//    }
-//
-//    public void update(long id, String text) {
-//        List<MessageCSV> messageCSVS = messageRepository.getAll();
-//        for (MessageCSV messageCSV : messageCSVS) {
-//            if (messageCSV.getId() == id) {
-//                messageCSV.setText(text);
-//            }
-//        }
-//        messageRepository.saveToFile(messageCSVS);
-//    }
+    public void deleteMessage(long id) {
+        messageRepository.delete(messageRepository.findById(id));
+    }
 }

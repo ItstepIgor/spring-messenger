@@ -7,14 +7,24 @@ public class MessageDto {
     private long id;
     private LocalDateTime dataCreateMessage;
     private String content;
-    private long chatId;
+
+    private ChatDto chatDto;
+//    private long chatId;
     private long senderUserId;
 
-    public MessageDto(long id, LocalDateTime dataCreateMessage, String content, long chatId, long senderUserId) {
+//    public MessageDto(long id, LocalDateTime dataCreateMessage, String content, long chatId, long senderUserId) {
+//        this.id = id;
+//        this.dataCreateMessage = dataCreateMessage;
+//        this.content = content;
+//        this.chatId = chatId;
+//        this.senderUserId = senderUserId;
+//    }
+
+    public MessageDto(long id, LocalDateTime dataCreateMessage, String content, ChatDto chatDto, long senderUserId) {
         this.id = id;
         this.dataCreateMessage = dataCreateMessage;
         this.content = content;
-        this.chatId = chatId;
+        this.chatDto = chatDto;
         this.senderUserId = senderUserId;
     }
 
@@ -38,13 +48,22 @@ public class MessageDto {
         this.content = content;
     }
 
-    public long getChatId() {
-        return chatId;
+    public ChatDto getChatDto() {
+        return chatDto;
     }
 
-    public void setChatId(long chatId) {
-        this.chatId = chatId;
+    public void setChatDto(ChatDto chatDto) {
+        this.chatDto = chatDto;
     }
+
+//    public long getChatId() {
+//        return chatId;
+//    }
+//
+//    public void setChatId(long chatId) {
+//        this.chatId = chatId;
+//    }
+
 
     public long getSenderUserId() {
         return senderUserId;
@@ -60,7 +79,7 @@ public class MessageDto {
                 "id=" + id +
                 ", dataCreateMessage=" + dataCreateMessage +
                 ", content='" + content + '\'' +
-                ", chatId=" + chatId +
+                ", chatDto=" + chatDto +
                 ", senderUserId=" + senderUserId +
                 '}';
     }

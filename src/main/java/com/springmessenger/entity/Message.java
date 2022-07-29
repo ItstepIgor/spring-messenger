@@ -9,7 +9,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "data_create_message", nullable = false)
+    @Column(name = "data_create_message")
     private LocalDateTime dataCreateMessage;
     @Column(nullable = false)
     private String content;
@@ -19,13 +19,13 @@ public class Message {
     @Column(name = "sender_user_id", nullable = false)
     private long senderUserId;
 
-    public Message(long id, LocalDateTime dataCreateMessage, String content, Chat chat, long senderUserId) {
-        this.id = id;
-        this.dataCreateMessage = dataCreateMessage;
-        this.content = content;
-        this.chat = chat;
-        this.senderUserId = senderUserId;
-    }
+//    public Message(long id, LocalDateTime dataCreateMessage, String content, Chat chat, long senderUserId) {
+//        this.id = id;
+//        this.dataCreateMessage = dataCreateMessage;
+//        this.content = content;
+//        this.chat = chat;
+//        this.senderUserId = senderUserId;
+//    }
 
     public Message() {
 
@@ -35,40 +35,20 @@ public class Message {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public LocalDateTime getDataCreateMessage() {
         return dataCreateMessage;
-    }
-
-    public void setDataCreateMessage(LocalDateTime dataCreateMessage) {
-        this.dataCreateMessage = dataCreateMessage;
     }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public Chat getChat() {
         return chat;
     }
 
-    public void setChatId(Chat chat) {
-        this.chat = chat;
-    }
-
     public long getSenderUserId() {
         return senderUserId;
-    }
-
-    public void setSenderUserId(long senderUserId) {
-        this.senderUserId = senderUserId;
     }
 
     @Override
@@ -81,4 +61,42 @@ public class Message {
                 ", senderUserId=" + senderUserId +
                 '}';
     }
+
+    public static Builder builder() {
+        return new Message().new Builder();
+    }
+
+    public class Builder {
+
+        public Builder setId(long id) {
+            Message.this.id = id;
+            return this;
+        }
+
+        public Builder setDataCreateMessage(LocalDateTime dataCreateMessage) {
+            Message.this.dataCreateMessage = dataCreateMessage;
+            return this;
+        }
+
+        public Builder setContent(String content) {
+            Message.this.content = content;
+            return this;
+        }
+
+        public Builder setChat(Chat chat) {
+            Message.this.chat = chat;
+            return this;
+        }
+
+        public Builder setSenderUserId(long senderUserId) {
+            Message.this.senderUserId = senderUserId;
+            return this;
+        }
+
+        public Message build() {
+            return Message.this;
+        }
+
+    }
+
 }

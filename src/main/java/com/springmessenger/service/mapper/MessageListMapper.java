@@ -10,5 +10,5 @@ import java.util.List;
 public interface MessageListMapper {
     List<MessageDto> toDTOList(List<Message> messageList);
 
-//    List<Message> toModelList(List<MessageDto> messageDtoList);
+    List<Message> toModelList(List<MessageDto> messageDtoList);
 }
