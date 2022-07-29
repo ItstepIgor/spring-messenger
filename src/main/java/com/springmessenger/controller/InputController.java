@@ -62,7 +62,6 @@ public class InputController {
                 messageController.getAllMessage();
                 long id = scanner.nextInt();
                 messageController.getMessageById(id);
-//                messageCSVController.getById(id);
                 selectAction();
             }
             case 5 -> {
