@@ -23,7 +23,7 @@ public class MainAspect {
     public void selectAllMethod() {
     }
 
-    @Pointcut("execution(* com.springmessenger.service.MessageService.getById(*))")
+    @Pointcut("execution(* com.springmessenger.service.MessageService.findById(*))")
     public void getByIdServiceMethod() {
     }
 
