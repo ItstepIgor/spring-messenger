@@ -16,7 +16,7 @@ public class OutputController {
 
 
     private Locale locale;
-
+    //todo поменять на конструкторы
     @Autowired
     private Scanner scanner;
 
@@ -44,10 +44,11 @@ public class OutputController {
 
 
     public void showMessage(String stringLocale, String addText, String logText) {
-        printStream.println(addText + "" + messageSource.getMessage(stringLocale, null, locale) + " " + logText);
+        System.out.println(addText + "" + messageSource.getMessage(stringLocale, null, locale) + " " + logText);
     }
+    //todo - добавить в build.gradle utf-8  и в тругие файлы и заменить System.out. где можно
 
-    public void showCache (){
+    public void showCache() {
         System.out.println(messageCacheMap.getCacheMap());
     }
 }

@@ -3,6 +3,7 @@ package com.springmessenger.repository;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.springmessenger.entity.Message;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
 import java.io.Reader;
@@ -15,26 +16,27 @@ import java.util.List;
 public class MessageRepository {
 
 
-    private final Path path = Path.of("src", "main", "resources", "messages.csv");
+    //todo посмотреть нужно ли делать в других коммитах переменные и убирать вложенный try
+    private static final String MESSAGES_FILE_NAME = "messages.csv";
+    private static final Path PATH = Path.of(new ClassPathResource(MESSAGES_FILE_NAME).getPath());
+
+//    private final Path path = Path.of("src", "main", "resources", "messages.csv");
 
     public void saveToFile(List<Message> messages) {
-        try {
-            try (Writer writer = Files.newBufferedWriter(path)) {
-                var beanToCsv = new StatefulBeanToCsvBuilder<Message>(writer).build();
-                beanToCsv.write(messages);
-            }
+        try (Writer writer = Files.newBufferedWriter(PATH)) {
+            var beanToCsv = new StatefulBeanToCsvBuilder<Message>(writer).build();
+            beanToCsv.write(messages);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
 
     public List<Message> getAll() {
         List<Message> messages;
-        try {
-            try (Reader reader = Files.newBufferedReader(path)) {
-                messages = new CsvToBeanBuilder<Message>(reader).withType(Message.class).build().parse();
-            }
+        try (Reader reader = Files.newBufferedReader(PATH)) {
+            messages = new CsvToBeanBuilder<Message>(reader).withType(Message.class).build().parse();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

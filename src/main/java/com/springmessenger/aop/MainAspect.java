@@ -4,7 +4,6 @@ import com.springmessenger.cache.MessageCacheMap;
 import com.springmessenger.controller.OutputController;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,12 +30,14 @@ public class MainAspect {
     public void beforeShowMethodName(JoinPoint joinPoint) {
         outputController.showMessage("called.method.name", "", joinPoint.getSignature().getName());
 
+        //todo заменили if на обратный
         Object[] parameters = joinPoint.getArgs();
-        if (parameters.length > 0) {
-            for (Object parameter : parameters) {
-                outputController.showMessage("parameter", "", parameter.toString());
-                System.out.println("------------------");
-            }
+        if (parameters.length == 0) {
+            return;
+        }
+        for (Object parameter : parameters) {
+            outputController.showMessage("parameter", "", parameter.toString());
+            System.out.println("------------------");
         }
     }
 
