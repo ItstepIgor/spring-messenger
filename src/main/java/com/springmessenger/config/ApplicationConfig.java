@@ -1,5 +1,6 @@
 package com.springmessenger.config;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -24,7 +25,6 @@ import java.util.Scanner;
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 public class ApplicationConfig {
-
 
 
     @Bean
@@ -64,11 +64,12 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
+    @DependsOn("liquibase")
+    public LocalSessionFactoryBean sessionFactory(DataSource dataSource, Properties hibernateProperties) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setPackagesToScan("com.springmessenger.entity");
-        sessionFactory.setHibernateProperties(hibernateProperties());
+        sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;
     }
 
@@ -80,14 +81,23 @@ public class ApplicationConfig {
         return transactionManager;
     }
 
-    private final Properties hibernateProperties() {
+
+    @Bean
+    public SpringLiquibase liquibase(DataSource dataSource) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:db/changelog/db.changelog-master.yaml");
+        liquibase.setDataSource(dataSource);
+        return liquibase;
+    }
+
+    @Bean
+    public Properties hibernateProperties(@Value("${hibernate.show_sql}") String showSql,
+                                          @Value("${hibernate.dialect}") String dialect,
+                                          @Value("${hibernate.hbm2ddl.auto}") String ddlAuto) {
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty(
-                "hibernate.show_sql", "true");
-        hibernateProperties.setProperty(
-                "hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
-        hibernateProperties.setProperty(
-                "hibernate.ddl-auto", "validate");
+        hibernateProperties.setProperty("hibernate.show_sql", showSql);
+        hibernateProperties.setProperty("hibernate.dialect", dialect);
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", ddlAuto);
 
         return hibernateProperties;
     }
