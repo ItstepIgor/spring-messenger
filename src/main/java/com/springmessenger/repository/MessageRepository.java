@@ -6,6 +6,7 @@ import com.springmessenger.entity.Message;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -18,7 +19,15 @@ public class MessageRepository {
 
     //todo посмотреть нужно ли делать в других коммитах переменные и убирать вложенный try
     private static final String MESSAGES_FILE_NAME = "messages.csv";
-    private static final Path PATH = Path.of(new ClassPathResource(MESSAGES_FILE_NAME).getPath());
+    private static final Path PATH;
+
+    static {
+        try {
+            PATH = new ClassPathResource(MESSAGES_FILE_NAME).getFile().toPath();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 //    private final Path path = Path.of("src", "main", "resources", "messages.csv");
 
