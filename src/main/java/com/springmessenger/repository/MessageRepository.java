@@ -59,6 +59,7 @@ public class MessageRepository {
         Message message =  session.get(Message.class, id);
 //        session.close();
         //todo что бы работало закрытие сесии нужно ставить FetchType.EAGER в Message
+
         return message;
     }
 }
