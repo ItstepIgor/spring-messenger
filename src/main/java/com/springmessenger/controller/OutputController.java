@@ -2,12 +2,10 @@ package com.springmessenger.controller;
 
 
 import com.springmessenger.cache.MessageCacheMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
-import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -17,17 +15,17 @@ public class OutputController {
 
     private Locale locale;
 
-    @Autowired
-    private Scanner scanner;
+    private final Scanner scanner;
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
-    @Autowired
-    private PrintStream printStream;
+    private final MessageCacheMap messageCacheMap;
 
-    @Autowired
-    private MessageCacheMap messageCacheMap;
+    public OutputController(Scanner scanner, MessageSource messageSource, MessageCacheMap messageCacheMap) {
+        this.scanner = scanner;
+        this.messageSource = messageSource;
+        this.messageCacheMap = messageCacheMap;
+    }
 
     @PostConstruct
     private void init() {
@@ -44,7 +42,7 @@ public class OutputController {
 
 
     public void showMessage(String stringLocale, String addText, String logText) {
-        printStream.println(addText + "" + messageSource.getMessage(stringLocale, null, locale) + " " + logText);
+        System.out.println(addText + "" + messageSource.getMessage(stringLocale, null, locale) + " " + logText);
     }
 
     public void showCache (){

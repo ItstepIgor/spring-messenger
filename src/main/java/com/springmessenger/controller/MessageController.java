@@ -5,7 +5,6 @@ import com.springmessenger.dto.CreateMessageDto;
 import com.springmessenger.dto.MessageDto;
 import com.springmessenger.service.MessageService;
 import com.springmessenger.service.mapper.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -14,14 +13,19 @@ import java.util.List;
 public class MessageController {
 
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
-    @Autowired
+    final
     MessageListMapper messageListMapper;
 
-    @Autowired
+    final
     MessageMapper messageMapper;
+
+    public MessageController(MessageService messageService, MessageListMapper messageListMapper, MessageMapper messageMapper) {
+        this.messageService = messageService;
+        this.messageListMapper = messageListMapper;
+        this.messageMapper = messageMapper;
+    }
 
     public void getAllMessage() {
         List<MessageDto> messages = messageListMapper.toDTOList(messageService.getAllMessage());

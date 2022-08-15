@@ -4,7 +4,6 @@ import com.springmessenger.entity.Message;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,8 +14,11 @@ import java.util.List;
 @Repository
 public class MessageRepository {
 
-    @Autowired
-    public SessionFactory sessionFactory;
+    public final SessionFactory sessionFactory;
+
+    public MessageRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     //запрос с использованием Criteria API
     public List<Message> findAll() {
@@ -53,6 +55,10 @@ public class MessageRepository {
     }
 
     public Message findById(long id) {
-        return sessionFactory.openSession().get(Message.class, id);
+        Session session = sessionFactory.openSession();
+        Message message =  session.get(Message.class, id);
+//        session.close();
+        //todo что бы работало закрытие сесии нужно ставить FetchType.EAGER в Message
+        return message;
     }
 }

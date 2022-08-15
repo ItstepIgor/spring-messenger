@@ -1,26 +1,27 @@
 package com.springmessenger.controller;
 
-import com.springmessenger.dto.MessageCSVDto;
 import com.springmessenger.service.MessageService;
 import com.springmessenger.service.mapper.MessageCSVListMapper;
 import com.springmessenger.service.mapper.MessageCSVMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import java.util.List;
 
 @Controller
 public class MessageCSVController {
 
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
-    @Autowired
+    final
     MessageCSVListMapper messageCSVListMapper;
 
-    @Autowired
+    final
     MessageCSVMapper messageCSVMapper;
+
+    public MessageCSVController(MessageService messageService, MessageCSVListMapper messageCSVListMapper, MessageCSVMapper messageCSVMapper) {
+        this.messageService = messageService;
+        this.messageCSVListMapper = messageCSVListMapper;
+        this.messageCSVMapper = messageCSVMapper;
+    }
 
 //    public void getAll() {
 //        List<MessageCSVDto> messages = messageCSVListMapper.toDTOList(messageService.getAll());

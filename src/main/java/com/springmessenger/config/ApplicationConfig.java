@@ -14,8 +14,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -38,11 +36,6 @@ public class ApplicationConfig {
         messageSource.setBasename("translation");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
-    }
-
-    @Bean
-    public PrintStream printStream() {
-        return new PrintStream(System.out, true, StandardCharsets.UTF_8);
     }
 
     @Bean

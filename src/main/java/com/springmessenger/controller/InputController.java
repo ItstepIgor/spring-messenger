@@ -1,7 +1,6 @@
 package com.springmessenger.controller;
 
 import com.springmessenger.dto.MessageDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.Scanner;
@@ -9,13 +8,16 @@ import java.util.Scanner;
 @Controller
 public class InputController {
 
-    @Autowired
-    private MessageController messageController;
+    private final MessageController messageController;
 
-    @Autowired
-    private Scanner scanner;
-    @Autowired
-    private OutputController outputController;
+    private final Scanner scanner;
+    private final OutputController outputController;
+
+    public InputController(MessageController messageController, Scanner scanner, OutputController outputController) {
+        this.messageController = messageController;
+        this.scanner = scanner;
+        this.outputController = outputController;
+    }
 
     public void selectAction() {
         outputController.showMessage("select.action", "", "");

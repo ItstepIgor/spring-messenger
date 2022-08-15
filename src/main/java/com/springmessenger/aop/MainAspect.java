@@ -6,18 +6,20 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
 public class MainAspect {
 
-    @Autowired
-    private OutputController outputController;
+    private final OutputController outputController;
 
-    @Autowired
-    private MessageCacheMap messageCacheMap;
+    private final MessageCacheMap messageCacheMap;
+
+    public MainAspect(OutputController outputController, MessageCacheMap messageCacheMap) {
+        this.outputController = outputController;
+        this.messageCacheMap = messageCacheMap;
+    }
 
     @Pointcut("execution(* com.springmessenger.repository.MessageRepository.*(..))")
     public void selectAllMethod() {
@@ -32,11 +34,12 @@ public class MainAspect {
         outputController.showMessage("called.method.name", "", joinPoint.getSignature().getName());
 
         Object[] parameters = joinPoint.getArgs();
-        if (parameters.length > 0) {
-            for (Object parameter : parameters) {
-                outputController.showMessage("parameter", "", parameter.toString());
-                System.out.println("------------------");
-            }
+        if (parameters.length == 0) {
+            return;
+        }
+        for (Object parameter : parameters) {
+            outputController.showMessage("parameter", "", parameter.toString());
+            System.out.println("------------------");
         }
     }
 
