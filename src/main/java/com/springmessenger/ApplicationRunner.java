@@ -1,16 +1,23 @@
 package com.springmessenger;
 
-import com.springmessenger.config.ApplicationConfig;
 import com.springmessenger.controller.InputController;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
+@SpringBootApplication
 public class ApplicationRunner {
+    public final InputController inputController;
+
+    public ApplicationRunner(InputController inputController) {
+        this.inputController = inputController;
+    }
 
     public static void main(String[] args) {
-        try (var context = new AnnotationConfigApplicationContext(ApplicationConfig.class)) {
-            InputController inputController = context.getBean("inputController", InputController.class);
-            inputController.selectAction();
-        }
+        SpringApplication.run(ApplicationRunner.class, args);
+
+//        try (var context = new AnnotationConfigApplicationContext(ApplicationConfig.class)) {
+//            InputController inputController = context.getBean("inputController", InputController.class);
+//            inputController.selectAction();
+//        }
     }
 }

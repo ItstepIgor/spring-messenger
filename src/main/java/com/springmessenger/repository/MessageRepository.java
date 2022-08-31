@@ -56,9 +56,9 @@ public class MessageRepository {
 
     public Message findById(long id) {
         Session session = sessionFactory.openSession();
-        Message message =  session.get(Message.class, id);
-//        session.close();
+        Message message = session.get(Message.class, id);
         //todo что бы работало закрытие сесии нужно ставить FetchType.EAGER в Message
+//        session.close();
 
         return message;
     }
