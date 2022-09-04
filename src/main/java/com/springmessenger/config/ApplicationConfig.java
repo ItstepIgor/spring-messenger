@@ -33,7 +33,7 @@ public class ApplicationConfig {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("translation");
+        messageSource.setBasename("classpath:translation");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }

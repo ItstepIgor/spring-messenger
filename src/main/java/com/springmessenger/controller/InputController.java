@@ -78,6 +78,7 @@ public class InputController {
                 outputController.showCache();
                 selectAction();
             }
+            default -> System.exit(0);
         }
     }
 }
