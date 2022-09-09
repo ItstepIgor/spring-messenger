@@ -4,12 +4,14 @@ package com.springmessenger.controller;
 import com.springmessenger.dto.CreateMessageDto;
 import com.springmessenger.dto.MessageDto;
 import com.springmessenger.service.MessageService;
-import com.springmessenger.service.mapper.*;
-import org.springframework.stereotype.Controller;
+import com.springmessenger.service.mapper.MessageListMapper;
+import com.springmessenger.service.mapper.MessageMapper;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/messages")
 public class MessageController {
 
 
@@ -27,26 +29,29 @@ public class MessageController {
         this.messageMapper = messageMapper;
     }
 
+    @GetMapping
     public void getAllMessage() {
         List<MessageDto> messages = messageListMapper.toDTOList(messageService.getAllMessage());
         messages.forEach(System.out::println);
     }
 
-    public MessageDto getMessageById(long id) {
+    @GetMapping("/{id}")
+    public MessageDto getMessageById(@PathVariable("id") long id) {
         return messageMapper.toDTO(messageService.findById(id));
     }
 
-    public void saveMessage() {
-        CreateMessageDto createMessageDto = new CreateMessageDto("new message", 2, 3);
+    @PostMapping
+    public void saveMessage(@RequestBody CreateMessageDto createMessageDto) {
         messageService.saveMessage(createMessageDto);
     }
 
-    public void updateMessage(MessageDto messageDto) {
+    @PutMapping
+    public void updateMessage(@RequestBody MessageDto messageDto) {
         messageService.updateMessage(messageMapper.toModel(messageDto));
     }
 
-    public void deleteMessage(long id) {
+    @DeleteMapping("/{id}")
+    public void deleteMessage(@PathVariable("id") long id) {
         messageService.deleteMessage(id);
     }
-
 }

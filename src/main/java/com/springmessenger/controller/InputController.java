@@ -37,7 +37,7 @@ public class InputController {
             }
             case 2 -> {
 
-                messageController.saveMessage();
+//                messageController.saveMessage();
 
 //                outputController.showMessage("enter.name", "", "");
 //                String name = scanner.next();
