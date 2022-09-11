@@ -30,9 +30,9 @@ public class MessageController {
     }
 
     @GetMapping
-    public void getAllMessage() {
-        List<MessageDto> messages = messageListMapper.toDTOList(messageService.getAllMessage());
-        messages.forEach(System.out::println);
+    public List<MessageDto> getAllMessage() {
+        return messageListMapper.toDTOList(messageService.getAllMessage());
+//        messages.forEach(System.out::println);
     }
 
     @GetMapping("/{id}")
