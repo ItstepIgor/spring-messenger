@@ -2,6 +2,7 @@ package com.springmessenger.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "messages")
@@ -29,6 +30,31 @@ public class Message {
 
     public Message() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message = (Message) o;
+
+        if (id != message.id) return false;
+        if (senderUserId != message.senderUserId) return false;
+        if (!Objects.equals(dataCreateMessage, message.dataCreateMessage))
+            return false;
+        if (!Objects.equals(content, message.content)) return false;
+        return Objects.equals(chat, message.chat);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (dataCreateMessage != null ? dataCreateMessage.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (chat != null ? chat.hashCode() : 0);
+        result = 31 * result + (int) (senderUserId ^ (senderUserId >>> 32));
+        return result;
     }
 
     public long getId() {
@@ -61,6 +87,7 @@ public class Message {
                 ", senderUserId=" + senderUserId +
                 '}';
     }
+
 
     public static Builder builder() {
         return new Message().new Builder();

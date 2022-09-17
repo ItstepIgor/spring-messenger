@@ -13,8 +13,7 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
 
-    final
-    ChatService chatService;
+    private final ChatService chatService;
 
     public MessageService(MessageRepository messageRepository, ChatService chatService) {
         this.messageRepository = messageRepository;
