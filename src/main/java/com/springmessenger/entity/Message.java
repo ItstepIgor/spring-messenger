@@ -36,25 +36,13 @@ public class Message {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Message message = (Message) o;
-
-        if (id != message.id) return false;
-        if (senderUserId != message.senderUserId) return false;
-        if (!Objects.equals(dataCreateMessage, message.dataCreateMessage))
-            return false;
-        if (!Objects.equals(content, message.content)) return false;
-        return Objects.equals(chat, message.chat);
+        return id == message.id && senderUserId == message.senderUserId && Objects.equals(dataCreateMessage, message.dataCreateMessage) && Objects.equals(content, message.content);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (dataCreateMessage != null ? dataCreateMessage.hashCode() : 0);
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (chat != null ? chat.hashCode() : 0);
-        result = 31 * result + (int) (senderUserId ^ (senderUserId >>> 32));
-        return result;
+        return Objects.hash(id, dataCreateMessage, content, senderUserId);
     }
 
     public long getId() {

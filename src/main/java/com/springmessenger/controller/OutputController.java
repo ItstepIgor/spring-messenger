@@ -5,7 +5,6 @@ import com.springmessenger.cache.MessageCacheMap;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
-import javax.annotation.PostConstruct;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -27,25 +26,25 @@ public class OutputController {
         this.messageCacheMap = messageCacheMap;
     }
 
-    @PostConstruct
-    private void init() {
-        System.out.println("""
-                1 - English
-                2 - Русский
-                """);
-        int selectLanguage = scanner.nextInt();
-        switch (selectLanguage) {
-            case 1 -> locale = new Locale("en", "EN");
-            case 2 -> locale = new Locale("ru", "RU");
-        }
-    }
+//    @PostConstruct
+//    private void init() {
+//        System.out.println("""
+//                1 - English
+//                2 - Русский
+//                """);
+//        int selectLanguage = scanner.nextInt();
+//        switch (selectLanguage) {
+//            case 1 -> locale = new Locale("en", "EN");
+//            case 2 -> locale = new Locale("ru", "RU");
+//        }
+//    }
 
 
     public void showMessage(String stringLocale, String addText, String logText) {
         System.out.println(addText + "" + messageSource.getMessage(stringLocale, null, locale) + " " + logText);
     }
 
-    public void showCache (){
+    public void showCache() {
         System.out.println(messageCacheMap.getCacheMap());
     }
 }
