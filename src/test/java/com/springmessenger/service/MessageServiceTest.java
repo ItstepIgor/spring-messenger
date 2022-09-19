@@ -1,5 +1,6 @@
 package com.springmessenger.service;
 
+import com.springmessenger.dto.CreateMessageDto;
 import com.springmessenger.entity.Message;
 import com.springmessenger.repository.MessageRepository;
 import org.junit.jupiter.api.Assertions;
@@ -11,18 +12,21 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(MockitoExtension.class)
 class MessageServiceTest {
 
     private static final Long MESSAGE_ID = 1L;
     @Mock
     private MessageRepository messageRepository;
-    @Mock
-    private ChatService chatService;
     @InjectMocks
     private MessageService messageService;
 
     Message message = Message.builder().setId(MESSAGE_ID).build();
+    Message message2 = Message.builder().setId(2).build();
 
     @Test
     void findById() {
@@ -43,23 +47,39 @@ class MessageServiceTest {
 
     @Test
     void deleteMessage() {
-        Mockito.doReturn(true).when(messageRepository.delete(message));
-//        Mockito.when(messageRepository.delete(message))
-//                .thenReturn(true)
-//                .thenReturn(false);
+        Mockito.doNothing().when(messageRepository).delete(message);
+        Mockito.when(messageRepository.findById(MESSAGE_ID)).thenReturn(message);
+        messageService.deleteMessage(MESSAGE_ID);
+        ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
+        Mockito.verify(messageRepository).delete(argumentCaptor.capture());
+        Assertions.assertEquals(message, argumentCaptor.getValue());
+    }
+
+
+    @Test
+    void updateMessage() {
+        Mockito.doNothing().when(messageRepository).update(message);
+        messageService.updateMessage(message);
+        ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
+        Mockito.verify(messageRepository).update(argumentCaptor.capture());
+        Assertions.assertEquals(message, argumentCaptor.getValue());
+    }
+
+
+    @Test
+    void saveMessage() {
+        Mockito.doNothing().when(messageRepository).save(any());
+        CreateMessageDto createMessageDto = new CreateMessageDto("new message test", 2, 3);
+        messageService.saveMessage(createMessageDto);
     }
 
     @Test
     void getAllMessage() {
-    }
+        Mockito.when(messageRepository.findAll()).thenReturn(List.of(message, message2));
 
-    @Test
-    void saveMessage() {
-    }
+        List<Message> messages = messageService.getAllMessage();
 
-    @Test
-    void updateMessage() {
+        Assertions.assertEquals(2, messages.size());
     }
-
 
 }
