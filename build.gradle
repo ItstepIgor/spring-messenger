@@ -4,6 +4,8 @@ plugins {
     id 'java'
 }
 
+apply from: 'version.gradle'
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -15,12 +17,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
-    implementation 'org.aspectj:aspectjweaver:1.9.7'
+    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
+    implementation "org.aspectj:aspectjweaver:${versions.aspectjweaver}"
     implementation 'org.postgresql:postgresql'
-    implementation 'org.liquibase:liquibase-core:4.14.0'
+    implementation "org.liquibase:liquibase-core:${versions.liquibase}"
 
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
