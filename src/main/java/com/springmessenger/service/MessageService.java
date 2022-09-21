@@ -5,12 +5,13 @@ import com.springmessenger.entity.Message;
 import com.springmessenger.repository.MessageRepository;
 import com.springmessenger.repository.MessagesRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class MessageService {
 
     private final MessageRepository messageRepository;
@@ -47,6 +48,7 @@ public class MessageService {
 //        messageRepository.save(message);
     }
 
+    @Transactional
     public void updateMessage(Message message) {
 //        messageRepository.update(message);
         messagesRepository.save(message);
