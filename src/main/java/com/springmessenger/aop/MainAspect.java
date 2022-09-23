@@ -4,7 +4,6 @@ import com.springmessenger.cache.MessageCacheMap;
 import com.springmessenger.controller.OutputController;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +20,8 @@ public class MainAspect {
         this.messageCacheMap = messageCacheMap;
     }
 
-    @Pointcut("execution(* com.springmessenger.repository.MessageRepository.*(..))")
+    //todo pointcut не показывает метод findAll() в Repository выяснить почему
+    @Pointcut("execution(* com.springmessenger.repository.*Repository.*(..))")
     public void selectAllMethod() {
     }
 

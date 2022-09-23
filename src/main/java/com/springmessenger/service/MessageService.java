@@ -33,7 +33,7 @@ public class MessageService {
 
     public Message findById(long id) {
 //        return messageRepository.findById(id);
-        return messagesRepository.getById(id);
+        return messagesRepository.findById(id).orElse(null);
     }
 
     @Transactional

@@ -21,6 +21,7 @@ dependencies {
     implementation "org.aspectj:aspectjweaver:${versions.aspectjweaver}"
     implementation 'org.postgresql:postgresql'
     implementation "org.liquibase:liquibase-core:${versions.liquibase}"
+    testImplementation 'junit:junit:4.13.1'
 
     annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
 

@@ -1,6 +1,8 @@
 package com.springmessenger.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Scanner;
@@ -18,13 +20,13 @@ public class ApplicationConfig {
         return new Scanner(System.in).useDelimiter("\n");
     }
 
-//    @Bean
-//    public MessageSource messageSource() {
-//        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-//        messageSource.setBasename("classpath:translation");
-//        messageSource.setDefaultEncoding("UTF-8");
-//        return messageSource;
-//    }
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:translation");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
 
 //    @Bean
 //    public DataSource dataSource(@Value("${jdbc.driver.class.name}") String driverClassName,
