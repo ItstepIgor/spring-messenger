@@ -22,6 +22,7 @@ public class MainAspect {
 
     //todo pointcut не показывает метод findAll() в Repository выяснить почему
     @Pointcut("execution(* com.springmessenger.repository.*Repository.*(..))")
+//    @Pointcut("execution(* com.springmessenger.repository.MessageRepository.*(..))")
     public void selectAllMethod() {
     }
 

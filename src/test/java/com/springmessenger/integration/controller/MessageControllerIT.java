@@ -45,11 +45,14 @@ class MessageControllerIT {
     @Test
     public void getAllMessage() throws Exception {
         Message message = Message.builder()
-                .setId(1L)
-                .setDataCreateMessage(LocalDateTime.parse("2022-06-15T13:05:42.489841"))
-                .setContent("eeeeeeeettttt")
-                .setChat(new Chat(1, "Ivan-Semen"))
-                .setSenderUserId(1)
+                .id(1L)
+                .dataCreateMessage(LocalDateTime.parse("2022-06-15T13:05:42.489841"))
+                .content("eeeeeeeettttt")
+                .chat(Chat.builder()
+                        .id(1)
+                        .chatName("Ivan-Semen")
+                        .build())
+                .senderUserId(1)
                 .build();
 
         List<Message> allMessage = Arrays.asList(message);
@@ -62,4 +65,6 @@ class MessageControllerIT {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].content", is(message.getContent())));
     }
+
+
 }

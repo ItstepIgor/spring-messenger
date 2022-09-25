@@ -23,15 +23,17 @@ public class MessageServiceIT {
     void findById() {
 
         Message actualResult = messageService.findById(MESSAGE_ID);
-        Message message = Message.builder()
-                .setId(MESSAGE_ID)
-                .setDataCreateMessage(LocalDateTime.parse("2022-06-15T13:05:42.489841"))
-                .setContent("eeeeeeeettttt")
-                .setChat(new Chat(1, "Ivan-Semen"))
-                .setSenderUserId(1)
-                .build();
 
-        Message expectedResult = message;
+        Message expectedResult = Message.builder()
+                .id(MESSAGE_ID)
+                .dataCreateMessage(LocalDateTime.parse("2022-06-15T13:05:42.489841"))
+                .content("eeeeeeeettttt")
+                .chat(Chat.builder()
+                        .id(1)
+                        .chatName("Ivan-Semen")
+                        .build())
+                .senderUserId(1)
+                .build();
 
         //todo что можно сравнивать и на что проверить  тест при запросе к базе данных по id
         //todo в данном случае пришлось исключить из сравнения Chat

@@ -1,9 +1,15 @@
 package com.springmessenger.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
+@Data
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = {"chat"})
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -20,98 +26,43 @@ public class Message {
     @Column(name = "sender_user_id", nullable = false)
     private long senderUserId;
 
-//    public Message(long id, LocalDateTime dataCreateMessage, String content, Chat chat, long senderUserId) {
-//        this.id = id;
-//        this.dataCreateMessage = dataCreateMessage;
-//        this.content = content;
-//        this.chat = chat;
-//        this.senderUserId = senderUserId;
+//todo компактный билдер
+
+//    public static Builder builder() {
+//        return new Message().new Builder();
 //    }
-
-    public Message() {
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Message message = (Message) o;
-        return id == message.id && senderUserId == message.senderUserId && Objects.equals(dataCreateMessage, message.dataCreateMessage) && Objects.equals(content, message.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, dataCreateMessage, content, senderUserId);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public LocalDateTime getDataCreateMessage() {
-        return dataCreateMessage;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Chat getChat() {
-        return chat;
-    }
-
-    public long getSenderUserId() {
-        return senderUserId;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", dataCreateMessage=" + dataCreateMessage +
-                ", content='" + content + '\'' +
-                ", chat=" + chat +
-                ", senderUserId=" + senderUserId +
-                '}';
-    }
-
-
-    public static Builder builder() {
-        return new Message().new Builder();
-    }
-
-    public class Builder {
-
-        public Builder setId(long id) {
-            Message.this.id = id;
-            return this;
-        }
-
-        public Builder setDataCreateMessage(LocalDateTime dataCreateMessage) {
-            Message.this.dataCreateMessage = dataCreateMessage;
-            return this;
-        }
-
-        public Builder setContent(String content) {
-            Message.this.content = content;
-            return this;
-        }
-
-        public Builder setChat(Chat chat) {
-            Message.this.chat = chat;
-            return this;
-        }
-
-        public Builder setSenderUserId(long senderUserId) {
-            Message.this.senderUserId = senderUserId;
-            return this;
-        }
-
-        public Message build() {
-            return Message.this;
-        }
-
-    }
+//
+//    public class Builder {
+//
+//        public Builder setId(long id) {
+//            Message.this.id = id;
+//            return this;
+//        }
+//
+//        public Builder setDataCreateMessage(LocalDateTime dataCreateMessage) {
+//            Message.this.dataCreateMessage = dataCreateMessage;
+//            return this;
+//        }
+//
+//        public Builder setContent(String content) {
+//            Message.this.content = content;
+//            return this;
+//        }
+//
+//        public Builder setChat(Chat chat) {
+//            Message.this.chat = chat;
+//            return this;
+//        }
+//
+//        public Builder setSenderUserId(long senderUserId) {
+//            Message.this.senderUserId = senderUserId;
+//            return this;
+//        }
+//
+//        public Message build() {
+//            return Message.this;
+//        }
+//
+//    }
 
 }

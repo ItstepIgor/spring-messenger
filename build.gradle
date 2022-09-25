@@ -17,14 +17,22 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
     implementation "org.aspectj:aspectjweaver:${versions.aspectjweaver}"
     implementation 'org.postgresql:postgresql'
     implementation "org.liquibase:liquibase-core:${versions.liquibase}"
-    testImplementation 'junit:junit:4.13.1'
 
+    implementation "org.projectlombok:lombok-mapstruct-binding:${versions.lmbinding}"
+    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
+
+    compileOnly "org.projectlombok:lombok:${versions.lombok}"
+    annotationProcessor "org.projectlombok:lombok:${versions.lombok}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${versions.lmbinding}"
 
+    testCompileOnly "org.projectlombok:lombok:${versions.lombok}"
+    testAnnotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+
+    testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
