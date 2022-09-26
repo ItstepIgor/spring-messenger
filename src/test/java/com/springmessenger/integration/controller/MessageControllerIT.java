@@ -1,6 +1,7 @@
 package com.springmessenger.integration.controller;
 
 import com.springmessenger.ApplicationRunner;
+import com.springmessenger.dto.CreateMessageDto;
 import com.springmessenger.entity.Chat;
 import com.springmessenger.entity.Message;
 import com.springmessenger.service.MessageService;
@@ -22,6 +23,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,10 +63,32 @@ class MessageControllerIT {
 
         mvc.perform(get("/api/messages")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].content", is(message.getContent())));
     }
 
 
+    @Test
+    public void saveMessageTest() throws Exception {
+        CreateMessageDto createMessageDto = new CreateMessageDto("old message 3333", 2, 3);
+
+        mvc.perform(post("/api/messages")
+                        .param("dataCreateMessage", String.valueOf(LocalDateTime.now()))
+                        .param("content", createMessageDto.getContent())
+                        .param("chat", String.valueOf(Chat.builder()
+                                .id(1)
+                                .chatName("Ivan-Semen")
+                                .build()))
+                        .param("senderUserId", String.valueOf(createMessageDto.getSenderUserId())))
+                .andExpect(status().isOk());
+
+//                Message message = Message.builder()
+//                        .dataCreateMessage(LocalDateTime.now())
+//                        .content(createMessageDto.getContent())
+//                        .chat(chatService.findById(createMessageDto.getChatId()))
+//                        .senderUserId(createMessageDto.getSenderUserId())
+//                        .build();
+
+    }
 }
