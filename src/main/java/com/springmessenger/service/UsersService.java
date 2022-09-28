@@ -1,5 +1,6 @@
 package com.springmessenger.service;
 
+import com.springmessenger.dto.CreateUsersDto;
 import com.springmessenger.dto.UsersDto;
 import com.springmessenger.entity.Users;
 import com.springmessenger.repository.UsersRepository;
@@ -32,11 +33,14 @@ public class UsersService {
         usersRepository.delete(usersMapper.usersDtoToUsers(usersDto));
     }
 
-    public Users save(Users users) {
-        return usersRepository.save(users);
+    public UsersDto save(CreateUsersDto createUsersDto) {
+        Users users = Users.builder()
+                .name(createUsersDto.getName())
+                .build();
+        return usersMapper.usersToUsersDto(usersRepository.save(users));
     }
 
-    public Users update(Users users) {
-        return usersRepository.save(users);
+    public UsersDto update(UsersDto usersDto) {
+        return usersMapper.usersToUsersDto(usersRepository.save(usersMapper.usersDtoToUsers(usersDto)));
     }
 }
