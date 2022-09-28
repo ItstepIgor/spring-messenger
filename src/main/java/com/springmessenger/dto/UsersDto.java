@@ -1,6 +1,6 @@
 package com.springmessenger.dto;
 
-public class UserDto {
+public class UsersDto {
 
     private long id;
 
