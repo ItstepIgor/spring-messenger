@@ -17,7 +17,7 @@ public class Users {
     private long id;
     @Column(nullable = false)
     private String name;
-    @Column
+    @Column(nullable = false)
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "chats_users", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "chat_id")},
