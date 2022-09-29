@@ -4,6 +4,8 @@ import com.springmessenger.dto.CreateUsersDto;
 import com.springmessenger.dto.UsersDto;
 import com.springmessenger.service.UsersService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,13 +28,25 @@ public class UsersController {
         return usersService.findById(id);
     }
 
+//    @PostMapping
+//    public UserDto create(@RequestBody CreateUsersDto createUsersDto) {
+//        System.out.println();
+//        return usersService.save(createUsersDto);
+//    }
+
     @PostMapping
-    public UsersDto create(@RequestBody CreateUsersDto createUsersDto) {
-        return usersService.save(createUsersDto);
+    public ResponseEntity<UsersDto> create(@RequestBody CreateUsersDto createUsersDto) {
+        return new ResponseEntity<>(usersService.save(createUsersDto), HttpStatus.CREATED);
     }
 
     @PutMapping
     public UsersDto update(@RequestBody UsersDto usersDto) {
         return usersService.update(usersDto);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public void deleteMessage(@PathVariable("id") long id) {
+        usersService.delete(id);
     }
 }

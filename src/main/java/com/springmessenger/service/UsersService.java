@@ -29,13 +29,14 @@ public class UsersService {
         return usersMapper.usersToUsersDto(usersRepository.findById(id).orElse(null));
     }
 
-    public void delete(UsersDto usersDto) {
-        usersRepository.delete(usersMapper.usersDtoToUsers(usersDto));
+    public void delete(long id) {
+        usersRepository.delete(usersMapper.usersDtoToUsers(findById(id)));
     }
 
     public UsersDto save(CreateUsersDto createUsersDto) {
         Users users = Users.builder()
                 .name(createUsersDto.getName())
+                .password(createUsersDto.getPassword())
                 .build();
         return usersMapper.usersToUsersDto(usersRepository.save(users));
     }

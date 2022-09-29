@@ -63,7 +63,7 @@ class MessageControllerIT {
 
         mvc.perform(get("/api/messages")
                         .contentType(MediaType.APPLICATION_JSON))
-
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].content", is(message.getContent())));
     }
