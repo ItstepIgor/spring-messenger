@@ -74,14 +74,15 @@ class MessageControllerIT {
         CreateMessageDto createMessageDto = new CreateMessageDto("old message 3333", 2, 3);
 
         mvc.perform(post("/api/messages")
-                        .param("dataCreateMessage", String.valueOf(LocalDateTime.now()))
-                        .param("content", createMessageDto.getContent())
-                        .param("chat", String.valueOf(Chat.builder()
-                                .id(1)
-                                .chatName("Ivan-Semen")
-                                .build()))
-                        .param("senderUserId", String.valueOf(createMessageDto.getSenderUserId())))
+//                        .content(new ObjectMapper().writeValueAsString(createMessageDto))
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andDo(print())
+                        .param(CreateMessageDto.Fields.content, "old message 3333")
+                        .param(CreateMessageDto.Fields.chatId, "2")
+                        .param(CreateMessageDto.Fields.senderUserId, "3")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+//todo c param тест не работает
 
 //                Message message = Message.builder()
 //                        .dataCreateMessage(LocalDateTime.now())
