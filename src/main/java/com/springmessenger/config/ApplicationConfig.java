@@ -1,5 +1,6 @@
 package com.springmessenger.config;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -8,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Scanner;
 
 @Configuration
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yml")
 @ComponentScan(basePackages = "com.springmessenger")
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
@@ -26,5 +27,11 @@ public class ApplicationConfig {
         messageSource.setBasename("classpath:translation");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DatabaseProperties databaseProperties() {
+        return new DatabaseProperties();
     }
 }
