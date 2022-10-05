@@ -53,10 +53,8 @@ public class MessageService {
 //        messageRepository.update(message);
         messagesRepository.save(message);
     }
-
+    @Transactional
     public void deleteMessage(long id) {
-//        messageRepository.delete(messageRepository.findById(id));
-        messagesRepository.delete(findById(id));
+        messagesRepository.deleteById(id);
     }
-    //todo Ответ нормальный 200 что удалилось но из базы ничего не удалено
 }

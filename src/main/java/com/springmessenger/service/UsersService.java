@@ -15,6 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsersService {
 
+    //todo перейти на yml properties. Добавить bean DatabaseProperties 7. Yaml format.mp4 8. @ConfigurationProperties.mp4
+
     private final UsersRepository usersRepository;
 
     private final UsersListMapper usersListMapper;
@@ -30,7 +32,7 @@ public class UsersService {
     }
 
     public void delete(long id) {
-        usersRepository.delete(usersMapper.usersDtoToUsers(findById(id)));
+        usersRepository.deleteById(id);
     }
 
     public UsersDto save(CreateUsersDto createUsersDto) {
