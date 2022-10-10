@@ -2,7 +2,6 @@ package com.springmessenger.service;
 
 import com.springmessenger.dto.CreateMessageDto;
 import com.springmessenger.entity.Message;
-import com.springmessenger.repository.MessageRepository;
 import com.springmessenger.repository.MessagesRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +13,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MessageService {
 
-    private final MessageRepository messageRepository;
     private final MessagesRepository messagesRepository;
 
     private final ChatService chatService;
 
-    public MessageService(MessageRepository messageRepository, MessagesRepository messagesRepository, ChatService chatService) {
-        this.messageRepository = messageRepository;
+    public MessageService(MessagesRepository messagesRepository, ChatService chatService) {
         this.messagesRepository = messagesRepository;
         this.chatService = chatService;
     }
