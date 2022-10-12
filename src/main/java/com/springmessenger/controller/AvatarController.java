@@ -4,11 +4,12 @@ package com.springmessenger.controller;
 import com.springmessenger.entity.Avatar;
 import com.springmessenger.service.AvatarService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Base64;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,8 +25,11 @@ public class AvatarController {
     }
 
     @GetMapping("/{id}")
-    public String getAvatar(@PathVariable String id) {
+    public ResponseEntity<byte[]> getAvatar(@PathVariable String id) {
         Avatar avatar = avatarService.getAvatar(id);
-        return Base64.getEncoder().encodeToString(avatar.getImage().getData());
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(avatar.getImage().getData());
     }
 }
