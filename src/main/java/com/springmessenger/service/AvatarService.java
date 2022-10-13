@@ -1,62 +1,48 @@
 package com.springmessenger.service;
 
-import com.springmessenger.entity.Avatar;
-import com.springmessenger.repository.AvatarRepository;
-import org.bson.BsonBinarySubType;
-import org.bson.types.Binary;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.client.gridfs.model.GridFSFile;
+import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @Service
+@RequiredArgsConstructor
 public class AvatarService {
 
-    private final AvatarRepository avatarRepository;
 
-    public AvatarService(AvatarRepository avatarRepository) {
-        this.avatarRepository = avatarRepository;
+//    private final AvatarRepository avatarRepository;
+
+    private final GridFsTemplate gridFsTemplate;
+
+    private final GridFsOperations operations;
+
+    public String addAvatar(String title, MultipartFile file) throws IOException {
+        DBObject metaData = new BasicDBObject();
+        metaData.put("type", "image");
+        metaData.put("title", title);
+        ObjectId id = gridFsTemplate.store(file.getInputStream(), title, file.getContentType(), metaData);
+        return id.toString();
     }
 
-
-    public String addAvatar(MultipartFile file) throws IOException {
-        Avatar avatar = new Avatar();
-        avatar.setImage(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
-
-        avatar = avatarRepository.insert(avatar);
-
-        return avatar.getId();
-    }
-
-    public Avatar getAvatar(String id) {
-        return avatarRepository.findById(id).get();
-    }
-
-
-//    private final GridFsTemplate gridFsTemplate;
-//
-//    private final GridFsOperations operations;
-//
-//    public AvatarService(AvatarRepository avatarRepository, GridFsTemplate gridFsTemplate, GridFsOperations operations) {
-//        this.avatarRepository = avatarRepository;
-//        this.gridFsTemplate = gridFsTemplate;
-//        this.operations = operations;
-//    }
-//
-//
-//    public String addAvatar(MultipartFile file) throws IOException {
-//        DBObject metaData = new BasicDBObject();
-//        metaData.put("type", "image");
-//        ObjectId id = gridFsTemplate.store(
-//                file.getInputStream(), file.getName(), file.getContentType(), metaData);
-//        return id.toString();
-//    }
-//
-//    public Avatar getAvatar(String id) throws IllegalStateException, IOException {
-//        GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+    public GridFsResource getAvatar(String id) throws IllegalStateException {
+        GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
 //        Avatar avatar = new Avatar();
-//        avatar.setStream(operations.getResource(file).getInputStream());
-//        return avatar;
-//
-//    }
+//        avatar.setTitle(file.getMetadata().get("title").toString());
+//        avatar.setImage(operations.getResource(file).getInputStream());
+        return operations.getResource(file);
+    }
+
+    public void delete(String id) {
+        gridFsTemplate.delete(new Query(Criteria.where("_id").is(id)));
+    }
 }

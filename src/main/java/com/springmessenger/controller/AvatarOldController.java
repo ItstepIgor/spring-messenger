@@ -1,8 +1,9 @@
 package com.springmessenger.controller;
 
-import com.springmessenger.service.AvatarService;
+
+import com.springmessenger.entity.AvatarOld;
+import com.springmessenger.service.AvatarOldService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,37 +16,38 @@ import java.nio.charset.StandardCharsets;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/avatars")
-public class AvatarController {
+@RequestMapping("/api/avatarsold")
+public class AvatarOldController {
 
-    private final AvatarService avatarService;
 
+    private final AvatarOldService avatarOldService;
 
     @PostMapping("/add")
-    public String addAvatar(@RequestParam("file") MultipartFile file) throws IOException {
-        return avatarService.addAvatar(file.getOriginalFilename(), file);
+    public String addAvatarOld(@RequestParam("image") MultipartFile image) throws IOException {
+        return avatarOldService.addAvatarOld(image.getOriginalFilename(), image);
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<GridFsResource> getAvatar(@PathVariable String id) throws Exception {
+    public ResponseEntity<byte[]> getAvatarOld(@PathVariable String id) {
+        AvatarOld avatarOld = avatarOldService.getAvatarOld(id);
 
-        GridFsResource gridFsResource = avatarService.getAvatar(id);
         //Преобразование русских имен файлов
         ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
-                .filename(gridFsResource.getFilename(), StandardCharsets.UTF_8)
+                .filename(avatarOld.getTitle(), StandardCharsets.UTF_8)
                 .build();
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentDisposition(contentDisposition);
         httpHeaders.setContentType(MediaType.IMAGE_JPEG);
 
-        return ResponseEntity.ok()
+        return ResponseEntity
+                .ok()
                 .headers(httpHeaders)
-                .body(gridFsResource);
+                .body(avatarOld.getImage().getData());
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
-        avatarService.delete(id);
+        avatarOldService.delete(id);
     }
 }
