@@ -28,12 +28,6 @@ public class UsersController {
         return usersService.findById(id);
     }
 
-//    @PostMapping
-//    public UserDto create(@RequestBody CreateUsersDto createUsersDto) {
-//        System.out.println();
-//        return usersService.save(createUsersDto);
-//    }
-
     @PostMapping
     public ResponseEntity<UsersDto> create(@RequestBody CreateUsersDto createUsersDto) {
         return new ResponseEntity<>(usersService.save(createUsersDto), HttpStatus.CREATED);

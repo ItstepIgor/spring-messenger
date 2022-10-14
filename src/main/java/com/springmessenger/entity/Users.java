@@ -19,6 +19,8 @@ public class Users {
     private String name;
     @Column(nullable = false)
     private String password;
+    @Column
+    private String avatarId;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "chats_users", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "chat_id")},
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "chat_id"})})

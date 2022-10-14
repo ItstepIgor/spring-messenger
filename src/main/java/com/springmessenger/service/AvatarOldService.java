@@ -30,7 +30,7 @@ public class AvatarOldService {
     }
 
     public AvatarOld getAvatarOld(String id) {
-        return avatarOldRepository.findById(id).get();
+        return avatarOldRepository.findById(id).orElse(null);
     }
 
     public void delete(String id) {

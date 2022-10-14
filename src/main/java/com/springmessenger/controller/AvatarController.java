@@ -1,8 +1,9 @@
 package com.springmessenger.controller;
 
+import com.springmessenger.entity.Avatar;
 import com.springmessenger.service.AvatarService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,22 +27,20 @@ public class AvatarController {
         return avatarService.addAvatar(file.getOriginalFilename(), file);
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<GridFsResource> getAvatar(@PathVariable String id) throws Exception {
+    public ResponseEntity<InputStreamResource> getAvatar(@PathVariable Long id) throws Exception {
 
-        GridFsResource gridFsResource = avatarService.getAvatar(id);
+        Avatar avatar = avatarService.getAvatar(id);
         //Преобразование русских имен файлов
         ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
-                .filename(gridFsResource.getFilename(), StandardCharsets.UTF_8)
+                .filename(avatar.getTitle(), StandardCharsets.UTF_8)
                 .build();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentDisposition(contentDisposition);
-        httpHeaders.setContentType(MediaType.IMAGE_JPEG);
-
+        httpHeaders.setContentType(MediaType.valueOf(avatar.getContentType()));
         return ResponseEntity.ok()
                 .headers(httpHeaders)
-                .body(gridFsResource);
+                .body(new InputStreamResource(avatar.getImage()));
     }
 
     @DeleteMapping("/{id}")

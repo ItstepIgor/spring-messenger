@@ -16,4 +16,6 @@ public class UsersDto {
 
     private String password;
 
+    private String avatarId;
+
 }

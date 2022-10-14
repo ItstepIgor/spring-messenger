@@ -15,8 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsersService {
 
-    //todo перейти на yml properties. Добавить bean DatabaseProperties 7. Yaml format.mp4 8. @ConfigurationProperties.mp4
-
     private final UsersRepository usersRepository;
 
     private final UsersListMapper usersListMapper;

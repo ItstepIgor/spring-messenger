@@ -6,8 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Id;
 import java.io.InputStream;
 
-
-//todo возможно эта сущность не нужна в GridFS и Repository  так же
 @Document(collection = "users")
 @Data
 public class Avatar {
@@ -16,6 +14,8 @@ public class Avatar {
     private String id;
 
     private String title;
+
+    private String contentType;
 
     private InputStream image;
 }
