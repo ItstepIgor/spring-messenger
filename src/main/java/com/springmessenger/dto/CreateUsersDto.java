@@ -9,4 +9,5 @@ import lombok.Data;
 public class CreateUsersDto {
     private String name;
     private String password;
+    private String avatarId;
 }

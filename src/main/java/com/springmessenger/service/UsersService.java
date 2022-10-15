@@ -37,6 +37,7 @@ public class UsersService {
         Users users = Users.builder()
                 .name(createUsersDto.getName())
                 .password(createUsersDto.getPassword())
+                .avatarId(createUsersDto.getAvatarId())
                 .build();
         return usersMapper.usersToUsersDto(usersRepository.save(users));
     }
