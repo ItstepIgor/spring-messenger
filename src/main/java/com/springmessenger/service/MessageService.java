@@ -24,12 +24,10 @@ public class MessageService {
 
 
     public List<Message> getAllMessage() {
-//        return messageRepository.findAll();
         return messagesRepository.findAll();
     }
 
     public Message findById(long id) {
-//        return messageRepository.findById(id);
         return messagesRepository.findById(id).orElse(null);
     }
 
@@ -42,12 +40,10 @@ public class MessageService {
                 .senderUserId(createMessageDto.getSenderUserId())
                 .build();
         messagesRepository.save(message);
-//        messageRepository.save(message);
     }
 
     @Transactional
     public void updateMessage(Message message) {
-//        messageRepository.update(message);
         messagesRepository.save(message);
     }
     @Transactional

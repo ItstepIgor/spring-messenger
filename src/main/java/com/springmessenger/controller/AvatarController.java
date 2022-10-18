@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @RequiredArgsConstructor
@@ -22,23 +21,27 @@ public class AvatarController {
     private final AvatarService avatarService;
 
 
-    @PostMapping("/add")
-    public String addAvatar(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping
+    public String addAvatar(@RequestParam("file") MultipartFile file) {
         return avatarService.addAvatar(file.getOriginalFilename(), file);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InputStreamResource> getAvatar(@PathVariable Long id) throws Exception {
-
+    public ResponseEntity<InputStreamResource> getAvatar(@PathVariable Long id) {
         Avatar avatar = avatarService.getAvatar(id);
         //Преобразование русских имен файлов
-        ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
-                .filename(avatar.getTitle(), StandardCharsets.UTF_8)
-                .build();
+        ContentDisposition contentDisposition =
+                ContentDisposition
+                        .attachment()
+                        .filename(avatar.getTitle(), StandardCharsets.UTF_8)
+                        .build();
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentDisposition(contentDisposition);
         httpHeaders.setContentType(MediaType.valueOf(avatar.getContentType()));
-        return ResponseEntity.ok()
+
+        return ResponseEntity
+                .ok()
                 .headers(httpHeaders)
                 .body(new InputStreamResource(avatar.getImage()));
     }

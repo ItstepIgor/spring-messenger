@@ -5,6 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.springmessenger.entity.Avatar;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -12,28 +13,28 @@ import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class AvatarService {
+    private static final String GRID_FS_FILE_ID = "_id";
+    private static final String TITLE = "title";
+    private static final String CONTENT_TYPE = "_contentType";
 
     private final GridFsOperations operations;
     private final UsersService usersService;
-    private final String GRID_FS_FILE_ID = "_id";
-    private final String TITLE = "title";
-    private final String CONTENT_TYPE = "_contentType";
 
-    public String addAvatar(String title, MultipartFile file) throws IOException {
+    @SneakyThrows
+    public String addAvatar(String title, MultipartFile file) {
         DBObject metaData = new BasicDBObject();
-//        metaData.put("type", "image");
         metaData.put(TITLE, title);
         ObjectId id = operations.store(file.getInputStream(), title, file.getContentType(), metaData);
         return id.toString();
     }
 
-    public Avatar getAvatar(Long id) throws IllegalStateException, IOException {
+    @SneakyThrows
+    public Avatar getAvatar(Long id) {
         // TODO "_id" - constant
         // TODO null checks (idea warnings)
         // TODO save content type to metadata for put it to get method header

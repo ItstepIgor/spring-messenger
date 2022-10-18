@@ -43,6 +43,9 @@ public class UsersService {
     }
 
     public UsersDto update(UsersDto usersDto) {
-        return usersMapper.usersToUsersDto(usersRepository.save(usersMapper.usersDtoToUsers(usersDto)));
+        Users entity = usersMapper.usersDtoToUsers(usersDto);
+        Users save = usersRepository.save(entity);
+
+        return usersMapper.usersToUsersDto(save);
     }
 }
