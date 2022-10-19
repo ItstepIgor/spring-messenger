@@ -38,8 +38,8 @@ public class UsersServiceIT {
     @Test
     @Order(2)
     public void create() {
-        CreateUsersDto createUsersDto = new CreateUsersDto("Alex", "111");
-        UsersDto expectedResult = new UsersDto(13, createUsersDto.getName(), createUsersDto.getPassword());
+        CreateUsersDto createUsersDto = new CreateUsersDto("Alex", "111", "6349220d872b4129567ae171");
+        UsersDto expectedResult = new UsersDto(13, createUsersDto.getName(), createUsersDto.getPassword(), "6349220d872b4129567ae171");
         UsersDto actualResult = usersService.save(createUsersDto);
         Assertions.assertEquals(expectedResult, actualResult);
         List<UsersDto> users2 = usersService.findAll();

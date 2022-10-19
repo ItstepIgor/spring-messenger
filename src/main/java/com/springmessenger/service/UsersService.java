@@ -48,4 +48,8 @@ public class UsersService {
 
         return usersMapper.usersToUsersDto(save);
     }
+
+    public Users findByUserLogin(String username) {
+        return usersRepository.findUsersByName(username);
+    }
 }
