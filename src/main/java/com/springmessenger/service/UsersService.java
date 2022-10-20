@@ -7,13 +7,17 @@ import com.springmessenger.repository.UsersRepository;
 import com.springmessenger.service.mapper.UsersListMapper;
 import com.springmessenger.service.mapper.UsersMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UsersService {
+public class UsersService implements UserDetailsService {
 
     private final UsersRepository usersRepository;
 
@@ -51,5 +55,18 @@ public class UsersService {
 
     public Users findByUserLogin(String username) {
         return usersRepository.findUsersByName(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Users users = findByUserLogin(username);
+        if (users == null) {
+            throw new UsernameNotFoundException("Пользователь " + username + " не существует");
+        }
+        return User.builder()
+                .username(users.getName())
+                .password(users.getPassword())
+                .roles(String.valueOf(users.getRole()))
+                .build();
     }
 }
