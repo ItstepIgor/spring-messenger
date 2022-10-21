@@ -4,6 +4,7 @@ ext {
             'aspectjweaver': '1.9.7',
             'liquibase'    : '4.14.0',
             'lombok'       : '1.18.24',
-            'lmbinding'    : '0.2.0'
+            'lmbinding'    : '0.2.0',
+            'jwt'          : '0.9.1'
     ]
 }
