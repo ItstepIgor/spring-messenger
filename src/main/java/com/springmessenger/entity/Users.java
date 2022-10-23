@@ -22,7 +22,7 @@ public class Users {
     @Column(nullable = false)
     private String avatarId;
     @Column(nullable = false)
-    private String role;
+    private Role role;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "chats_users", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "chat_id")},
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "chat_id"})})

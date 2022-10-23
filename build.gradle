@@ -22,7 +22,10 @@ dependencies {
     implementation "org.aspectj:aspectjweaver:${versions.aspectjweaver}"
     implementation 'org.postgresql:postgresql'
     implementation "org.liquibase:liquibase-core:${versions.liquibase}"
-    implementation "io.jsonwebtoken:jjwt:${versions.jwt}"
+    implementation "io.jsonwebtoken:jjwt-api:${versions.jwt}"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:${versions.jwt}"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${versions.jwt}"
+    implementation "javax.xml.bind:jaxb-api:${versions.jaxb}"
 
     implementation "org.projectlombok:lombok-mapstruct-binding:${versions.lmbinding}"
     implementation "org.mapstruct:mapstruct:${versions.mapstruct}"

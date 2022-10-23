@@ -3,6 +3,7 @@ package com.springmessenger.service;
 import com.springmessenger.dto.CreateUsersDto;
 import com.springmessenger.dto.UsersDto;
 import com.springmessenger.entity.Users;
+import com.springmessenger.exception.AuthException;
 import com.springmessenger.repository.UsersRepository;
 import com.springmessenger.service.mapper.UsersListMapper;
 import com.springmessenger.service.mapper.UsersMapper;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,13 +55,14 @@ public class UsersService implements UserDetailsService {
         return usersMapper.usersToUsersDto(save);
     }
 
-    public Users findByUserLogin(String username) {
+    public Optional<Users> findByUserLogin(String username) {
         return usersRepository.findUsersByName(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users users = findByUserLogin(username);
+        Users users = findByUserLogin(username)
+                .orElseThrow(() -> new AuthException("Пользователь не найден"));
         if (users == null) {
             throw new UsernameNotFoundException("Пользователь " + username + " не существует");
         }

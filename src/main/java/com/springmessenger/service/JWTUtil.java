@@ -1,85 +1,31 @@
 package com.springmessenger.service;
 
+import com.springmessenger.config.security.JwtAuthentication;
+import com.springmessenger.entity.Role;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JWTUtil {
 
-    @Value("${jwt.secret}")
-    private String SECRET_KEY;
-    @Value("${jwt.sessionTime}")
-    private long sessionTime;
 
-
-    // генерация токена (кладем в него имя пользователя и authorities)
-
-    public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        String commaSeparatedListOfAuthorities = userDetails.getAuthorities().stream()
-                .map(a -> a.getAuthority()).collect(Collectors.joining(","));
-        claims.put("authorities", commaSeparatedListOfAuthorities);
-        return createToken(claims, userDetails.getUsername());
+    public static JwtAuthentication generate(Claims claims) {
+        final JwtAuthentication jwtInfoToken = new JwtAuthentication();
+        jwtInfoToken.setRoles(getRoles(claims));
+        jwtInfoToken.setFirstName(claims.get("firstName", String.class));
+        jwtInfoToken.setUsername(claims.getSubject());
+        return jwtInfoToken;
     }
 
-    //извлечение имени пользователя из токена (внутри валидация токена)
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    private static Set<Role> getRoles(Claims claims) {
+        final List<String> roles = claims.get("roles", List.class);
+        return roles.stream()
+                .map(Role::valueOf)
+                .collect(Collectors.toSet());
     }
-
-    //извлечение authorities (внутри валидация токена)
-    public String extractAuthorities(String token) {
-        return extractClaim(token, claims -> (String) claims.get("authorities"));
-    }
-
-    // другие методы
-
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-    }
-
-    private String createToken(Map<String, Object> claims, String subject) {
-
-        return Jwts.builder().setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(expireTimeFromNow())
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
-    }
-
-    private Date expireTimeFromNow() {
-        return new Date(System.currentTimeMillis() + sessionTime);
-    }
-
-//    из другого примера
-//    private String createToken(Map<String, Object> claims, String subject) {
-//
-//        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-//                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
-//    }
-//
-//    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-//        final Claims claims = extractAllClaims(token);
-//        return claimsResolver.apply(claims);
-//    }
-//
-//    private Claims extractAllClaims(String token) {
-//        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-//    }
 }
