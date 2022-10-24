@@ -2,6 +2,7 @@ package com.springmessenger.service;
 
 import com.springmessenger.dto.CreateUsersDto;
 import com.springmessenger.dto.UsersDto;
+import com.springmessenger.entity.Role;
 import com.springmessenger.entity.Users;
 import com.springmessenger.exception.AuthException;
 import com.springmessenger.repository.UsersRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.Optional;
 public class UsersService implements UserDetailsService {
 
     private final UsersRepository usersRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     private final UsersListMapper usersListMapper;
 
@@ -42,8 +46,9 @@ public class UsersService implements UserDetailsService {
     public UsersDto save(CreateUsersDto createUsersDto) {
         Users users = Users.builder()
                 .name(createUsersDto.getName())
-                .password(createUsersDto.getPassword())
+                .password(passwordEncoder.encode(createUsersDto.getPassword()))
                 .avatarId(createUsersDto.getAvatarId())
+                .role(Role.valueOf(createUsersDto.getRole()))
                 .build();
         return usersMapper.usersToUsersDto(usersRepository.save(users));
     }

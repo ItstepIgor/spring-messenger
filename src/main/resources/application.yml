@@ -22,5 +22,5 @@ spring:
       enabled: true
 jwt:
   secret:
-    access: qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w==
-    refresh: zL1HB3Pch05Avfynovxrf/kpF9O2m4NCWKJUjEp27s9J2jEG3ifiKCGylaZ8fDeoONSTJP/wAzKawB8F9rOMNg==
+    access: e8SiLayEF5HIyzUVKWSJohoJnOSPEfDepe+Z9ZGi3YeuZ+UgpMRIlvCI72TSnz962+PU0DELpUJYHuptAgUkEA==
+    refresh: zZbAyzBUA9ZMjbh/V+FdwsEyAXqQlKwQbkMH4jP69NjFhvSHz1zCd4bAJze1sKYg17Y6hKjvPhAq8/K3gFtk1g==
