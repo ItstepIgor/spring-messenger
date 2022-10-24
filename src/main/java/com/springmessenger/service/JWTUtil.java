@@ -6,10 +6,6 @@ import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JWTUtil {
 
@@ -22,10 +18,7 @@ public class JWTUtil {
         return jwtInfoToken;
     }
 
-    private static Set<Role> getRoles(Claims claims) {
-        final List<String> roles = claims.get("roles", List.class);
-        return roles.stream()
-                .map(Role::valueOf)
-                .collect(Collectors.toSet());
+    private static Role getRoles(Claims claims) {
+        return Role.valueOf(claims.get("roles", String.class));
     }
 }
