@@ -34,6 +34,13 @@ public class AuthService {
 
     public JwtResponse login(@NonNull JwtRequest authRequest) {
         Authentication authentication;
+        //todo переделать авторизацию
+        /*
+        get user from db
+        check password using passwordEncoder.matches
+        if not match - throw exception for 401 status code
+        if match - generate token
+         */
         try {
             authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
@@ -50,19 +57,24 @@ public class AuthService {
     }
 
     public JwtResponse getAccessToken(@NonNull String refreshToken) {
-        if (jwtProvider.validateRefreshToken(refreshToken)) {
-            final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
-            final String login = claims.getSubject();
-            System.out.println(login);
-            final String saveRefreshToken = refreshStorage.get(login);
-            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
-                final Users user = userService.findByUserLogin(login)
-                        .orElseThrow(() -> new AuthException(EXCEPTION_MESSAGE));
-                final String accessToken = jwtProvider.generateAccessToken(user);
-                return new JwtResponse(accessToken, null);
-            }
+        if (!jwtProvider.validateRefreshToken(refreshToken)) {
+            return new JwtResponse(null, null);
         }
-        return new JwtResponse(null, null);
+
+        final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
+        final String login = claims.getSubject();
+        System.out.println(login);
+        final String saveRefreshToken = refreshStorage.get(login);
+
+        if (saveRefreshToken == null || !saveRefreshToken.equals(refreshToken)) {
+            return new JwtResponse(null, null);
+        }
+
+        final Users user = userService.findByUserLogin(login)
+                .orElseThrow(() -> new AuthException(EXCEPTION_MESSAGE));
+        final String accessToken = jwtProvider.generateAccessToken(user);
+
+        return new JwtResponse(accessToken, null);
     }
 
     public JwtResponse refresh(@NonNull String refreshToken) {

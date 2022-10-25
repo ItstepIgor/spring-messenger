@@ -14,6 +14,7 @@ import java.security.Key;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 @Component
@@ -31,8 +32,8 @@ public class JwtProvider {
     }
 
     public String generateAccessToken(@NonNull Users user) {
-        final LocalDateTime now = LocalDateTime.now();
-        final Instant accessExpirationInstant = now.plusMinutes(5).atZone(ZoneId.systemDefault()).toInstant();
+        final LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
+        final Instant accessExpirationInstant = now.plusMinutes(5).atZone(ZoneOffset.UTC).toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
         return Jwts.builder()
                 .setSubject(user.getName())
@@ -43,6 +44,7 @@ public class JwtProvider {
                 .compact();
     }
 
+    //TODO Посмотреть в статье как переделать refresh token
     public String generateRefreshToken(@NonNull Users user) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant refreshExpirationInstant = now.plusDays(30).atZone(ZoneId.systemDefault()).toInstant();
