@@ -1,10 +1,10 @@
-INSERT INTO users (name, password)
-VALUES ('Ivan', 1),
-       ('Semen', 3),
-       ('Petr', 2),
-       ('Makar', 4),
-       ('Miron', 123),
-       ('Miron', 123);
+INSERT INTO users (name, password, avatar_id, role)
+VALUES ('Ivan', 1, '634921ff872b4129567ae16a', 0),
+       ('Semen', 3, '634921ff872b4129567ae16a', 1),
+       ('Petr', 2, '634921ff872b4129567ae16a', 1),
+       ('Makar', 4, '634921ff872b4129567ae16a', 0),
+       ('Miron', 123, '634921ff872b4129567ae16a', 1),
+       ('Miron', 123, '634921ff872b4129567ae16a', 0);
 
 INSERT INTO chats (chat_name)
 VALUES ('Ivan-Semen');

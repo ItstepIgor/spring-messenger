@@ -4,6 +4,7 @@ package com.springmessenger.integration.service;
 import com.springmessenger.ApplicationRunner;
 import com.springmessenger.dto.CreateUsersDto;
 import com.springmessenger.dto.UsersDto;
+import com.springmessenger.entity.Role;
 import com.springmessenger.service.UsersService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,10 @@ public class UsersServiceIT {
     @Test
     @Order(2)
     public void create() {
-        CreateUsersDto createUsersDto = new CreateUsersDto("Alex", "111", "6349220d872b4129567ae171");
-        UsersDto expectedResult = new UsersDto(13, createUsersDto.getName(), createUsersDto.getPassword(), "6349220d872b4129567ae171");
+        CreateUsersDto createUsersDto = new CreateUsersDto("Alex", "111",
+                "6349220d872b4129567ae171", "ADMIN");
+        UsersDto expectedResult = new UsersDto(13, createUsersDto.getName(), createUsersDto.getPassword(),
+                "6349220d872b4129567ae171", Role.ADMIN);
         UsersDto actualResult = usersService.save(createUsersDto);
         Assertions.assertEquals(expectedResult, actualResult);
         List<UsersDto> users2 = usersService.findAll();
