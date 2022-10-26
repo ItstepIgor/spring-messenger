@@ -1,9 +1,9 @@
 package com.springmessenger.controller;
 
 
-import com.springmessenger.config.security.JwtRequest;
-import com.springmessenger.config.security.JwtResponse;
-import com.springmessenger.config.security.RefreshJwtRequest;
+import com.springmessenger.entity.jwt.JwtRequest;
+import com.springmessenger.entity.jwt.JwtResponse;
+import com.springmessenger.entity.jwt.RefreshJwtRequest;
 import com.springmessenger.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +32,8 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 
+    //TODO если оставить только этот метод и сделать его публичным то при каждом запросе нового токена access токена
+    // будет выдаваться новый refresh токен(будет использован только один раз) и сохраняться в БД
     @PostMapping("/refresh")
     public ResponseEntity<JwtResponse> getNewRefreshToken(@RequestBody RefreshJwtRequest request) {
         final JwtResponse token = authService.refresh(request.getRefreshToken());

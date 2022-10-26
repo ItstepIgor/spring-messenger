@@ -1,59 +1,43 @@
 package com.springmessenger.service;
 
-import com.springmessenger.config.security.JwtAuthentication;
-import com.springmessenger.config.security.JwtProvider;
-import com.springmessenger.config.security.JwtRequest;
-import com.springmessenger.config.security.JwtResponse;
 import com.springmessenger.entity.Users;
+import com.springmessenger.entity.jwt.JwtProvider;
+import com.springmessenger.entity.jwt.JwtRefreshToken;
+import com.springmessenger.entity.jwt.JwtRequest;
+import com.springmessenger.entity.jwt.JwtResponse;
 import com.springmessenger.exception.AuthException;
+import com.springmessenger.exception.BadLoginOrPasswordException;
+import com.springmessenger.security.JwtAuthentication;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
-    private static final String EXCEPTION_MESSAGE = "Пользователь не найден";
+    private static final String EXCEPTION_MESSAGE = "Не верный логин или пароль";
     private final UsersService userService;
-    private final Map<String, String> refreshStorage = new HashMap<>();
     private final JwtProvider jwtProvider;
-
-    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtRefreshTokenService jwtRefreshTokenService;
 
     public JwtResponse login(@NonNull JwtRequest authRequest) {
-        Authentication authentication;
-        //todo переделать авторизацию
-        /*
-        get user from db
-        check password using passwordEncoder.matches
-        if not match - throw exception for 401 status code
-        if match - generate token
-         */
-        try {
-            authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
-            System.out.println(authentication);
-        } catch (BadCredentialsException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Имя или пароль неправильны", e);
-        }
         final Users user = userService.findByUserLogin(authRequest.getLogin())
-                .orElseThrow(() -> new AuthException(EXCEPTION_MESSAGE));
-        final String accessToken = jwtProvider.generateAccessToken(user);
-        final String refreshToken = jwtProvider.generateRefreshToken(user);
-        refreshStorage.put(user.getName(), refreshToken);
-        return new JwtResponse(accessToken, refreshToken);
+                .orElseThrow(() -> new BadLoginOrPasswordException(EXCEPTION_MESSAGE));
+        if (passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
+            final String accessToken = jwtProvider.generateAccessToken(user);
+            final String refreshToken = jwtProvider.generateRefreshToken(user);
+
+            saveToken(user, refreshToken);
+
+            return new JwtResponse(accessToken, refreshToken);
+        } else {
+            throw new BadLoginOrPasswordException(EXCEPTION_MESSAGE);
+        }
     }
 
     public JwtResponse getAccessToken(@NonNull String refreshToken) {
@@ -63,35 +47,47 @@ public class AuthService {
 
         final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
         final String login = claims.getSubject();
-        System.out.println(login);
-        final String saveRefreshToken = refreshStorage.get(login);
+        final String saveRefreshToken = jwtRefreshTokenService.findByName(login).getToken();
 
         if (saveRefreshToken == null || !saveRefreshToken.equals(refreshToken)) {
             return new JwtResponse(null, null);
         }
 
         final Users user = userService.findByUserLogin(login)
-                .orElseThrow(() -> new AuthException(EXCEPTION_MESSAGE));
+                .orElseThrow(() -> new BadLoginOrPasswordException(EXCEPTION_MESSAGE));
         final String accessToken = jwtProvider.generateAccessToken(user);
 
         return new JwtResponse(accessToken, null);
     }
 
     public JwtResponse refresh(@NonNull String refreshToken) {
-        if (jwtProvider.validateRefreshToken(refreshToken)) {
-            final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
-            final String login = claims.getSubject();
-            final String saveRefreshToken = refreshStorage.get(login);
-            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
-                final Users user = userService.findByUserLogin(login)
-                        .orElseThrow(() -> new AuthException(EXCEPTION_MESSAGE));
-                final String accessToken = jwtProvider.generateAccessToken(user);
-                final String newRefreshToken = jwtProvider.generateRefreshToken(user);
-                refreshStorage.put(user.getName(), newRefreshToken);
-                return new JwtResponse(accessToken, newRefreshToken);
-            }
+        if (!jwtProvider.validateRefreshToken(refreshToken)) {
+            throw new AuthException("Невалидный JWT токен");
         }
-        throw new AuthException("Невалидный JWT токен");
+
+        final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
+        final String login = claims.getSubject();
+        final String saveRefreshToken = jwtRefreshTokenService.findByName(login).getToken();
+
+        if (saveRefreshToken == null || !saveRefreshToken.equals(refreshToken)) {
+            throw new AuthException("Невалидный JWT токен");
+        }
+
+        final Users user = userService.findByUserLogin(login)
+                .orElseThrow(() -> new BadLoginOrPasswordException(EXCEPTION_MESSAGE));
+        final String accessToken = jwtProvider.generateAccessToken(user);
+        final String newRefreshToken = jwtProvider.generateRefreshToken(user);
+        saveToken(user, newRefreshToken);
+
+        return new JwtResponse(accessToken, newRefreshToken);
+    }
+
+    private void saveToken(Users user, String refreshToken) {
+        JwtRefreshToken token = JwtRefreshToken.builder()
+                .name(user.getName())
+                .token(refreshToken)
+                .build();
+        jwtRefreshTokenService.save(token);
     }
 
     public JwtAuthentication getAuthInfo() {

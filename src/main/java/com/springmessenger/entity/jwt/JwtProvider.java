@@ -1,4 +1,4 @@
-package com.springmessenger.config.security;
+package com.springmessenger.entity.jwt;
 
 import com.springmessenger.entity.Users;
 import io.jsonwebtoken.*;
@@ -44,7 +44,6 @@ public class JwtProvider {
                 .compact();
     }
 
-    //TODO Посмотреть в статье как переделать refresh token
     public String generateRefreshToken(@NonNull Users user) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant refreshExpirationInstant = now.plusDays(30).atZone(ZoneId.systemDefault()).toInstant();

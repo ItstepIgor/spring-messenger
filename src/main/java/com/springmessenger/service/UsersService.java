@@ -4,15 +4,10 @@ import com.springmessenger.dto.CreateUsersDto;
 import com.springmessenger.dto.UsersDto;
 import com.springmessenger.entity.Role;
 import com.springmessenger.entity.Users;
-import com.springmessenger.exception.AuthException;
 import com.springmessenger.repository.UsersRepository;
 import com.springmessenger.service.mapper.UsersListMapper;
 import com.springmessenger.service.mapper.UsersMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UsersService implements UserDetailsService {
+public class UsersService {
 
     private final UsersRepository usersRepository;
 
@@ -62,19 +57,5 @@ public class UsersService implements UserDetailsService {
 
     public Optional<Users> findByUserLogin(String username) {
         return usersRepository.findUsersByName(username);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users users = findByUserLogin(username)
-                .orElseThrow(() -> new AuthException("Пользователь не найден"));
-        if (users == null) {
-            throw new UsernameNotFoundException("Пользователь " + username + " не существует");
-        }
-        return User.builder()
-                .username(users.getName())
-                .password(users.getPassword())
-                .roles(String.valueOf(users.getRole()))
-                .build();
     }
 }

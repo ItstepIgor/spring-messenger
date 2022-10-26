@@ -1,6 +1,6 @@
 package com.springmessenger.config;
 
-import com.springmessenger.config.security.JWTFilter;
+import com.springmessenger.security.JWTFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;

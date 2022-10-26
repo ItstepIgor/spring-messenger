@@ -1,4 +1,4 @@
-package com.springmessenger.config.security;
+package com.springmessenger.security;
 
 import com.springmessenger.entity.Role;
 import lombok.Getter;

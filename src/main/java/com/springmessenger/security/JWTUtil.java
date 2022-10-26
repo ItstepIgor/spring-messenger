@@ -1,6 +1,5 @@
-package com.springmessenger.service;
+package com.springmessenger.security;
 
-import com.springmessenger.config.security.JwtAuthentication;
 import com.springmessenger.entity.Role;
 import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;

@@ -1,4 +1,4 @@
-package com.springmessenger.config.security;
+package com.springmessenger.entity.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

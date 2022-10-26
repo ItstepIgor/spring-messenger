@@ -1,6 +1,6 @@
-package com.springmessenger.config.security;
+package com.springmessenger.security;
 
-import com.springmessenger.service.JWTUtil;
+import com.springmessenger.entity.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
