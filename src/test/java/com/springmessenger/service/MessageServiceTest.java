@@ -61,12 +61,12 @@ class MessageServiceTest {
 
     @Test
     void deleteMessage() {
-        Mockito.doNothing().when(messageRepository).delete(message);
-        Mockito.when(messageRepository.findById(MESSAGE_ID)).thenReturn(Optional.ofNullable(message));
+        Mockito.doNothing().when(messageRepository).deleteById(MESSAGE_ID);
+//        Mockito.when(messageRepository.findById(MESSAGE_ID)).thenReturn(Optional.ofNullable(message));
         messageService.deleteMessage(MESSAGE_ID);
-        ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
-        Mockito.verify(messageRepository).delete(argumentCaptor.capture());
-        Assertions.assertEquals(message, argumentCaptor.getValue());
+        ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
+        Mockito.verify(messageRepository).deleteById(argumentCaptor.capture());
+        Assertions.assertEquals(message.getId(), argumentCaptor.getValue());
     }
 
 
@@ -75,8 +75,10 @@ class MessageServiceTest {
 //        Mockito.doNothing().doThrow(new RuntimeException()).when(messageRepository).save(message);
         Mockito.when(messageRepository.save(message)).thenReturn(message);
         messageService.updateMessage(message);
+        //перехватываем значение переданное в метод и сравнивааем его со значением с которым вызвали метод repository
         ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
         Mockito.verify(messageRepository).save(argumentCaptor.capture());
+        //Сравнивааем значением с которым вызвали метод repository
         Assertions.assertEquals(message, argumentCaptor.getValue());
     }
 
