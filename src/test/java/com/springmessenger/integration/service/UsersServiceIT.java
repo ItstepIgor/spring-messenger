@@ -9,6 +9,7 @@ import com.springmessenger.service.UsersService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -27,6 +28,9 @@ public class UsersServiceIT {
     @Autowired
     private UsersService usersService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Test
     @Order(1)
@@ -39,10 +43,10 @@ public class UsersServiceIT {
     @Test
     @Order(2)
     public void create() {
-        CreateUsersDto createUsersDto = new CreateUsersDto("Alex", "111",
-                "6349220d872b4129567ae171", "ADMIN");
-        UsersDto expectedResult = new UsersDto(13, createUsersDto.getName(), createUsersDto.getPassword(),
-                "6349220d872b4129567ae171", Role.ADMIN);
+        CreateUsersDto createUsersDto = new CreateUsersDto("Alex", "1"
+                , "6349220d872b4129567ae171", "ADMIN");
+        UsersDto expectedResult = new UsersDto(13, createUsersDto.getName(), passwordEncoder.encode(createUsersDto.getPassword())
+                , "6349220d872b4129567ae171", Role.ADMIN);
         UsersDto actualResult = usersService.save(createUsersDto);
         Assertions.assertEquals(expectedResult, actualResult);
         List<UsersDto> users2 = usersService.findAll();

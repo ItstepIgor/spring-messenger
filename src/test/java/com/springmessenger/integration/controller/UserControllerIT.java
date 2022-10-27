@@ -27,8 +27,8 @@ public class UserControllerIT {
 
     @Test
     public void create() throws Exception {
-        CreateUsersDto createUsersDto = new CreateUsersDto("Miron", "123", "6349220d872b4129567ae171", "ADMIN");
-
+        CreateUsersDto createUsersDto = new CreateUsersDto("Miron", "123"
+                , "6349220d872b4129567ae171", "ADMIN");
         mvc.perform(post("/api/users/registration")
                         .content(new ObjectMapper().writeValueAsString(createUsersDto))
                         .contentType(MediaType.APPLICATION_JSON))

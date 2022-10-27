@@ -8,6 +8,9 @@ import com.springmessenger.repository.UsersRepository;
 import com.springmessenger.service.mapper.UsersListMapper;
 import com.springmessenger.service.mapper.UsersMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UsersService {
+public class UsersService implements UserDetailsService {
 
     private final UsersRepository usersRepository;
 
@@ -57,5 +60,12 @@ public class UsersService {
 
     public Optional<Users> findByUserLogin(String username) {
         return usersRepository.findUsersByName(username);
+    }
+
+
+    //TODO 27/10/2022 выяснить зачем метод нужен для выполнения тестов если его нет ошибка Stack Overflow
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }
