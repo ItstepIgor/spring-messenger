@@ -1,9 +1,9 @@
-package com.springmessenger.service;
+package com.avatarservice.service;
 
+import com.avatarservice.entity.Avatar;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
-import com.springmessenger.entity.Avatar;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.bson.types.ObjectId;
@@ -23,7 +23,7 @@ public class AvatarService {
     private static final String CONTENT_TYPE = "_contentType";
 
     private final GridFsOperations operations;
-    private final UsersService usersService;
+//    private final UsersService usersService;
 
     @SneakyThrows
     public String addAvatar(String title, MultipartFile file) {
@@ -35,14 +35,10 @@ public class AvatarService {
 
     @SneakyThrows
     public Avatar getAvatar(Long id) {
-        // TODO "_id" - constant
-        // TODO null checks (idea warnings)
-        // TODO save content type to metadata for put it to get method header
-        // TODO return object with file data from service, replace GridFsResource with InputStream
-        //  return value from controller - ResponseEntity<InputStreamResource>
-
+        //TODO разобраться с getAvatarId
         GridFSFile file = operations.findOne(new Query(Criteria.where(GRID_FS_FILE_ID)
-                .is(usersService.findById(id).getAvatarId())));
+                .is("634921f3872b4129567ae164")));
+//                .is(usersService.findById(id).getAvatarId())));
         Avatar avatar = new Avatar();
         avatar.setId(String.valueOf(Objects.requireNonNull(file).getObjectId()));
         avatar.setTitle(Objects.requireNonNull(file.getMetadata()).get(TITLE).toString());

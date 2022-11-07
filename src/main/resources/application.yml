@@ -10,11 +10,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
         ddl-auto: validate
     show-sql: true
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: spring_messenger
   servlet:
     multipart:
       max-file-size: 1024MB

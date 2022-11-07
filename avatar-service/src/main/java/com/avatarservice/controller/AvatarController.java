@@ -1,7 +1,7 @@
-package com.springmessenger.controller;
+package com.avatarservice.controller;
 
-import com.springmessenger.entity.Avatar;
-import com.springmessenger.service.AvatarService;
+import com.avatarservice.entity.Avatar;
+import com.avatarservice.service.AvatarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ContentDisposition;
