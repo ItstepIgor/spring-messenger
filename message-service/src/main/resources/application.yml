@@ -1,0 +1,9 @@
+server:
+  port: 8084
+
+topic:
+  name: message
+
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_URL:localhost:9092}
