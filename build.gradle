@@ -14,29 +14,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation "org.aspectj:aspectjweaver:${versions.aspectjweaver}"
-    implementation 'org.postgresql:postgresql'
-    implementation "org.liquibase:liquibase-core:${versions.liquibase}"
     implementation "io.jsonwebtoken:jjwt-api:${versions.jwt}"
     runtimeOnly "io.jsonwebtoken:jjwt-impl:${versions.jwt}"
     runtimeOnly "io.jsonwebtoken:jjwt-jackson:${versions.jwt}"
     implementation "javax.xml.bind:jaxb-api:${versions.jaxb}"
-
-    implementation "org.projectlombok:lombok-mapstruct-binding:${versions.lmbinding}"
-    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
-
-    compileOnly "org.projectlombok:lombok:${versions.lombok}"
-    annotationProcessor "org.projectlombok:lombok:${versions.lombok}"
-    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${versions.lmbinding}"
-
-    testCompileOnly "org.projectlombok:lombok:${versions.lombok}"
-    testAnnotationProcessor "org.projectlombok:lombok:${versions.lombok}"
 
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

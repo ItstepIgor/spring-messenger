@@ -16,6 +16,10 @@ configurations {
     }
 }
 
+bootJar {
+    archiveFileName = 'chat-service.jar'
+}
+
 repositories {
     mavenCentral()
 }
@@ -47,4 +51,9 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+compileJava {
+    options.encoding = "UTF-8"
 }

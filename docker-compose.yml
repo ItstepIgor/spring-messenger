@@ -1,0 +1,135 @@
+version: "3.7"
+
+networks:
+  spring-messenger-net:
+    name: spring-messenger-net
+    driver: bridge
+
+services:
+  chats_db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=chats_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=sa
+    restart: always
+    ports:
+      - 5000:5432
+#    volumes:
+#      - db_deposit:/var/lib/postgresql/data
+    networks:
+      - spring-messenger-net
+
+  user_db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=user_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=sa
+    restart: always
+    ports:
+      - 6000:5432
+    #    volumes:
+    #      - db_deposit:/var/lib/postgresql/data
+    networks:
+      - spring-messenger-net
+
+  zookeeper:
+    image: bitnami/zookeeper:3.8.0
+    container_name: zookeeper
+    restart: always
+    networks:
+      - spring-messenger-net
+    ports:
+      - "2182:2182"
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: yes
+
+  kafka:
+    image: bitnami/kafka:3.3.1
+    container_name: kafka
+    restart: always
+    networks:
+      - spring-messenger-net
+    ports:
+      - "9093:9093"
+    environment:
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER_INTERNAL:PLAINTEXT,DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER_INTERNAL://:29092,DOCKER_EXTERNAL://:9093
+      KAFKA_ADVERTISED_LISTENERS: DOCKER_INTERNAL://kafka:29092,DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2182"
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      ALLOW_PLAINTEXT_LISTENER: yes
+    depends_on:
+      - zookeeper
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:3.30.0
+    container_name: kafdrop
+    restart: always
+    networks:
+      - spring-messenger-net
+    ports:
+      - "9001:9001"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:29092"
+    depends_on:
+      - "kafka"
+
+  avatar-service:
+    build:
+      context: ./avatar-service
+      dockerfile: Dockerfile
+    image: avatar-service:latest
+    container_name: avatar-service-app
+    ports:
+      - "8085:8085"
+    environment:
+      KAFKA_URL: "kafka:29092"
+    restart: always
+    networks:
+      - spring-messenger-net
+
+  chat-service:
+    build:
+      context: ./chat-service
+      dockerfile: Dockerfile
+    image: chat-service:latest
+    container_name: chat-service-app
+    ports:
+      - "8083:8083"
+    environment:
+      KAFKA_URL: "kafka:29092"
+    restart: always
+    networks:
+      - spring-messenger-net
+
+  message-sender-service:
+    build:
+      context: ./message-sender-service
+      dockerfile: Dockerfile
+    image: message-sender-service:latest
+    container_name: message-sender-service-app
+    ports:
+      - "8084:8084"
+    environment:
+      KAFKA_URL: "kafka:29092"
+    restart: always
+    networks:
+      - spring-messenger-net
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    image: user-service:latest
+    container_name: user-service-service-app
+    ports:
+      - "8082:8082"
+    environment:
+      KAFKA_URL: "kafka:29092"
+    restart: always
+    networks:
+      - spring-messenger-net

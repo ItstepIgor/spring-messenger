@@ -19,3 +19,10 @@ CREATE TABLE chats
     chat_name VARCHAR(255),
     PRIMARY KEY (id)
 );
+
+CREATE TABLE chats_users
+(
+    chat_id INT8 NOT NULL,
+    user_id INT8 NOT NULL,
+    PRIMARY KEY (chat_id, user_id)
+);

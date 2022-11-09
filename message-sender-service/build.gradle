@@ -16,6 +16,10 @@ configurations {
     }
 }
 
+bootJar {
+    archiveFileName = 'message-sender-service.jar'
+}
+
 repositories {
     mavenCentral()
 }

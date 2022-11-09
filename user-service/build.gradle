@@ -16,6 +16,10 @@ configurations {
     }
 }
 
+bootJar {
+    archiveFileName = 'user-service.jar'
+}
+
 repositories {
     mavenCentral()
 }
