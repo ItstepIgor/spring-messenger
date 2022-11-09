@@ -2,6 +2,7 @@ package com.chatservice.service;
 
 
 import com.chatservice.entity.Chat;
+import com.chatservice.entity.Message;
 import com.chatservice.repository.ChatRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,9 @@ public class ChatService {
 
     public Chat findById(Long id) {
         return chatRepository.findById(id).orElse(null);
+    }
+
+    public void saveMessage(Message message) {
+        System.out.println(message);
     }
 }

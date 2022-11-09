@@ -10,9 +10,11 @@ import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Map;
 
+@EnableScheduling
 @Configuration
 public class MessageConfig {
 
@@ -25,7 +27,6 @@ public class MessageConfig {
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
-        // get configs on application.properties/yml
         Map<String, Object> properties = kafkaProperties.buildProducerProperties();
         return new DefaultKafkaProducerFactory<>(properties);
     }
