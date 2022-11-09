@@ -1,2 +1,5 @@
 rootProject.name = 'spring-messenger'
-
+include ':chat-service'
+include ':message-sender-service'
+include ':avatar-service'
+include ':user-service'

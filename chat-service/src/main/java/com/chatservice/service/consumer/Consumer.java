@@ -25,7 +25,7 @@ public class Consumer {
         this.chatService = chatService;
     }
 
-    @KafkaListener(groupId = "myGroup", topics = ORDER_TOPIC)
+    @KafkaListener(topics = ORDER_TOPIC)
     public void consumeMessage(String messageString) throws JsonProcessingException {
         log.info("message consumed {}", messageString);
 
@@ -35,7 +35,7 @@ public class Consumer {
     }
 
 
-    @KafkaListener(groupId = "myGroup", topics = CONSOLE_MESSAGE)
+    @KafkaListener(topics = CONSOLE_MESSAGE)
     public void consumeMessageConsole(String message) {
         log.info("receive console message {}", message);
     }
