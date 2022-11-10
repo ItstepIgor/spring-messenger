@@ -6,9 +6,9 @@ topic:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/chats_db
-    username: postgres
-    password: sa
+    url: jdbc:postgresql://${POSTGRES_DB_HOST:localhost:5432}/${POSTGRES_DB_NAME:chats_db}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:sa}
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:

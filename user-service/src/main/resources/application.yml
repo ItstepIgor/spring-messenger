@@ -2,9 +2,9 @@ server:
   port: 8082
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/user_db
-    username: postgres
-    password: sa
+    url: jdbc:postgresql://${POSTGRES_DB_HOST:localhost:5432}/${POSTGRES_DB_NAME:user_db}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:sa}
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
