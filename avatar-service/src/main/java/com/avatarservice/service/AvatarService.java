@@ -34,10 +34,10 @@ public class AvatarService {
     }
 
     @SneakyThrows
-    public Avatar getAvatar(Long id) {
+    public Avatar getAvatar(String id) {
         //TODO разобраться с getAvatarId
         GridFSFile file = operations.findOne(new Query(Criteria.where(GRID_FS_FILE_ID)
-                .is("634921f3872b4129567ae164")));
+                .is(id)));
 //                .is(usersService.findById(id).getAvatarId())));
         Avatar avatar = new Avatar();
         avatar.setId(String.valueOf(Objects.requireNonNull(file).getObjectId()));

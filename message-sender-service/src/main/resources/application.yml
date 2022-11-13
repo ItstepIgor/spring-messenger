@@ -6,4 +6,4 @@ topic:
 
 spring:
   kafka:
-    bootstrap-servers: ${KAFKA_URL:localhost:9092}
+    bootstrap-servers: ${KAFKA_URL:localhost:9093}

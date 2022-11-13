@@ -1,9 +1,6 @@
 package com.chatservice.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +8,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"messages"})
+@ToString(exclude = {"users"})
 @Builder
 @Entity
 @Table(name = "chats")
@@ -23,5 +22,4 @@ public class Chat {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
     private List<Message> messages;
-
 }

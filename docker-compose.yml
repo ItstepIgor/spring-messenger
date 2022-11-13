@@ -11,12 +11,10 @@ services:
     environment:
       - MONGO_DB=spring_messenger
     restart: always
-    expose:
-      - 27017
-    #    ports:
-    #      - 5000:5432
-    #    volumes:
-    #      - db_deposit:/var/lib/postgresql/data
+    ports:
+      - "27018:27017"
+    volumes:
+      - avatar_db:/data/db
     networks:
       - spring-messenger-net
 
@@ -27,12 +25,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=sa
     restart: always
-    expose:
-      - 5432
-#    ports:
-#      - 5000:5432
-#    volumes:
-#      - db_deposit:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    volumes:
+      - chats_db:/var/lib/postgresql/data
     networks:
       - spring-messenger-net
 
@@ -43,12 +39,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=sa
     restart: always
-    expose:
-      - 5432
-#    ports:
-#      - 6000:5432
-    #    volumes:
-    #      - db_deposit:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    volumes:
+      - user_db:/var/lib/postgresql/data
     networks:
       - spring-messenger-net
 
@@ -159,3 +153,8 @@ services:
     restart: always
     networks:
       - spring-messenger-net
+volumes:
+  avatar_db:
+  chats_db:
+  user_db:
+

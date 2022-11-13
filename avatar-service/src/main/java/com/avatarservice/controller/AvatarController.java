@@ -27,7 +27,7 @@ public class AvatarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InputStreamResource> getAvatar(@PathVariable Long id) {
+    public ResponseEntity<InputStreamResource> getAvatar(@PathVariable String id) {
         Avatar avatar = avatarService.getAvatar(id);
         //Преобразование русских имен файлов
         ContentDisposition contentDisposition =

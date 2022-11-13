@@ -17,7 +17,7 @@ spring:
         ddl-auto: validate
     show-sql: true
   kafka:
-    bootstrap-servers: ${KAFKA_URL:localhost:9092}
+    bootstrap-servers: ${KAFKA_URL:localhost:9093}
     consumer:
       auto-offset-reset: earliest
       group-id: "default"

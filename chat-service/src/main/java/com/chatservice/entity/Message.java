@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"chat"})
 @NoArgsConstructor
 @Builder
 @Entity
