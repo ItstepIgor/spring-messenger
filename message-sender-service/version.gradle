@@ -3,7 +3,6 @@ ext {
             'mapstruct': '1.5.2.Final',
             'liquibase': '4.17.0',
             'lombok'   : '1.18.24',
-            'lmbinding': '0.2.0',
-            'eureka'   : '3.1.4'
+            'lmbinding': '0.2.0'
     ]
 }
