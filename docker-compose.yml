@@ -160,6 +160,22 @@ services:
     networks:
       - spring-messenger-net
 
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    image: gateway-service:latest
+    container_name: gateway-service-app
+    ports:
+      - "8765:8765"
+    environment:
+      EUREKA_URL: http://discovery-service:8761/eureka
+    restart: always
+    networks:
+      - spring-messenger-net
+    depends_on:
+      - discovery-service
+
   user-service:
     build:
       context: ./user-service

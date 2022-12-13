@@ -8,6 +8,10 @@ group = 'com'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+bootJar {
+    archiveFileName = 'gateway-service.jar'
+}
+
 repositories {
     mavenCentral()
 }
@@ -32,4 +36,8 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+compileJava {
+    options.encoding = "UTF-8"
 }
