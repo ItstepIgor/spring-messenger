@@ -1,34 +1,5 @@
-server:
-  port: 8765
 spring:
   application:
     name: gateway-service
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      routes:
-        - id: user
-          uri: lb://user-service
-          predicates:
-            - Path=/api/users/**
-        - id: message
-          uri: lb://message-sender-service
-          predicates:
-            - Path=/api/messages/**
-        - id: chat
-          uri: lb://chat-service
-          predicates:
-            - Path=/api/chats/**
-        - id: avatar
-          uri: lb://avatar-service
-          predicates:
-            - Path=/api/avatars/**
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
-  instance:
-    preferIpAddress: true
+  config:
+    import: optional:configserver:http://localhost:8888

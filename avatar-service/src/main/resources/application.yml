@@ -1,16 +1,5 @@
-server:
-  port: 8085
 spring:
-  data:
-    mongodb:
-      host: ${MONGO_DB_HOST:localhost}
-      port: ${MONGO_DB_PORT:27017}
-      database: ${MONGO_DB:spring_messenger}
   application:
     name: avatar-service
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
-  instance:
-    preferIpAddress: true
+  config:
+    import: optional:configserver:http://localhost:8888

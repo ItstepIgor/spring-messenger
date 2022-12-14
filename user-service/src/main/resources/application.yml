@@ -1,22 +1,5 @@
-server:
-  port: 8082
 spring:
-  datasource:
-    url: jdbc:postgresql://${POSTGRES_DB_HOST:localhost:5432}/${POSTGRES_DB_NAME:user_db}
-    username: ${POSTGRES_USERNAME:postgres}
-    password: ${POSTGRES_PASSWORD:sa}
-    driver-class-name: org.postgresql.Driver
   application:
     name: user-service
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL10Dialect
-        ddl-auto: validate
-    show-sql: true
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
-  instance:
-    preferIpAddress: true
+  config:
+    import: optional:configserver:http://localhost:8888
