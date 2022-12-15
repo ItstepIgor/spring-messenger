@@ -10,4 +10,4 @@ spring:
           uri: https://github.com/ItstepIgor/config-spring-messenger.git
           default-label: main
           clone-on-start: true
-          basedir: file://C:/Temp/git-c
+          basedir: ${BASEDIR:file://C:/Temp/git-c}
