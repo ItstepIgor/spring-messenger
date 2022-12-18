@@ -104,6 +104,41 @@ services:
     networks:
       - spring-messenger-net
 
+  discovery-service:
+    build:
+      context: ./discovery-service
+      dockerfile: Dockerfile
+    image: discovery-service:latest
+    container_name: discovery-service-app
+    ports:
+      - "8761:8761"
+    environment:
+      CONFIG_SERVICE_URL: http://config-service:8888
+      EUREKA_URL: http://discovery-service:8761/eureka
+    restart: always
+    networks:
+      - spring-messenger-net
+    depends_on:
+      - config-service
+
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    image: gateway-service:latest
+    container_name: gateway-service-app
+    ports:
+      - "8765:8765"
+    environment:
+      EUREKA_URL: http://discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: http://config-service:8888
+    restart: always
+    networks:
+      - spring-messenger-net
+    depends_on:
+      - config-service
+      - discovery-service
+
   avatar-service:
     build:
       context: ./avatar-service
@@ -113,17 +148,17 @@ services:
     ports:
       - "8085:8085"
     environment:
-      CONFIG_SERVICE_URL: http://config-service:8888
       MONGO_DB_HOST: avatar_db_service
       MONGO_DB_PORT: 27017
       EUREKA_URL: http://discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: http://config-service:8888
     restart: always
     networks:
       - spring-messenger-net
     depends_on:
       - config-service
-      - discovery-service
       - avatar_db_service
+      - discovery-service
 
   chat-service:
     build:
@@ -168,40 +203,6 @@ services:
       - config-service
       - discovery-service
 
-  discovery-service:
-    build:
-      context: ./discovery-service
-      dockerfile: Dockerfile
-    image: discovery-service:latest
-    container_name: discovery-service-app
-    ports:
-      - "8761:8761"
-#    environment:
-#      CONFIG_SERVICE_URL: http://config-service:8888
-    restart: always
-    networks:
-      - spring-messenger-net
-    depends_on:
-      - config-service
-
-  gateway-service:
-    build:
-      context: ./gateway-service
-      dockerfile: Dockerfile
-    image: gateway-service:latest
-    container_name: gateway-service-app
-    ports:
-      - "8765:8765"
-    environment:
-      EUREKA_URL: http://discovery-service:8761/eureka
-      CONFIG_SERVICE_URL: http://config-service:8888
-    restart: always
-    networks:
-      - spring-messenger-net
-    depends_on:
-      - config-service
-      - discovery-service
-
   user-service:
     build:
       context: ./user-service
@@ -222,8 +223,8 @@ services:
       - spring-messenger-net
     depends_on:
       - config-service
-      - discovery-service
       - user_db_service
+      - discovery-service
 
 volumes:
   avatar_db:
