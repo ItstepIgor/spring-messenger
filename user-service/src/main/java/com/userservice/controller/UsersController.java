@@ -2,6 +2,7 @@ package com.userservice.controller;
 
 import com.userservice.dto.CreateUsersDto;
 import com.userservice.dto.UsersDto;
+import com.userservice.entity.Users;
 import com.userservice.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -37,6 +39,11 @@ public class UsersController {
     @PutMapping
     public UsersDto update(@RequestBody UsersDto usersDto) {
         return usersService.update(usersDto);
+    }
+
+    @GetMapping
+    public boolean findByUserLogin(String username) {
+        return usersService.findByUserLogin(username);
     }
 
 

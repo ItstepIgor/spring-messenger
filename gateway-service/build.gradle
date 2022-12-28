@@ -4,6 +4,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
+apply from: 'version.gradle'
+
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -27,6 +29,12 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+
+    compileOnly "org.projectlombok:lombok:${versions.lombok}"
+    annotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+
+    testCompileOnly "org.projectlombok:lombok:${versions.lombok}"
+    testAnnotationProcessor "org.projectlombok:lombok:${versions.lombok}"
 }
 
 dependencyManagement {

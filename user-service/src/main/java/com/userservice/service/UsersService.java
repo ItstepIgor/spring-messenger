@@ -56,8 +56,10 @@ public class UsersService /*implements UserDetailsService*/ {
     }
 
     //TODO Security вернуть
-    public Optional<Users> findByUserLogin(String username) {
-        return usersRepository.findUsersByName(username);
+//    public Optional<Users> findByUserLogin(String username) {
+    public boolean findByUserLogin(String username) {
+        Optional<Users> optionalUsers = usersRepository.findUsersByName(username);
+        return optionalUsers.isPresent();
     }
 
 

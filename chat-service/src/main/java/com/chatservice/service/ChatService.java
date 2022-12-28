@@ -19,6 +19,4 @@ public class ChatService {
     public Chat findById(Long id) {
         return chatRepository.findById(id).orElse(null);
     }
-
-
 }
