@@ -2,6 +2,7 @@ package com.userservice.controller;
 
 import com.userservice.dto.CreateUsersDto;
 import com.userservice.dto.UsersDto;
+import com.userservice.entity.AuthRequest;
 import com.userservice.entity.Users;
 import com.userservice.service.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -41,9 +42,9 @@ public class UsersController {
         return usersService.update(usersDto);
     }
 
-    @GetMapping
-    public boolean findByUserLogin(String username) {
-        return usersService.findByUserLogin(username);
+    @PostMapping("/login")
+    public Users findByUserLogin(@RequestBody AuthRequest authRequest) {
+        return usersService.findByUserLogin(authRequest);
     }
 
 

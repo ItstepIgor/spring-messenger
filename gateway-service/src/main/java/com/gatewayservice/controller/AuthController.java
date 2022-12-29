@@ -2,9 +2,9 @@ package com.gatewayservice.controller;
 
 
 import com.gatewayservice.entity.Users;
-import com.gatewayservice.entity.jwt.JwtRequest;
-import com.gatewayservice.entity.jwt.JwtResponse;
-import com.gatewayservice.entity.jwt.RefreshJwtRequest;
+import com.gatewayservice.entity.jwt.AuthRequest;
+import com.gatewayservice.entity.jwt.AuthResponse;
+import com.gatewayservice.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/authenticate")
 public class AuthController {
 
-//    private final AuthService authService;
+    private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<Users> login(@RequestBody JwtRequest authRequest) {
-        final JwtResponse token = authService.login(authRequest);
-        return ResponseEntity.ok(token);
+    public void login(@RequestBody AuthRequest authRequest) {
+        authService.login(authRequest);
+//        return ResponseEntity.ok(token);
+//        return ResponseEntity.ok(token);
     }
 
 //    @PostMapping("/token")

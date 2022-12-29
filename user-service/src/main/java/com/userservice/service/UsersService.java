@@ -2,12 +2,14 @@ package com.userservice.service;
 
 import com.userservice.dto.CreateUsersDto;
 import com.userservice.dto.UsersDto;
+import com.userservice.entity.AuthRequest;
 import com.userservice.entity.Role;
 import com.userservice.entity.Users;
 import com.userservice.repository.UsersRepository;
 import com.userservice.service.mapper.UsersListMapper;
 import com.userservice.service.mapper.UsersMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class UsersService /*implements UserDetailsService*/ {
 
     private final UsersRepository usersRepository;
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private final UsersListMapper usersListMapper;
 
@@ -40,8 +42,8 @@ public class UsersService /*implements UserDetailsService*/ {
     public UsersDto save(CreateUsersDto createUsersDto) {
         Users users = Users.builder()
                 .name(createUsersDto.getName())
-//                .password(passwordEncoder.encode(createUsersDto.getPassword()))
-                .password("4646")
+                .password(passwordEncoder.encode(createUsersDto.getPassword()))
+//                .password("4646")
                 .avatarId(createUsersDto.getAvatarId())
                 .role(Role.valueOf(createUsersDto.getRole()))
                 .build();
@@ -57,9 +59,24 @@ public class UsersService /*implements UserDetailsService*/ {
 
     //TODO Security вернуть
 //    public Optional<Users> findByUserLogin(String username) {
-    public boolean findByUserLogin(String username) {
-        Optional<Users> optionalUsers = usersRepository.findUsersByName(username);
-        return optionalUsers.isPresent();
+    public Users findByUserLogin(AuthRequest authRequest) {
+// //       Optional<Users> optionalUsers = usersRepository.findUsersByName(authRequest.getLogin());
+        return usersRepository.findUsersByName(authRequest.getLogin());
+
+
+//
+////        return optionalUsers.isPresent();
+//
+////                .orElseThrow(() -> new BadLoginOrPasswordException(EXCEPTION_MESSAGE));
+//        if (passwordEncoder.matches(authRequest.getPassword(), optionalUsers.get().getPassword())) {
+//
+//            return true;
+//        } else {
+//            return false;
+////            throw new BadLoginOrPasswordException(EXCEPTION_MESSAGE);
+//        }
+
+
     }
 
 

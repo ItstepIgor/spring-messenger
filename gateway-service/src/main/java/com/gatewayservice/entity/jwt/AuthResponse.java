@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class JwtResponse {
+public class AuthResponse {
     private static final String TYPE = "Bearer";
     private String accessToken;
     private String refreshToken;
