@@ -1,8 +1,7 @@
 package com.gatewayservice.service;
 
 import com.gatewayservice.entity.jwt.AuthRequest;
-import com.gatewayservice.feign.UserFeignClients;
-import com.gatewayservice.feign.UserWebClients;
+import com.gatewayservice.util.UserRestTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +9,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserFeignClients userFeignClients;
 
-    private final UserWebClients userWebClients;
+    private final UserRestTemplate userRestTemplate;
+
+
 
     public void login(AuthRequest authRequest) {
 
-//        return userFeignClients.findByUserLogin(authRequest);
-//        return userWebClients.userExists(authRequest);
-        userWebClients.userExists(authRequest);
+        userRestTemplate.userExists(authRequest);
     }
 }

@@ -132,6 +132,7 @@ services:
     environment:
       EUREKA_URL: http://discovery-service:8761/eureka
       CONFIG_SERVICE_URL: http://config-service:8888
+      USER_SERVICE_URL: http://gateway-service:8765
     restart: always
     networks:
       - spring-messenger-net
@@ -139,69 +140,69 @@ services:
       - config-service
       - discovery-service
 
-  avatar-service:
-    build:
-      context: ./avatar-service
-      dockerfile: Dockerfile
-    image: avatar-service:latest
-    container_name: avatar-service-app
-    ports:
-      - "8085:8085"
-    environment:
-      MONGO_DB_HOST: avatar_db_service
-      MONGO_DB_PORT: 27017
-      EUREKA_URL: http://discovery-service:8761/eureka
-      CONFIG_SERVICE_URL: http://config-service:8888
-    restart: always
-    networks:
-      - spring-messenger-net
-    depends_on:
-      - config-service
-      - avatar_db_service
-      - discovery-service
+#  avatar-service:
+#    build:
+#      context: ./avatar-service
+#      dockerfile: Dockerfile
+#    image: avatar-service:latest
+#    container_name: avatar-service-app
+#    ports:
+#      - "8085:8085"
+#    environment:
+#      MONGO_DB_HOST: avatar_db_service
+#      MONGO_DB_PORT: 27017
+#      EUREKA_URL: http://discovery-service:8761/eureka
+#      CONFIG_SERVICE_URL: http://config-service:8888
+#    restart: always
+#    networks:
+#      - spring-messenger-net
+#    depends_on:
+#      - config-service
+#      - avatar_db_service
+#      - discovery-service
 
-  chat-service:
-    build:
-      context: ./chat-service
-      dockerfile: Dockerfile
-    image: chat-service:latest
-    container_name: chat-service-app
-    ports:
-      - "8083:8083"
-    environment:
-      KAFKA_URL: "kafka_my_app:29093"
-      POSTGRES_DB_HOST: chats_db_service
-      POSTGRES_DB_PORT: 5432
-      POSTGRES_DB_USERNAME: postgres
-      POSTGRES_DB_PASSWORD: sa
-      EUREKA_URL: http://discovery-service:8761/eureka
-      CONFIG_SERVICE_URL: http://config-service:8888
-    restart: always
-    networks:
-      - spring-messenger-net
-    depends_on:
-      - config-service
-      - chats_db_service
-      - discovery-service
-
-  message-sender-service:
-    build:
-      context: ./message-sender-service
-      dockerfile: Dockerfile
-    image: message-sender-service:latest
-    container_name: message-sender-service-app
-    ports:
-      - "8084:8084"
-    environment:
-      KAFKA_URL: "kafka_my_app:29093"
-      EUREKA_URL: http://discovery-service:8761/eureka
-      CONFIG_SERVICE_URL: http://config-service:8888
-    restart: always
-    networks:
-      - spring-messenger-net
-    depends_on:
-      - config-service
-      - discovery-service
+#  chat-service:
+#    build:
+#      context: ./chat-service
+#      dockerfile: Dockerfile
+#    image: chat-service:latest
+#    container_name: chat-service-app
+#    ports:
+#      - "8083:8083"
+#    environment:
+#      KAFKA_URL: "kafka_my_app:29093"
+#      POSTGRES_DB_HOST: chats_db_service
+#      POSTGRES_DB_PORT: 5432
+#      POSTGRES_DB_USERNAME: postgres
+#      POSTGRES_DB_PASSWORD: sa
+#      EUREKA_URL: http://discovery-service:8761/eureka
+#      CONFIG_SERVICE_URL: http://config-service:8888
+#    restart: always
+#    networks:
+#      - spring-messenger-net
+#    depends_on:
+#      - config-service
+#      - chats_db_service
+#      - discovery-service
+#
+#  message-sender-service:
+#    build:
+#      context: ./message-sender-service
+#      dockerfile: Dockerfile
+#    image: message-sender-service:latest
+#    container_name: message-sender-service-app
+#    ports:
+#      - "8084:8084"
+#    environment:
+#      KAFKA_URL: "kafka_my_app:29093"
+#      EUREKA_URL: http://discovery-service:8761/eureka
+#      CONFIG_SERVICE_URL: http://config-service:8888
+#    restart: always
+#    networks:
+#      - spring-messenger-net
+#    depends_on:
+#      - config-service
+#      - discovery-service
 
   user-service:
     build:
