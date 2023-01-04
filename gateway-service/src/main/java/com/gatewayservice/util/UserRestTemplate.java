@@ -18,19 +18,13 @@ public class UserRestTemplate {
 
     private static final String baseUrlUser = "/api/users/";
 
-    public void userExists(AuthRequest authRequest) {
+    public ResponseEntity<Users> userExists(AuthRequest authRequest) {
 
         HttpEntity<AuthRequest> request = new HttpEntity<>(authRequest);
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Users> response;
-
-        // вызов сервисы
-        response = restTemplate.exchange(url + baseUrlUser + "/login", HttpMethod.POST, request, Users.class);
-
-
-        System.out.println(response.getBody());
+        return restTemplate.exchange(url + baseUrlUser + "/login", HttpMethod.POST, request, Users.class);
 
     }
 

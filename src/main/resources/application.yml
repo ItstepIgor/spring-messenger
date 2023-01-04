@@ -1,9 +1,4 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/spring_messenger
-    username: postgres
-    password: sa
-    driver-class-name: org.postgresql.Driver
   jpa:
     properties:
       hibernate:
@@ -15,7 +10,3 @@ spring:
       max-file-size: 1024MB
       max-request-size: 1024MB
       enabled: true
-jwt:
-  secret:
-    access: e8SiLayEF5HIyzUVKWSJohoJnOSPEfDepe+Z9ZGi3YeuZ+UgpMRIlvCI72TSnz962+PU0DELpUJYHuptAgUkEA==
-    refresh: zZbAyzBUA9ZMjbh/V+FdwsEyAXqQlKwQbkMH4jP69NjFhvSHz1zCd4bAJze1sKYg17Y6hKjvPhAq8/K3gFtk1g==

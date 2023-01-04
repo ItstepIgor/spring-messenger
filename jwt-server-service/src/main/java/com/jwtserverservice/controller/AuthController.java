@@ -1,10 +1,10 @@
-package com.springmessenger.controller;
+package com.jwtserverservice.controller;
 
 
-import com.springmessenger.entity.jwt.JwtRequest;
-import com.springmessenger.entity.jwt.JwtResponse;
-import com.springmessenger.entity.jwt.RefreshJwtRequest;
-import com.springmessenger.service.AuthService;
+import com.jwtserverservice.domain.JwtRequest;
+import com.jwtserverservice.domain.JwtResponse;
+import com.jwtserverservice.domain.RefreshJwtRequest;
+import com.jwtserverservice.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

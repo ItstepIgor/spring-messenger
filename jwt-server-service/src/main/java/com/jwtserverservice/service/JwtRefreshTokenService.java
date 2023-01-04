@@ -1,7 +1,7 @@
-package com.springmessenger.service;
+package com.jwtserverservice.service;
 
-import com.springmessenger.entity.jwt.JwtRefreshToken;
-import com.springmessenger.repository.JwtRefreshTokenRepository;
+import com.jwtserverservice.domain.JwtRefreshToken;
+import com.jwtserverservice.repository.JwtRefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -43,7 +43,7 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public Users findByUserLogin(@RequestBody AuthRequest authRequest) {
+    public Optional<Users> findByUserLogin(@RequestBody AuthRequest authRequest) {
         return usersService.findByUserLogin(authRequest);
     }
 

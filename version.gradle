@@ -1,7 +1,5 @@
 ext {
     versions = [
             'aspectjweaver': '1.9.7',
-            'jwt'          : '0.11.5',
-            'jaxb'         : '2.3.1'
     ]
 }

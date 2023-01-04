@@ -14,12 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     implementation "org.aspectj:aspectjweaver:${versions.aspectjweaver}"
-    implementation "io.jsonwebtoken:jjwt-api:${versions.jwt}"
-    runtimeOnly "io.jsonwebtoken:jjwt-impl:${versions.jwt}"
-    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${versions.jwt}"
-    implementation "javax.xml.bind:jaxb-api:${versions.jaxb}"
 
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

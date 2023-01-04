@@ -1,0 +1,4 @@
+jwt:
+  secret:
+    access: e8SiLayEF5HIyzUVKWSJohoJnOSPEfDepe+Z9ZGi3YeuZ+UgpMRIlvCI72TSnz962+PU0DELpUJYHuptAgUkEA==
+    refresh: zZbAyzBUA9ZMjbh/V+FdwsEyAXqQlKwQbkMH4jP69NjFhvSHz1zCd4bAJze1sKYg17Y6hKjvPhAq8/K3gFtk1g==

@@ -1,4 +1,4 @@
-package com.springmessenger.entity.jwt;
+package com.jwtserverservice.domain;
 
 import com.springmessenger.entity.Users;
 import io.jsonwebtoken.*;

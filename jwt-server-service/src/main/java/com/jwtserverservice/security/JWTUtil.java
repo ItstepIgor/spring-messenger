@@ -1,6 +1,6 @@
-package com.springmessenger.security;
+package com.jwtserverservice.security;
 
-import com.springmessenger.entity.Role;
+import com.jwtserverservice.entity.Role;
 import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

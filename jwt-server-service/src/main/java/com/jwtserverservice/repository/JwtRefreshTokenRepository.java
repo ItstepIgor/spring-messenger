@@ -1,7 +1,7 @@
-package com.springmessenger.repository;
+package com.jwtserverservice.repository;
 
-import com.springmessenger.entity.jwt.JwtRefreshToken;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.jwtserverservice.domain.JwtRefreshToken;
+//import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

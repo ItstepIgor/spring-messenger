@@ -1,4 +1,4 @@
-package com.springmessenger.entity.jwt;
+package com.jwtserverservice.domain;
 
 import lombok.Getter;
 import lombok.Setter;

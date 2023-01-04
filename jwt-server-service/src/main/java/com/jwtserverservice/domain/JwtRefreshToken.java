@@ -1,4 +1,4 @@
-package com.springmessenger.entity.jwt;
+package com.jwtserverservice.domain;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,13 +1,13 @@
-package com.springmessenger.service;
+package com.jwtserverservice.service;
 
-import com.springmessenger.entity.Users;
-import com.springmessenger.entity.jwt.JwtProvider;
-import com.springmessenger.entity.jwt.JwtRefreshToken;
-import com.springmessenger.entity.jwt.JwtRequest;
-import com.springmessenger.entity.jwt.JwtResponse;
-import com.springmessenger.exception.AuthException;
-import com.springmessenger.exception.BadLoginOrPasswordException;
-import com.springmessenger.security.JwtAuthentication;
+import com.jwtserverservice.domain.Users;
+import com.jwtserverservice.domain.JwtProvider;
+import com.jwtserverservice.domain.JwtRefreshToken;
+import com.jwtserverservice.domain.JwtRequest;
+import com.jwtserverservice.domain.JwtResponse;
+import com.jwtserverservice.exception.AuthException;
+import com.jwtserverservice.exception.BadLoginOrPasswordException;
+import com.jwtserverservice.security.JwtAuthentication;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
