@@ -1,6 +1,6 @@
 package com.jwtserverservice.security;
 
-import com.jwtserverservice.domain.JwtProvider;
+import com.jwtserverservice.entity.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +30,7 @@ public class JWTFilter extends GenericFilterBean {
             final Claims claims = jwtProvider.getAccessClaims(token);
             final JwtAuthentication jwtInfoToken = JWTUtil.generate(claims);
             jwtInfoToken.setAuthenticated(true);
-            SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
+//            SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
         }
         fc.doFilter(request, response);
     }

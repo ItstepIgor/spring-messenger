@@ -1,3 +1,8 @@
+spring:
+  application:
+    name: jwt-server-service
+  config:
+    import: optional:configserver:${CONFIG_SERVICE_URL:http://localhost:8888}
 jwt:
   secret:
     access: e8SiLayEF5HIyzUVKWSJohoJnOSPEfDepe+Z9ZGi3YeuZ+UgpMRIlvCI72TSnz962+PU0DELpUJYHuptAgUkEA==

@@ -1,7 +1,7 @@
-package com.gatewayservice.util;
+package com.jwtserverservice.util;
 
-import com.gatewayservice.entity.Users;
-import com.gatewayservice.entity.jwt.AuthRequest;
+import com.jwtserverservice.entity.Users;
+import com.jwtserverservice.entity.jwt.AuthRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 @RequiredArgsConstructor
 public class UserRestTemplate {
-    @Value("${base.url.rest.template}")
+    @Value("${base.url.rest.template.users}")
     private String url;
 
     private static final String baseUrlUser = "/api/users/";

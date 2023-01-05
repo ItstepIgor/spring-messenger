@@ -1,8 +1,8 @@
 package com.gatewayservice.service;
 
-import com.gatewayservice.entity.Users;
 import com.gatewayservice.entity.jwt.AuthRequest;
-import com.gatewayservice.util.UserRestTemplate;
+import com.gatewayservice.entity.jwt.AuthResponse;
+import com.gatewayservice.util.JwtRestTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,15 +12,10 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
 
-    private final UserRestTemplate userRestTemplate;
+    private final JwtRestTemplate jwtRestTemplate;
 
+    public ResponseEntity<AuthResponse> login(AuthRequest authRequest) {
 
-
-    public void login(AuthRequest authRequest) {
-
-        ResponseEntity<Users> response = userRestTemplate.userExists(authRequest);
-        if (response.getBody() != null){
-
-        }
+        return jwtRestTemplate.getToken(authRequest);
     }
 }

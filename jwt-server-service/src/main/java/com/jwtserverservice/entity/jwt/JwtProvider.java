@@ -1,6 +1,6 @@
-package com.jwtserverservice.domain;
+package com.jwtserverservice.entity.jwt;
 
-import com.springmessenger.entity.Users;
+import com.jwtserverservice.entity.Users;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

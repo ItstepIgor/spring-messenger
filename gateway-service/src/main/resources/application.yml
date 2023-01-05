@@ -6,4 +6,5 @@ spring:
 base:
   url:
     rest:
-      template: ${USER_SERVICE_URL:http://localhost:8765}
+      template:
+        jwt : ${JWT_SERVER_SERVICE_URL:http://localhost:8765}

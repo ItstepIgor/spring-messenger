@@ -1,7 +1,6 @@
 package com.gatewayservice.controller;
 
 
-import com.gatewayservice.entity.Users;
 import com.gatewayservice.entity.jwt.AuthRequest;
 import com.gatewayservice.entity.jwt.AuthResponse;
 import com.gatewayservice.service.AuthService;
@@ -21,10 +20,9 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public void login(@RequestBody AuthRequest authRequest) {
-        authService.login(authRequest);
-//        return ResponseEntity.ok(token);
-//        return ResponseEntity.ok(token);
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+
+        return authService.login(authRequest);
     }
 
 //    @PostMapping("/token")

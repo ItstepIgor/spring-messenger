@@ -1,9 +1,9 @@
-package com.jwtserverservice.domain;
+package com.jwtserverservice.entity.jwt;
 
 import lombok.Data;
 
 @Data
-public class JwtRequest {
+public class AuthRequest {
     private String login;
     private String password;
 }
