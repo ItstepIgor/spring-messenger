@@ -132,7 +132,7 @@ services:
     environment:
       EUREKA_URL: http://discovery-service:8761/eureka
       CONFIG_SERVICE_URL: http://config-service:8888
-      USER_SERVICE_URL: http://gateway-service:8765
+      JWT_SERVER_SERVICE_URL: http://gateway-service:8765
     restart: always
     networks:
       - spring-messenger-net
@@ -203,6 +203,24 @@ services:
 #    depends_on:
 #      - config-service
 #      - discovery-service
+
+  jwt-server-service:
+    build:
+      context: ./jwt-server-service
+      dockerfile: Dockerfile
+    image: jwt-server-service:latest
+    container_name: jwt-server-service-app
+    ports:
+      - "8089:8089"
+    environment:
+      EUREKA_URL: http://discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: http://config-service:8888
+    restart: always
+    networks:
+      - spring-messenger-net
+    depends_on:
+      - config-service
+      - discovery-service
 
   user-service:
     build:
