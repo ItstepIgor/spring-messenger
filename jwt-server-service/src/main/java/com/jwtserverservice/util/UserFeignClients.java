@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "user-service")
 public interface UserFeignClients {
 
+    @PostMapping("/api/users/check")
+    ResponseEntity<Users> checkUserLogin(@RequestBody AuthRequest authRequest);
+
+
     @PostMapping("/api/users/login")
-    ResponseEntity<Users> findByUserLogin(@RequestBody AuthRequest authRequest);
+    ResponseEntity<Users> findByUserLogin(@RequestBody String login);
+
 }

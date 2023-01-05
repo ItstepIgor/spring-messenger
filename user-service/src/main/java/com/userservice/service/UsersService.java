@@ -58,17 +58,19 @@ public class UsersService /*implements UserDetailsService*/ {
     }
 
     //TODO Security вернуть
-    public Optional<Users> findByUserLogin(AuthRequest authRequest) {
-        Optional<Users> optionalUsers = usersRepository.findUsersByName(authRequest.getLogin());
-//                .orElseThrow(() -> new BadLoginOrPasswordException(EXCEPTION_MESSAGE));
+    public Optional<Users> checkUserLogin(AuthRequest authRequest) {
+        Optional<Users> optionalUsers = findByUserLogin(authRequest.getLogin());
         if (passwordEncoder.matches(authRequest.getPassword(), optionalUsers.get().getPassword())) {
             return optionalUsers;
         } else {
             return null;
-//            throw new BadLoginOrPasswordException(EXCEPTION_MESSAGE);
         }
+    }
 
-
+    public Optional<Users> findByUserLogin(String login) {
+//                .orElseThrow(() -> new BadLoginOrPasswordException(EXCEPTION_MESSAGE));
+//            throw new BadLoginOrPasswordException(EXCEPTION_MESSAGE);
+        return usersRepository.findUsersByName(login);
     }
 
 

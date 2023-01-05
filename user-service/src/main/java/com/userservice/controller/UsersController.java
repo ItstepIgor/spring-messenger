@@ -42,11 +42,15 @@ public class UsersController {
         return usersService.update(usersDto);
     }
 
-    @PostMapping("/login")
-    public Optional<Users> findByUserLogin(@RequestBody AuthRequest authRequest) {
-        return usersService.findByUserLogin(authRequest);
+    @PostMapping("/check")
+    public Optional<Users> checkUserLogin(@RequestBody AuthRequest authRequest) {
+        return usersService.checkUserLogin(authRequest);
     }
 
+    @PostMapping("/login")
+    public Optional<Users> findByUserLogin(@RequestBody String login) {
+        return usersService.findByUserLogin(login);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteMessage(@PathVariable("id") long id) {

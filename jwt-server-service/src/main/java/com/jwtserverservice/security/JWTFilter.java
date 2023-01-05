@@ -30,7 +30,7 @@ public class JWTFilter extends GenericFilterBean {
             final Claims claims = jwtProvider.getAccessClaims(token);
             final JwtAuthentication jwtInfoToken = JWTUtil.generate(claims);
             jwtInfoToken.setAuthenticated(true);
-//            SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
+            SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
         }
         fc.doFilter(request, response);
     }

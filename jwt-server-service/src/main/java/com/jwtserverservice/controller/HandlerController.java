@@ -1,9 +1,9 @@
-package com.springmessenger.controller;
+package com.jwtserverservice.controller;
 
 
-import com.springmessenger.exception.AuthException;
-import com.springmessenger.exception.BadLoginOrPasswordException;
-import com.springmessenger.exception.TemplateResponseException;
+import com.jwtserverservice.exception.AuthException;
+import com.jwtserverservice.exception.BadLoginOrPasswordException;
+import com.jwtserverservice.exception.TemplateResponseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package com.springmessenger.exception;
+package com.jwtserverservice.exception;
 
 public class BadLoginOrPasswordException extends RuntimeException {
     public BadLoginOrPasswordException(String message) {
