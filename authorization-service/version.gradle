@@ -1,0 +1,6 @@
+ext {
+    versions = [
+            'lombok'       : '1.18.24',
+            'oauth2'       : '0.3.1'
+    ]
+}
