@@ -56,4 +56,5 @@ public class UsersController {
     public void deleteMessage(@PathVariable("id") long id) {
         usersService.delete(id);
     }
+
 }

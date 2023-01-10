@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -29,6 +30,8 @@ import java.util.UUID;
 @Configuration
 public class AuthorizationServerConfig {
 
+    @Value("${base.url.redirect}")
+    private String redirectUrl;
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -44,8 +47,8 @@ public class AuthorizationServerConfig {
                 .clientSecret("{noop}secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/gateway")
+//                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .redirectUri(redirectUrl + "login/oauth2/code/gateway")
                 .scope(OidcScopes.OPENID)
                 .scope("resource.read")
                 .build();
