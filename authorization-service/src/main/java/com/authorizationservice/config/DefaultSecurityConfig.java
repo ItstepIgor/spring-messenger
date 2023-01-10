@@ -16,23 +16,32 @@ public class DefaultSecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(authorizeRequests ->
-                        authorizeRequests
-                                .anyRequest()
-                                .authenticated()
-                )
-                .formLogin(withDefaults());
+        http.cors().and().csrf().disable()
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .permitAll();
+
         return http.build();
+
+//        http
+//                .authorizeRequests(authorizeRequests ->
+//                        authorizeRequests
+//                                .anyRequest()
+//                                .authenticated()
+//                )
+//                .formLogin(withDefaults());
+//        return http.build();
     }
 
-    @Bean
-    UserDetailsService users() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("1")
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    UserDetailsService users() {
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username("admin")
+//                .password("1")
+//                .roles("USER")
+//                .build();
+//        return new InMemoryUserDetailsManager(user);
+//    }
 }
