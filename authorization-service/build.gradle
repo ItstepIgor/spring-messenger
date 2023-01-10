@@ -35,6 +35,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation "org.springframework.security:spring-security-oauth2-authorization-server:${versions.oauth2}"
 
     compileOnly "org.projectlombok:lombok:${versions.lombok}"
