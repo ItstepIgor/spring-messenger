@@ -14,10 +14,4 @@ public class PasswordEncoderConfig {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
-
-    //Необходим если в базе храним не зашифрованные пароли
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
 }

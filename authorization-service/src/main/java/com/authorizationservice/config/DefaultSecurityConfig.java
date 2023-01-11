@@ -21,32 +21,19 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @RequiredArgsConstructor
 public class DefaultSecurityConfig {
 
-    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthenticationProvider authProvider;
 
 //    @Bean
 //    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests(authorizeRequests ->
-//                        authorizeRequests
-//                                .anyRequest()
-//                                .authenticated()
-//                )
-//                .formLogin(withDefaults());
+//        http/*.cors().and().csrf().disable()*/
+//                .authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .permitAll();
+//
 //        return http.build();
 //    }
-
-//    @Bean
-//    UserDetailsService users() {
-//        UserDetails user = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder.encode("1"))
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
-
-
-    private final CustomAuthenticationProvider authProvider;
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -54,40 +41,30 @@ public class DefaultSecurityConfig {
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(authProvider);
         return authenticationManagerBuilder.build();
+
     }
 
+//    @Bean
+//    UserDetailsService users() {
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username("admin")
+//                .password("1")
+//                .roles("USER")
+//                .build();
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
-//
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .permitAll();
-
+        http
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                .anyRequest()
+                                .authenticated()
+                )
+                .formLogin(withDefaults());
         return http.build();
     }
+//
 
-//
-////        http
-////                .authorizeRequests(authorizeRequests ->
-////                        authorizeRequests
-////                                .anyRequest()
-////                                .authenticated()
-////                )
-////                .formLogin();
-////        return http.build();
-////    }
-//
-////    @Bean
-////    UserDetailsService users() {
-////        UserDetails user = User.withDefaultPasswordEncoder()
-////                .username("admin")
-////                .password("1")
-////                .roles("USER")
-////                .build();
-////        return new InMemoryUserDetailsManager(user);
-////    }
 }

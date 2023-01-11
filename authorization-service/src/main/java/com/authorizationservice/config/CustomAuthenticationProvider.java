@@ -24,13 +24,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throws AuthenticationException {
         String userName = authentication.getName();
         String password = authentication.getCredentials().toString();
-        //получаем пользователя
+
         Users users = userRestTemplate.getUser(userName).getBody();
-        //смотрим, найден ли пользователь в базе
+
         if (users == null) {
             throw new BadCredentialsException("Unknown user "+userName);
         }
-//        if (!password.equals(users.getPassword())) {
+
         if (!passwordEncoder.matches(password, users.getPassword())) {
             throw new BadCredentialsException("Bad password");
         }
