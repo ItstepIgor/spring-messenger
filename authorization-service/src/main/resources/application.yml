@@ -18,7 +18,7 @@ logging:
     org.springframework.security: INFO
     org.springframework.security.oauth2: INFO
 #    org.springframework.boot.autoconfigure: DEBUG
-#    org.springframework.web.client.RestTemplate: DEBUG
+    org.springframework.web.client.RestTemplate: DEBUG
 base:
   url:
     redirect: ${REDIRECT_URL:http://127.0.0.1:8765/}

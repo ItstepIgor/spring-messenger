@@ -19,7 +19,14 @@ public class UserServiceConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http.cors().and().csrf().disable()
+//                .authorizeRequests((authorizeRequests) ->
+//                        authorizeRequests
+//                                .antMatchers("/api/users/login").permitAll()
+//                );
+                .authorizeRequests()
+                .antMatchers("/api/users/login/**").permitAll()
+                .and()
                 .mvcMatcher("/api/users/**")
                 .authorizeRequests()
                 .mvcMatchers("/api/users/**")
@@ -29,11 +36,5 @@ public class UserServiceConfig {
                 .jwt();
         return http.build();
     }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        PasswordEncoder encoder = new BCryptPasswordEncoder();
-//        return encoder;
-//    }
 
 }

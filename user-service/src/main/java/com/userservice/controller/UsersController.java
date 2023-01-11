@@ -49,7 +49,9 @@ public class UsersController {
 
     @PostMapping("/login")
     public Optional<Users> findByUserLogin(@RequestBody String login) {
-        return usersService.findByUserLogin(login);
+        System.out.println();
+        Optional<Users> users = usersService.findByUserLogin(login);
+        return users;
     }
 
     @DeleteMapping("/{id}")
