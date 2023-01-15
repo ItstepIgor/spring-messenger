@@ -2,7 +2,6 @@ package com.authorizationservice.config;
 
 import com.authorizationservice.entity.Users;
 import com.authorizationservice.util.UserRestTemplate;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,15 +9,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRestTemplate userRestTemplate;
+
+    public CustomAuthenticationProvider(UserRestTemplate userRestTemplate) {
+        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.userRestTemplate = userRestTemplate;
+    }
+
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
