@@ -4,4 +4,5 @@ RUN gradle clean bootJar
 
 FROM adoptopenjdk:11-jre-hotspot
 COPY --from=builder /home/gradle/build/libs/*.jar ./user-service.jar
-CMD java -jar user-service.jar
+COPY ./entrypoint.sh /usr/bin/entrypoint.sh
+ENTRYPOINT [ "entrypoint.sh", "user-service.jar" ]

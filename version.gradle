@@ -1,5 +1,0 @@
-ext {
-    versions = [
-            'aspectjweaver': '1.9.7',
-    ]
-}

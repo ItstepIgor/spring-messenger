@@ -1,6 +1,7 @@
 package com.authorizationservice.config;
 
 import com.authorizationservice.entity.Users;
+import com.authorizationservice.util.UserFeignClients;
 import com.authorizationservice.util.UserRestTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,8 +19,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRestTemplate userRestTemplate;
+    private final UserFeignClients userFeignClients;
 
-    public CustomAuthenticationProvider(UserRestTemplate userRestTemplate) {
+    public CustomAuthenticationProvider(UserRestTemplate userRestTemplate, UserFeignClients userFeignClients) {
+        this.userFeignClients = userFeignClients;
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.userRestTemplate = userRestTemplate;
     }
@@ -30,7 +33,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String userName = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        Users users = userRestTemplate.getUser(userName).getBody();
+//        Users users = userRestTemplate.getUser(userName).getBody();
+        Users users = userFeignClients.findByUserLogin(userName).getBody();
 
         if (users == null) {
             throw new BadCredentialsException("Unknown user "+userName);

@@ -3,17 +3,3 @@ spring:
     name: user-service
   config:
     import: optional:configserver:${CONFIG_SERVICE_URL:http://localhost:8888}
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${AUTHORIZATION_SERVICE:http://localhost:9000}
-
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
-    #    org.springframework.boot.autoconfigure: DEBUG
-    org.springframework.web.client.RestTemplate: DEBUG

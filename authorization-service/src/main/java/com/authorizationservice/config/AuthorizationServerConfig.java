@@ -7,7 +7,6 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
@@ -36,6 +35,9 @@ public class AuthorizationServerConfig {
     @Value("${base.url.redirect}")
     private String redirectUrl;
 
+    @Value("${base.url.provider}")
+    private String providerSettings;
+
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -50,9 +52,8 @@ public class AuthorizationServerConfig {
                 .clientSecret("{noop}secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-//                .authorizationGrantType(AuthorizationGrantType.IMPLICIT)
 //                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri(redirectUrl + "login/oauth2/code/gateway")
+                .redirectUri("http://127.0.0.1:8765/login/oauth2/code/gateway")
                 .scope(OidcScopes.OPENID)
                 .scope("resource.read")
                 .build();
@@ -92,7 +93,7 @@ public class AuthorizationServerConfig {
     @Bean
     public ProviderSettings providerSettings() {
         return ProviderSettings.builder()
-                .issuer("http://localhost:9000")
+                .issuer(providerSettings)
                 .build();
     }
 
