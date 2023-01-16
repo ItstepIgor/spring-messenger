@@ -26,7 +26,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.userRestTemplate = userRestTemplate;
     }
-
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
