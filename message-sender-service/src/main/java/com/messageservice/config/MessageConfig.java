@@ -1,8 +1,8 @@
 package com.messageservice.config;
 
 
+import lombok.SneakyThrows;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,18 +11,35 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Map;
 
 @EnableScheduling
 @Configuration
+@EnableWebSecurity
 public class MessageConfig {
 
     private final KafkaProperties kafkaProperties;
 
-    @Autowired
     public MessageConfig(KafkaProperties kafkaProperties) {
         this.kafkaProperties = kafkaProperties;
+    }
+
+    @Bean
+    @SneakyThrows
+    SecurityFilterChain securityFilterChain(HttpSecurity http){
+        http
+                .mvcMatcher("/api/messages/**")
+                .authorizeRequests()
+                .mvcMatchers("/api/messages/**")
+                .access("hasAuthority('SCOPE_resource.read')")
+                .and()
+                .oauth2ResourceServer()
+                .jwt();
+        return http.build();
     }
 
     @Bean

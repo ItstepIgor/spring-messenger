@@ -3,3 +3,7 @@ spring:
     name: user-service
   config:
     import: optional:configserver:${CONFIG_SERVICE_URL:http://localhost:8888}
+
+springdoc:
+  api-docs:
+    version: openapi_3_0

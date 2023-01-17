@@ -8,3 +8,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${AUTHORIZATION_SERVICE:http://localhost:9002}
+
+springdoc:
+  api-docs:
+    version: openapi_3_0

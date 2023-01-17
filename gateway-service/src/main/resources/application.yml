@@ -3,3 +3,25 @@ spring:
     name: gateway-service
   config:
     import: optional:configserver:${CONFIG_SERVICE_URL:http://localhost:8888}
+
+springdoc:
+  api-docs:
+    version: openapi_3_0
+  swagger-ui:
+    use-root-path: true
+    urls:
+      - name: user-service
+        url: /user-service/v3/api-docs/
+#      - name: gateway-service
+#        url: /gateway-service/v3/api-docs/
+      - name: avatar-service
+        url: /avatar-service/v3/api-docs/
+#      - name: chat-service
+#        url: /chat-service/v3/api-docs/
+      - name: message-sender-service
+        url: /message-sender-service/v3/api-docs/
+    oauth:
+      client-id: gateway
+      client-secret: secret
+      scopes: openid,resource.read
+    oauth2-redirect-url: http://127.0.0.1:8765/swagger-ui.html
